@@ -48,7 +48,7 @@ Um gerador de IBANs portugueses válidos (em formato) para testes de software, d
 
 ### 🌐 Método Online
 
-1. Acede à versão online em: [IBAN Fresquinho](https://andrenevesgomes.com/iban-fresquinho)
+1. Acede à versão online em: [IBAN Fresquinho](https://andrenevesgomes.github.io/iban-fresquinho/)
 
 1. Clicar em **Gerar IBAN** ou gerar múltiplos conforme necessário.
 
@@ -103,7 +103,7 @@ A generator of valid-format Portuguese IBANs for software testing, development a
 
 #### 🌐 Online Method
 
-1. Access the online version at: [IBAN Fresquinho](https://andrenevesgomes.com/iban-fresquinho)
+1. Access the online version at: [IBAN Fresquinho](https://andrenevesgomes.github.io/iban-fresquinho/)
 2. Click on **Generate IBAN** or generate multiple as needed
 3. You can copy the IBAN with a click
 4. Works in dark mode and as a mobile PWA application
