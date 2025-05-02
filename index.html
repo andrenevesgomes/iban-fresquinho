@@ -2,8 +2,30 @@
 <html lang="pt">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Gere IBANs portugueses válidos para testes e desenvolvimento. Inspirado por uma mente brilhante e um coração que ama bordô." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Primary Meta Tags -->
     <title>IBAN Fresquinho - Gere IBANs Portugueses para Testes</title>
+    <meta name="title" content="IBAN Fresquinho - Gere IBANs Portugueses para Testes" />
+    <meta name="description" content="Gere IBANs portugueses válidos para testes e desenvolvimento. Inspirado por uma mente brilhante e um coração que ama bordô." />
+    <meta name="keywords" content="gerador de iban, iban portugal, gerador iban pt, iban teste, iban fresquinho, criar iban teste" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://andrenevesgomes.github.io/iban-fresquinho/" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://andrenevesgomes.github.io/iban-fresquinho/" />
+    <meta property="og:title" content="Gerador de IBAN Português | IBAN Fresquinho - IBANs para Testes" />
+    <meta property="og:description" content="Gere IBANs portugueses válidos para testes e desenvolvimento. Ferramenta gratuita online para testers e desenvolvedores." />
+    <meta property="og:image" content="https://andrenevesgomes.github.io/iban-fresquinho/images/bank-social-image.jpg" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://andrenevesgomes.github.io/iban-fresquinho/" />
+    <meta property="twitter:title" content="Gerador de IBAN Português | IBAN Fresquinho" />
+    <meta property="twitter:description" content="Gere IBANs portugueses válidos para testes e desenvolvimento. Ferramenta gratuita online para testers e desenvolvedores." />
+    <meta property="twitter:image" content="https://andrenevesgomes.github.io/iban-fresquinho/images/bank-social-image.jpg" />
+    <!-- Add after other meta tags -->
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="IBAN Fresquinho - Gerador de IBANs portugueses para testes" />
     <meta name="theme-color" content="#7d0022" />
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="icons/favicon.ico" />
@@ -26,29 +48,29 @@
               fadeIn: {
                 "0%": {
                   opacity: 0,
-                  transform: "translateY(-10px)"
+                  transform: "translateY(-10px)",
                 },
                 "100%": {
                   opacity: 1,
-                  transform: "translateY(0)"
+                  transform: "translateY(0)",
                 },
               },
               bounceSubtle: {
                 "0%, 100%": {
-                  transform: "translateY(0)"
+                  transform: "translateY(0)",
                 },
                 "50%": {
-                  transform: "translateY(-4px)"
+                  transform: "translateY(-4px)",
                 },
               },
               reveal: {
                 "0%": {
                   opacity: 0,
-                  transform: "scale(0.95)"
+                  transform: "scale(0.95)",
                 },
                 "100%": {
                   opacity: 1,
-                  transform: "scale(1)"
+                  transform: "scale(1)",
                 },
               },
             },
@@ -60,6 +82,22 @@
           },
         },
       };
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "IBAN Fresquinho",
+        "url": "https://andrenevesgomes.github.io/iban-fresquinho/",
+        "description": "Gerador de IBANs portugueses válidos para testes e desenvolvimento.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        }
+      }
     </script>
   </head>
   <body class="bg-bourdeaux dark:bg-gray-900 text-gray-900 dark:text-white flex flex-col items-center justify-center min-h-screen p-6 transition-colors">
