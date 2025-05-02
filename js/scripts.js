@@ -58,7 +58,7 @@ function copyIBAN() {
  */
 function generateIBANs() {
     const count = Math.min(
-        parseInt(document.getElementById("count").value),
+        parseInt(document.getElementById("count-input").value),
         20
     );
     const list = document.getElementById("iban-list");
