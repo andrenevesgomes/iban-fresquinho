@@ -15,11 +15,45 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Dancing+Script&display=swap"
       rel="stylesheet"
     />
-    <link href="
-https://cdn.jsdelivr.net/npm/tailwindcss@4/index.min.css
-" rel="stylesheet">
     <!-- Reference to external styles.css -->
     <link rel="stylesheet" href="css/styles.css" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "media",
+        theme: {
+          extend: {
+            colors: {
+              bourdeaux: "#7d0022",
+            },
+            backgroundImage: {
+              subtle:
+                "radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: 0, transform: "translateY(-10px)" },
+                "100%": { opacity: 1, transform: "translateY(0)" },
+              },
+              bounceSubtle: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-4px)" },
+              },
+              reveal: {
+                "0%": { opacity: 0, transform: "scale(0.95)" },
+                "100%": { opacity: 1, transform: "scale(1)" },
+              },
+            },
+            animation: {
+              fadeIn: "fadeIn 1s ease-out forwards",
+              bounceLight: "bounceSubtle 0.8s ease-in-out",
+              reveal: "reveal 0.5s ease-out",
+            },
+          },
+        },
+      };
+    </script>
   </head>
   <body
     class="bg-bourdeaux dark:bg-gray-900 text-gray-900 dark:text-white flex flex-col items-center justify-center min-h-screen p-6 transition-colors"
@@ -105,44 +139,6 @@ https://cdn.jsdelivr.net/npm/tailwindcss@4/index.min.css
     </footer>
 
     <!-- SCRIPTS -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/tailwindcss@4/dist/lib.min.js"
-    ></script>
-    <script>
-      tailwind.config = {
-        darkMode: "media",
-        theme: {
-          extend: {
-            colors: {
-              bourdeaux: "#7d0022",
-            },
-            backgroundImage: {
-              subtle:
-                "radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)",
-            },
-            keyframes: {
-              fadeIn: {
-                "0%": { opacity: 0, transform: "translateY(-10px)" },
-                "100%": { opacity: 1, transform: "translateY(0)" },
-              },
-              bounceSubtle: {
-                "0%, 100%": { transform: "translateY(0)" },
-                "50%": { transform: "translateY(-4px)" },
-              },
-              reveal: {
-                "0%": { opacity: 0, transform: "scale(0.95)" },
-                "100%": { opacity: 1, transform: "scale(1)" },
-              },
-            },
-            animation: {
-              fadeIn: "fadeIn 1s ease-out forwards",
-              bounceLight: "bounceSubtle 0.8s ease-in-out",
-              reveal: "reveal 0.5s ease-out",
-            },
-          },
-        },
-      };
-    </script>
     <script src="js/scripts.js"></script>
   </body>
 </html>
