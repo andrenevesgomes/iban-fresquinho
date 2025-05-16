@@ -84,9 +84,11 @@ function generateIBANs() {
 function createIBAN() {
     const countryCode = "PT";  // Código de país para Portugal
 
+    // Verifica se o utilizador forçou o IBAN para PT50
+    const forcePT50 = document.getElementById("pt50-toggle")?.checked ?? true;
+
     // Seleciona um código de banco aleatório da lista disponível
-    const bankCode =
-        bankCodes[Math.floor(Math.random() * bankCodes.length)];
+    const bankCode = bankCodes[Math.floor(Math.random() * bankCodes.length)];
 
     // Gera código de balcão aleatório (4 dígitos)
     const branchCode = pad(Math.floor(Math.random() * 10000), 4);
@@ -101,11 +103,14 @@ function createIBAN() {
     const bban = bankCode + branchCode + accountNumber + controlDigits;
 
     // Rearranja conforme especificação para cálculo do checksum (PT = 2529)
-    const rearranged = bban + "2529" + "00";
+    const rearranged = bban + countryCode + "00";
 
     // Calcula os dígitos de verificação (98 - módulo 97)
-    const checksum = 98 - mod97(rearranged);
-
+    let checksum = 50; // default if forcing PT50
+    if (!forcePT50) {
+        const rearranged = bban + countryCode + "00";
+        checksum = 98 - mod97(rearranged);
+    }
     return { iban: countryCode + pad(checksum, 2) + bban, bankCode };
 }
 

@@ -108,6 +108,15 @@
     </header>
     <div id="iban-single" class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white shadow-lg rounded-2xl px-6 py-4 text-xl text-center mb-2 min-w-[320px] transition-all scale-100"> Clica abaixo para gerar </div>
     <div id="bank-name" class="mb-6 text-sm text-gray-100 dark:text-gray-400"></div>
+    
+    <div class="mb-4 text-center">
+  <label for="pt50-toggle" class="text-white dark:text-gray-300">
+    <input type="checkbox" id="pt50-toggle" checked class="mr-2" />
+    Começar com PT50 (recomendado)
+  </label>
+</div>
+
+    
     <div class="flex gap-4 mb-10">
       <button onclick="generateIBAN()" class="bg-white text-bourdeaux font-semibold px-6 py-3 rounded-2xl text-lg hover:bg-gray-200 dark:hover:bg-gray-200 transition animate-bounceLight"> Gerar IBAN </button>
       <button onclick="copyIBAN()" class="bg-gray-800 text-white px-6 py-3 rounded-2xl text-lg hover:bg-gray-700 transition relative animate-bounceLight"> Copiar <span id="copyTooltip" class="absolute -top-8 left-1/2 transform -translate-x-1/2 text-xs text-white bg-gray-700 px-2 py-1 rounded hidden">Copiado!</span>
