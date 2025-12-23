@@ -1,6 +1,10 @@
 import './styles.css';
+import { inject } from '@vercel/analytics';
 import { createIBAN, createMultipleIBANs, formatIBAN } from './iban';
 import type { IBANResult } from './types';
+
+// Initialize Vercel Web Analytics
+inject();
 
 /**
  * DOM element references with type safety.

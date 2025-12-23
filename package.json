@@ -25,6 +25,9 @@
   ],
   "author": "André Neves Gomes",
   "license": "MIT",
+  "dependencies": {
+    "@vercel/analytics": "^1.4.0"
+  },
   "devDependencies": {
     "@types/node": "^20.10.0",
     "@typescript-eslint/eslint-plugin": "^6.13.0",
