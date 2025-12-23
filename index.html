@@ -3,92 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <!-- Primary Meta Tags -->
     <title>IBAN Fresquinho - Gere IBANs Portugueses para Testes</title>
     <meta name="title" content="IBAN Fresquinho - Gere IBANs Portugueses para Testes" />
     <meta name="description" content="Gere IBANs portugueses válidos para testes e desenvolvimento. Inspirado por uma mente brilhante e um coração que ama bordô." />
     <meta name="keywords" content="gerador de iban, iban portugal, gerador iban pt, iban teste, iban fresquinho, criar iban teste" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://andrenevesgomes.github.io/iban-fresquinho/" />
+    <link rel="canonical" href="https://iban-fresquinho.vercel.app/" />
+    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://andrenevesgomes.github.io/iban-fresquinho/" />
+    <meta property="og:url" content="https://iban-fresquinho.vercel.app/" />
     <meta property="og:title" content="Gerador de IBAN Português | IBAN Fresquinho - IBANs para Testes" />
     <meta property="og:description" content="Gere IBANs portugueses válidos para testes e desenvolvimento. Ferramenta gratuita online para testers e desenvolvedores." />
-    <meta property="og:image" content="https://andrenevesgomes.github.io/iban-fresquinho/images/bank-social-image.jpg" />
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://andrenevesgomes.github.io/iban-fresquinho/" />
-    <meta property="twitter:title" content="Gerador de IBAN Português | IBAN Fresquinho" />
-    <meta property="twitter:description" content="Gere IBANs portugueses válidos para testes e desenvolvimento. Ferramenta gratuita online para testers e desenvolvedores." />
-    <meta property="twitter:image" content="https://andrenevesgomes.github.io/iban-fresquinho/images/bank-social-image.jpg" />
-    <!-- Add after other meta tags -->
+    <meta property="og:image" content="https://iban-fresquinho.vercel.app/images/bank-social-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="IBAN Fresquinho - Gerador de IBANs portugueses para testes" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://iban-fresquinho.vercel.app/" />
+    <meta property="twitter:title" content="Gerador de IBAN Português | IBAN Fresquinho" />
+    <meta property="twitter:description" content="Gere IBANs portugueses válidos para testes e desenvolvimento. Ferramenta gratuita online para testers e desenvolvedores." />
+    <meta property="twitter:image" content="https://iban-fresquinho.vercel.app/images/bank-social-image.jpg" />
+    
+    <!-- Theme -->
     <meta name="theme-color" content="#7d0022" />
-    <link rel="manifest" href="manifest.json" />
-    <link rel="icon" href="icons/favicon.ico" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Dancing+Script&display=swap" rel="stylesheet" />
-    <!-- Reference to external styles.css -->
-    <link rel="stylesheet" href="css/styles.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "media",
-        theme: {
-          extend: {
-            colors: {
-              bourdeaux: "#7d0022",
-            },
-            backgroundImage: {
-              subtle: "radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)",
-            },
-            keyframes: {
-              fadeIn: {
-                "0%": {
-                  opacity: 0,
-                  transform: "translateY(-10px)",
-                },
-                "100%": {
-                  opacity: 1,
-                  transform: "translateY(0)",
-                },
-              },
-              bounceSubtle: {
-                "0%, 100%": {
-                  transform: "translateY(0)",
-                },
-                "50%": {
-                  transform: "translateY(-4px)",
-                },
-              },
-              reveal: {
-                "0%": {
-                  opacity: 0,
-                  transform: "scale(0.95)",
-                },
-                "100%": {
-                  opacity: 1,
-                  transform: "scale(1)",
-                },
-              },
-            },
-            animation: {
-              fadeIn: "fadeIn 1s ease-out forwards",
-              bounceLight: "bounceSubtle 0.8s ease-in-out",
-              reveal: "reveal 0.5s ease-out",
-            },
-          },
-        },
-      };
-    </script>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/icons/favicon.ico" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    
+    <!-- Structured Data -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "IBAN Fresquinho",
-        "url": "https://andrenevesgomes.github.io/iban-fresquinho/",
+        "url": "https://iban-fresquinho.vercel.app/",
         "description": "Gerador de IBANs portugueses válidos para testes e desenvolvimento.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
@@ -100,41 +54,120 @@
       }
     </script>
   </head>
+  
   <body class="bg-bourdeaux dark:bg-gray-900 text-gray-900 dark:text-white flex flex-col items-center justify-center min-h-screen p-6 transition-colors">
+    <!-- Header -->
     <header class="text-center mb-10 animate-fadeIn">
-      <h1 class="text-4xl font-bold tracking-tight cursive text-white dark:text-white"> IBAN Fresquinho </h1>
-      <p class="text-sm text-white/90 dark:text-gray-300 mt-2"> Gera IBANs portugueses válidos (falsos) para testes e desenvolvimento </p>
-      <p class="text-xs mt-1 italic text-white/60 dark:text-gray-400"> Inspirado por uma mente brilhante e um coração que ama bordô 🌸 </p>
+      <h1 class="text-4xl font-bold tracking-tight cursive text-white dark:text-white">
+        IBAN Fresquinho
+      </h1>
+      <p class="text-sm text-white/90 dark:text-gray-300 mt-2">
+        Gera IBANs portugueses válidos (falsos) para testes e desenvolvimento
+      </p>
+      <p class="text-xs mt-1 italic text-white/60 dark:text-gray-400">
+        Inspirado por uma mente brilhante e um coração que ama bordô 🌸
+      </p>
     </header>
-    <div id="iban-single" class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white shadow-lg rounded-2xl px-6 py-4 text-xl text-center mb-2 min-w-[320px] transition-all scale-100"> Clica abaixo para gerar </div>
-    <div id="bank-name" class="mb-6 text-sm text-gray-100 dark:text-gray-400"></div>
-    
-    <div class="mb-4 text-center">
-  <label for="pt50-toggle" class="text-white dark:text-gray-300">
-    <input type="checkbox" id="pt50-toggle" checked class="mr-2" />
-    Começar com PT50 (recomendado)
-  </label>
-</div>
 
-    
-    <div class="flex gap-4 mb-10">
-      <button onclick="generateIBAN()" class="bg-white text-bourdeaux font-semibold px-6 py-3 rounded-2xl text-lg hover:bg-gray-200 dark:hover:bg-gray-200 transition animate-bounceLight"> Gerar IBAN </button>
-      <button onclick="copyIBAN()" class="bg-gray-800 text-white px-6 py-3 rounded-2xl text-lg hover:bg-gray-700 transition relative animate-bounceLight"> Copiar <span id="copyTooltip" class="absolute -top-8 left-1/2 transform -translate-x-1/2 text-xs text-white bg-gray-700 px-2 py-1 rounded hidden">Copiado!</span>
-      </button>
-    </div>
-    <details class="mb-6 max-w-xl w-full text-center">
-      <summary class="cursor-pointer text-lg text-white font-medium"> Gerar múltiplos IBANs </summary>
-      <div class="mt-4 flex flex-col items-center">
-        <div class="flex items-center justify-center gap-2 mb-4">
-          <label for="count-input" class="text-lg text-white dark:text-white">Quantos?</label>
-          <input type="number" id="count-input" value="2" min="1" max="20" class="w-20 px-2 py-1 rounded border text-gray-900 dark:text-white dark:bg-gray-800" />
-        </div>
-        <div id="iban-list" class="flex flex-col gap-2 items-center justify-center w-full max-w-lg mb-4 transition-all"></div>
-        <button onclick="generateIBANs()" class="bg-white text-bourdeaux font-semibold px-6 py-3 rounded-2xl text-lg hover:bg-gray-200 dark:hover:bg-gray-200 transition animate-bounceLight"> Gerar Múltiplos </button>
+    <!-- Main IBAN Display -->
+    <main class="flex flex-col items-center w-full max-w-xl">
+      <div 
+        id="iban-single" 
+        class="iban-display"
+        aria-live="polite"
+        aria-label="IBAN gerado"
+      >
+        Clica abaixo para gerar
       </div>
-    </details>
-    <footer class="mt-10 text-xs text-white/60 dark:text-gray-400 text-center"> Desenvolvido com carinho para uma menina especial. ❤️ </footer>
-    <!-- SCRIPTS -->
-    <script src="js/scripts.js"></script>
+      
+      <div 
+        id="bank-name" 
+        class="mb-6 text-sm text-gray-100 dark:text-gray-400 h-5"
+        aria-live="polite"
+      ></div>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-4 mb-10">
+        <button 
+          id="generate-btn"
+          class="btn-primary"
+          aria-label="Gerar novo IBAN"
+        >
+          Gerar IBAN
+        </button>
+        
+        <button 
+          id="copy-btn"
+          class="btn-secondary"
+          aria-label="Copiar IBAN para área de transferência"
+        >
+          Copiar
+          <span 
+            id="copyTooltip" 
+            class="absolute -top-8 left-1/2 transform -translate-x-1/2 text-xs text-white bg-gray-700 px-2 py-1 rounded hidden"
+            role="status"
+          >
+            Copiado!
+          </span>
+        </button>
+      </div>
+
+      <!-- Multiple IBANs Section -->
+      <details class="w-full text-center">
+        <summary class="cursor-pointer text-lg text-white font-medium hover:text-white/80 transition-colors">
+          Gerar múltiplos IBANs
+        </summary>
+        
+        <div class="mt-4 flex flex-col items-center">
+          <div class="flex items-center justify-center gap-2 mb-4">
+            <label for="count-input" class="text-lg text-white dark:text-white">
+              Quantos?
+            </label>
+            <input 
+              type="number" 
+              id="count-input" 
+              value="2" 
+              min="1" 
+              max="20"
+              class="w-20 px-2 py-1 rounded border text-gray-900 dark:text-white dark:bg-gray-800 focus:ring-2 focus:ring-white/50 outline-none"
+              aria-label="Número de IBANs a gerar"
+            />
+          </div>
+          
+          <div 
+            id="iban-list" 
+            class="flex flex-col gap-2 items-center justify-center w-full max-w-lg mb-4 transition-all"
+            role="list"
+            aria-label="Lista de IBANs gerados"
+          ></div>
+          
+          <button 
+            id="generate-multiple-btn"
+            class="btn-primary"
+            aria-label="Gerar múltiplos IBANs"
+          >
+            Gerar Múltiplos
+          </button>
+        </div>
+      </details>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-10 text-xs text-white/60 dark:text-gray-400 text-center">
+      <p>Desenvolvido com carinho para uma menina especial. ❤️</p>
+      <p class="mt-1">
+        <a 
+          href="https://github.com/andrenevesgomes/iban-fresquinho" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="hover:text-white/80 transition-colors underline"
+        >
+          Ver código no GitHub
+        </a>
+      </p>
+    </footer>
+
+    <!-- Main Script -->
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

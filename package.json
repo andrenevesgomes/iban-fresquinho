@@ -1,0 +1,45 @@
+{
+  "name": "iban-fresquinho",
+  "version": "2.0.0",
+  "description": "Gerador de IBANs portugueses válidos para testes e desenvolvimento",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,html}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,html}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "iban",
+    "portugal",
+    "generator",
+    "testing",
+    "banking"
+  ],
+  "author": "André Neves Gomes",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.0",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.3.2",
+    "vite": "^5.0.6",
+    "vite-plugin-pwa": "^0.17.4",
+    "vitest": "^1.0.4",
+    "workbox-window": "^7.0.0"
+  }
+}

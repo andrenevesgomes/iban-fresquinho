@@ -1,10 +1,16 @@
 # IBAN Fresquinho 🏦
 
+[![CI](https://github.com/andrenevesgomes/iban-fresquinho/actions/workflows/ci.yml/badge.svg)](https://github.com/andrenevesgomes/iban-fresquinho/actions/workflows/ci.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0-646CFF.svg)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.3-38B2AC.svg)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 > 🇵🇹 Inspirado por uma mente brilhante e um coração que ama bordô.
 
 > 🇬🇧 Inspired by a brilliant mind and a heart that loves bordeaux.
 
-Um gerador de IBANs portugueses válidos (em formato) para testes de software, desenvolvimento e demonstrações.
+Um gerador de IBANs portugueses **válidos** para testes de software, desenvolvimento e demonstrações.
 
 ## 📚 Índice / Table of Contents
 
@@ -12,92 +18,144 @@ Um gerador de IBANs portugueses válidos (em formato) para testes de software, d
   - [📚 Índice / Table of Contents](#-índice--table-of-contents)
   - [✨ Funcionalidades](#-funcionalidades)
   - [🚀 Como Utilizar](#-como-utilizar)
-    - [🌐 Método Online](#-método-online)
-    - [📍 Método Local](#-método-local)
+  - [🛠️ Desenvolvimento](#️-desenvolvimento)
   - [💡 Sobre o formato de IBANs portugueses](#-sobre-o-formato-de-ibans-portugueses)
   - [🧑‍💻 Tecnologias utilizadas](#-tecnologias-utilizadas)
-    - [✨ Features](#-features)
-    - [🚀 How to Use](#-how-to-use)
-      - [🌐 Online Method](#-online-method)
-      - [📍 Local Method](#-local-method)
-    - [💡 About Portuguese IBAN format](#-about-portuguese-iban-format)
-    - [🧑‍💻 Technologies used](#-technologies-used)
 
 
 <details>
 <summary><h2>🇵🇹 Versão Portuguesa</h2></summary>
 
-Um gerador de IBANs portugueses válidos (em formato) para testes de software, desenvolvimento e demonstrações.
+Um gerador de IBANs portugueses válidos para testes de software, desenvolvimento e demonstrações.
 
 
 ## ✨ Funcionalidades
 
-- Gera IBANs portugueses aleatórios com formato válido
-- Mostra o nome do banco correspondente ao código gerado
-- Permite gerar múltiplos IBANs de uma vez (até 20)
-- Cópia para a área de transferência com um clique
-- Suporte para modo escuro automático
-- Funciona offline como PWA (Progressive Web App)
-- Interface simples e intuitiva
+- ✅ Gera IBANs portugueses com **dígitos de verificação válidos** (ISO 13616)
+- ✅ Calcula corretamente os **dígitos de controlo NIB** (norma portuguesa)
+- ✅ Mostra o nome do banco correspondente ao código gerado
+- ✅ Permite gerar múltiplos IBANs de uma vez (até 100)
+- ✅ Cópia para a área de transferência com um clique
+- ✅ Suporte para modo escuro automático
+- ✅ Funciona offline como PWA (Progressive Web App)
+- ✅ Interface simples e intuitiva
+- ✅ **100% testado** com Vitest
 
 
 ## 🚀 Como Utilizar
 
-1. Abrir o `index.html` num navegador moderno.
-
-
 ### 🌐 Método Online
 
 1. Acede à versão online em: [IBAN Fresquinho](https://andrenevesgomes.github.io/iban-fresquinho/)
+2. Clica em **Gerar IBAN** ou gerar múltiplos conforme necessário
+3. Podes copiar o IBAN com um clique
+4. Funciona em dark mode e como aplicação PWA móvel
 
-1. Clicar em **Gerar IBAN** ou gerar múltiplos conforme necessário.
+### 📍 Método Local (Desenvolvimento)
 
-1. Pode copiar o IBAN com um clique.
+```bash
+# Clonar o repositório
+git clone https://github.com/andrenevesgomes/iban-fresquinho.git
+cd iban-fresquinho
 
-1. Funciona em dark mode e como aplicação PWA móvel.
+# Instalar dependências
+npm install
 
-### 📍 Método Local
+# Iniciar servidor de desenvolvimento
+npm run dev
 
-1. Clona este repositório ou faz o download do código
-2. Abre o ficheiro `index.html` num navegador moderno
-3. Clica em **Gerar IBAN** para obteres um novo IBAN
-4. Para múltiplos IBANs, expande a secção "Gerar múltiplos IBANs"
-5. Introduz a quantidade desejada e clica em "Gerar Múltiplos"
-6. Clica em "Copiar" para copiar o IBAN para a área de transferência
+# Correr testes
+npm test
+
+# Build para produção
+npm run build
+```
+
+## 🛠️ Desenvolvimento
+
+### Scripts Disponíveis
+
+| Comando | Descrição |
+|---------|-----------|
+| `npm run dev` | Inicia o servidor de desenvolvimento |
+| `npm run build` | Compila para produção |
+| `npm run preview` | Pré-visualiza o build de produção |
+| `npm test` | Corre os testes em modo watch |
+| `npm run test:run` | Corre os testes uma vez |
+| `npm run test:coverage` | Corre os testes com cobertura |
+| `npm run lint` | Verifica erros de linting |
+| `npm run lint:fix` | Corrige erros de linting automaticamente |
+| `npm run format` | Formata o código com Prettier |
+| `npm run typecheck` | Verifica tipos TypeScript |
+
+### Estrutura do Projeto
+
+```
+iban-fresquinho/
+├── src/
+│   ├── __tests__/
+│   │   └── iban.test.ts    # Testes unitários
+│   ├── iban.ts              # Lógica de geração de IBAN
+│   ├── types.ts             # Definições TypeScript
+│   ├── main.ts              # Ponto de entrada da aplicação
+│   └── styles.css           # Estilos Tailwind
+├── index.html               # HTML principal
+├── vite.config.ts           # Configuração Vite
+├── tailwind.config.js       # Configuração Tailwind
+├── tsconfig.json            # Configuração TypeScript
+├── vitest.config.ts         # Configuração Vitest
+└── eslint.config.js         # Configuração ESLint
+```
 
 ## 💡 Sobre o formato de IBANs portugueses
 
-Os IBANs portugueses seguem a estrutura:
-- PT + 2 dígitos de verificação
-- 4 dígitos do código do banco
-- 4 dígitos do código da agência
-- 11 dígitos do número da conta
-- 2 dígitos de controlo
+Os IBANs portugueses seguem a estrutura (25 caracteres):
+
+```
+PT XX BBBB SSSS CCCCCCCCCCC KK
+│  │  │    │    │           │
+│  │  │    │    │           └─ Dígitos de controlo NIB (2)
+│  │  │    │    └───────────── Número da conta (11)
+│  │  │    └────────────────── Código da agência (4)
+│  │  └─────────────────────── Código do banco (4)
+│  └────────────────────────── Dígitos de verificação IBAN (2)
+└───────────────────────────── Código do país
+```
+
+### Algoritmos Implementados
+
+1. **Dígitos de controlo NIB**: `98 - mod97(bankCode + branchCode + accountNumber + "00")`
+2. **Dígitos de verificação IBAN**: `98 - mod97(BBAN + "PT00")` (ISO 13616)
 
 ## 🧑‍💻 Tecnologias utilizadas
 
-- HTML5, CSS3 e JavaScript
-- Tailwind CSS para estilos
-- Web API para manipulação da área de transferência
-- Manifesto PWA para instalação em dispositivos móveis
+- **[TypeScript](https://www.typescriptlang.org/)** - Tipagem estática
+- **[Vite](https://vitejs.dev/)** - Build tool e dev server
+- **[Tailwind CSS](https://tailwindcss.com/)** - Framework CSS
+- **[Vitest](https://vitest.dev/)** - Framework de testes
+- **[ESLint](https://eslint.org/)** + **[Prettier](https://prettier.io/)** - Linting e formatação
+- **[GitHub Actions](https://github.com/features/actions)** - CI/CD
+- **PWA** - Progressive Web App com vite-plugin-pwa
 
 </details>
 
 <details>
 <summary><h2>🇬🇧 English Version</h2></summary>
 
-A generator of valid-format Portuguese IBANs for software testing, development and demonstrations.
+A generator of **valid** Portuguese IBANs for software testing, development, and demonstrations.
 
 
 ### ✨ Features
 
-- Generates random Portuguese IBANs with valid format
-- Shows the corresponding bank name
-- Allows generating multiple IBANs at once (up to 20)
-- Copy to clipboard with a single click
-- Automatic dark mode support
-- Works offline as a Progressive Web App (PWA)
-- Simple and intuitive interface
+- ✅ Generates Portuguese IBANs with **valid check digits** (ISO 13616)
+- ✅ Correctly calculates **NIB control digits** (Portuguese standard)
+- ✅ Shows the corresponding bank name
+- ✅ Allows generating multiple IBANs at once (up to 100)
+- ✅ Copy to clipboard with a single click
+- ✅ Automatic dark mode support
+- ✅ Works offline as a Progressive Web App (PWA)
+- ✅ Simple and intuitive interface
+- ✅ **100% tested** with Vitest
 
 ### 🚀 How to Use
 
@@ -108,29 +166,58 @@ A generator of valid-format Portuguese IBANs for software testing, development a
 3. You can copy the IBAN with a click
 4. Works in dark mode and as a mobile PWA application
 
-#### 📍 Local Method
+#### 📍 Local Method (Development)
 
-1. Clone this repository or download the code
-2. Open the `index.html` file in a modern browser
-3. Click on **Generate IBAN** to get a new IBAN
-4. For multiple IBANs, expand the "Generate multiple IBANs" section
-5. Enter the desired quantity and click on "Generate Multiple"
-6. Click on "Copy" to copy the IBAN to the clipboard
+```bash
+# Clone the repository
+git clone https://github.com/andrenevesgomes/iban-fresquinho.git
+cd iban-fresquinho
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Run tests
+npm test
+
+# Build for production
+npm run build
+```
 
 ### 💡 About Portuguese IBAN format
 
-Portuguese IBANs follow this structure:
-- PT + 2 check digits
-- 4 digits for the bank code
-- 4 digits for the branch code
-- 11 digits for the account number
-- 2 control digits
+Portuguese IBANs follow this structure (25 characters):
+
+```
+PT XX BBBB SSSS CCCCCCCCCCC KK
+│  │  │    │    │           │
+│  │  │    │    │           └─ NIB control digits (2)
+│  │  │    │    └───────────── Account number (11)
+│  │  │    └────────────────── Branch code (4)
+│  │  └─────────────────────── Bank code (4)
+│  └────────────────────────── IBAN check digits (2)
+└───────────────────────────── Country code
+```
+
+### Implemented Algorithms
+
+1. **NIB control digits**: `98 - mod97(bankCode + branchCode + accountNumber + "00")`
+2. **IBAN check digits**: `98 - mod97(BBAN + "PT00")` (ISO 13616)
 
 ### 🧑‍💻 Technologies used
 
-- HTML5, CSS3 and JavaScript
-- Tailwind CSS for styling
-- Web API for clipboard manipulation
-- PWA manifest for mobile device installation
+- **[TypeScript](https://www.typescriptlang.org/)** - Static typing
+- **[Vite](https://vitejs.dev/)** - Build tool and dev server
+- **[Tailwind CSS](https://tailwindcss.com/)** - CSS framework
+- **[Vitest](https://vitest.dev/)** - Testing framework
+- **[ESLint](https://eslint.org/)** + **[Prettier](https://prettier.io/)** - Linting and formatting
+- **[GitHub Actions](https://github.com/features/actions)** - CI/CD
+- **PWA** - Progressive Web App with vite-plugin-pwa
 
 </details>
+
+## 📄 License
+
+MIT © [André Neves Gomes](https://github.com/andrenevesgomes)

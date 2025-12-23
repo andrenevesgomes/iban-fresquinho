@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Dancing+Script&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+  }
+}
+
+@layer components {
+  .cursive {
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .btn-primary {
+    @apply bg-white text-bourdeaux font-semibold px-6 py-3 rounded-2xl text-lg 
+           hover:bg-gray-200 dark:hover:bg-gray-200 transition animate-bounceLight;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-800 text-white px-6 py-3 rounded-2xl text-lg 
+           hover:bg-gray-700 transition relative animate-bounceLight;
+  }
+
+  .iban-display {
+    @apply bg-white text-gray-900 dark:bg-gray-800 dark:text-white 
+           shadow-lg rounded-2xl px-6 py-4 text-xl text-center 
+           min-w-[320px] transition-all scale-100 font-mono tracking-wide;
+  }
+
+  .iban-card {
+    @apply bg-white dark:bg-gray-800 shadow-md px-4 py-2 rounded-xl 
+           text-center w-full animate-reveal text-gray-900 dark:text-white
+           cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 
+           transition-colors font-mono;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
