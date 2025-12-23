@@ -41,5 +41,8 @@
     "vite-plugin-pwa": "^1.2.0",
     "vitest": "^4.0.16",
     "workbox-window": "^7.0.0"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.6.1"
   }
 }
