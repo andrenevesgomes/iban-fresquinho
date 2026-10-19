@@ -4,7 +4,6 @@ import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { bankCatalogue } from '../banks';
 
-vi.mock('@vercel/analytics', () => ({ inject: vi.fn() }));
 vi.mock('../styles.css', () => ({}));
 vi.mock('../pwa', () => ({ startPWA: vi.fn() }));
 

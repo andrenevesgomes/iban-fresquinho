@@ -63,7 +63,7 @@ Apenas a preferência de tema é guardada em `localStorage`; os IBANs gerados n�
 
 ### 📍 Método Local (Desenvolvimento)
 
-Recomendado: Node.js 24 LTS e npm. Os requisitos mínimos técnicos estão em `engines` no [package.json](package.json); o lockfile fixa as versões. Não são necessárias variáveis de ambiente para gerar IBANs.
+Recomendado: Node.js 24 LTS e pnpm 10.34.7, fixado no [package.json](package.json). O [pnpm-lock.yaml](pnpm-lock.yaml) é o único lockfile. Os requisitos mínimos técnicos estão em `engines`; não são necessárias variáveis de ambiente para gerar IBANs. Usar uma instalação existente de pnpm ou o Corepack; não é necessário alterar ferramentas globais.
 
 ```bash
 # Clonar o repositório
@@ -71,16 +71,16 @@ git clone https://github.com/andrenevesgomes/iban-fresquinho.git
 cd iban-fresquinho
 
 # Instalar dependências
-npm ci
+corepack pnpm install --frozen-lockfile
 
 # Iniciar servidor de desenvolvimento
-npm run dev
+pnpm run dev
 
 # Correr testes
-npm test
+pnpm test
 
 # Build para produção
-npm run build
+pnpm run build
 ```
 
 ## 🛠️ Desenvolvimento
@@ -89,17 +89,17 @@ npm run build
 
 | Comando | Descrição |
 |---------|-----------|
-| `npm run dev` | Inicia o servidor de desenvolvimento |
-| `npm run build` | Compila para produção |
-| `npm run preview` | Pré-visualiza o build de produção |
-| `npm test` | Corre os testes em modo watch |
-| `npm run test:run` | Corre os testes uma vez |
-| `npm run test:coverage` | Corre os testes com cobertura |
-| `npm run lint` | Verifica erros de linting |
-| `npm run lint:fix` | Corrige erros de linting automaticamente |
-| `npm run format` | Formata o código com Prettier |
-| `npm run format:check` | Verifica a formatação sem alterar ficheiros |
-| `npm run typecheck` | Verifica tipos TypeScript |
+| `pnpm run dev` | Inicia o servidor de desenvolvimento |
+| `pnpm run build` | Compila para produção |
+| `pnpm run preview` | Pré-visualiza o build com os cabeçalhos de segurança |
+| `pnpm test` | Corre os testes em modo watch |
+| `pnpm run test:run` | Corre os testes uma vez |
+| `pnpm run test:coverage` | Corre os testes com cobertura |
+| `pnpm run lint` | Verifica erros de linting |
+| `pnpm run lint:fix` | Corrige erros de linting automaticamente |
+| `pnpm run format` | Formata o código com Prettier |
+| `pnpm run format:check` | Verifica a formatação sem alterar ficheiros |
+| `pnpm run typecheck` | Verifica tipos TypeScript |
 
 ### Estrutura do Projeto
 
@@ -193,7 +193,7 @@ Generated identifiers may coincide with assigned account numbers. Mathematical v
 
 #### 📍 Local Method (Development)
 
-Recommended: Node.js 24 LTS and npm. See [package.json](package.json) for technical engine requirements. Use the lockfile; IBAN generation needs no environment variables.
+Recommended: Node.js 24 LTS and pnpm 10.34.7, pinned in [package.json](package.json). [pnpm-lock.yaml](pnpm-lock.yaml) is the only lockfile. Use an existing pnpm installation or Corepack; no global tool replacement is required. See `engines` for technical Node requirements. IBAN generation needs no environment variables.
 
 ```bash
 # Clone the repository
@@ -201,16 +201,16 @@ git clone https://github.com/andrenevesgomes/iban-fresquinho.git
 cd iban-fresquinho
 
 # Install dependencies
-npm ci
+corepack pnpm install --frozen-lockfile
 
 # Start development server
-npm run dev
+pnpm run dev
 
 # Run tests
-npm test
+pnpm test
 
 # Build for production
-npm run build
+pnpm run build
 ```
 
 ### 💡 About Portuguese IBAN format
@@ -251,11 +251,13 @@ ASCII letters are expanded before calculation (`PT` = `2529`). Validation requir
 
 Phase 1 covers IBAN generation only. NIFs and vehicle data are not included. The public URL above is not evidence that the latest local changes have been deployed.
 
-Before publishing, run `npm ci`, `npm run typecheck`, `npm run lint`, `npm run format:check`, `npm run test:coverage`, `npm audit --audit-level=moderate`, and `npm run build`. Check the built preview for multi-bank selection, copy feedback with 100 results, keyboard operation and narrow layouts.
+Before publishing, run `pnpm install --frozen-lockfile`, `pnpm run typecheck`, `pnpm run lint`, `pnpm run format:check`, `pnpm run test:coverage`, `pnpm audit --audit-level=moderate`, and `pnpm run build`. Check the built preview for multi-bank selection, copy feedback with 100 results, keyboard operation and narrow layouts.
 
 CI validates pushes to `release/iban-v2` without merging them into `main`. GitHub Pages deployment is manual and publishes only `dist/`. Vercel deployment depends on its connected repository and branch settings; a fork push alone does not establish a production release. Check the live URL and consent-based PWA update after an approved deployment.
 
 Automated tests and accessibility checks do not establish complete WCAG conformance, Lighthouse scores, insurer acceptance or account ownership. The bank catalogue records the official source URL, date and download hash; the current tests do not re-download or hash the original workbook.
+
+The application has no analytics client, backend or account lookup. Its own runtime code does not send generated identifiers to a server. Hosting providers can still log ordinary asset requests. Installation scripts and pnpm hooks are disabled; new dependency resolutions use a one-day release-age delay. These controls reduce risk, not guarantee safety. See [SECURITY.md](SECURITY.md) for limits, updates and deployment requirements.
 
 ## 📄 License
 

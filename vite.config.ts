@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import hosting from './vercel.json';
 
 export default defineConfig({
   base: './',
@@ -36,13 +37,17 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         skipWaiting: false,
+        sourcemap: false,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,woff2}'],
       },
     }),
   ],
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: false,
+  },
+  preview: {
+    headers: Object.fromEntries(hosting.headers[0]!.headers.map(({ key, value }) => [key, value])),
   },
   server: {
     port: 3000,

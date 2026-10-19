@@ -1,5 +1,4 @@
 import './styles.css';
-import { inject } from '@vercel/analytics';
 import {
   createElement,
   Check,
@@ -23,8 +22,6 @@ import { createMultipleIBANs, formatIBAN, MAX_IBAN_BATCH_SIZE } from './iban';
 import { bankCatalogue, bankReferenceSource } from './banks';
 import { startPWA } from './pwa';
 import type { IBANResult } from './types';
-
-inject();
 
 function element<ElementType extends HTMLElement>(id: string): ElementType {
   const result = document.getElementById(id);
