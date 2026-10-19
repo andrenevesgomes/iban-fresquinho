@@ -1,9 +1,9 @@
 # IBAN Fresquinho 🏦
 
 [![CI](https://github.com/andrenevesgomes/iban-fresquinho/actions/workflows/ci.yml/badge.svg)](https://github.com/andrenevesgomes/iban-fresquinho/actions/workflows/ci.yml)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.0-646CFF.svg)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.3-38B2AC.svg)](https://tailwindcss.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF.svg)](https://vite.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-38B2AC.svg)](https://tailwindcss.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > 🇵🇹 Inspirado por uma mente brilhante e um coração que ama bordô.
@@ -11,6 +11,8 @@
 > 🇬🇧 Inspired by a brilliant mind and a heart that loves bordeaux.
 
 Um gerador de IBANs portugueses **válidos** para testes de software, desenvolvimento e demonstrações.
+
+**Nota de validade:** os IBANs gerados têm estrutura portuguesa (`PT50` + 21 dígitos) e dígitos de controlo IBAN/NIB matematicamente válidos (ISO 13616). Podem coincidir com números já atribuídos: não se verifica a existência da conta, o balcão ou a titularidade. Usar apenas em testes autorizados, nunca para pagamentos.
 
 ## 📚 Índice / Table of Contents
 
@@ -33,25 +35,35 @@ Um gerador de IBANs portugueses válidos para testes de software, desenvolviment
 
 - ✅ Gera IBANs portugueses com **dígitos de verificação válidos** (ISO 13616)
 - ✅ Calcula corretamente os **dígitos de controlo NIB** (norma portuguesa)
-- ✅ Mostra o nome do banco correspondente ao código gerado
-- ✅ Permite gerar múltiplos IBANs de uma vez (até 100)
-- ✅ Cópia para a área de transferência com um clique
-- ✅ Suporte para modo escuro automático
-- ✅ Funciona offline como PWA (Progressive Web App)
+- ✅ Designações bancárias verificadas na lista do Banco de Portugal de 13/10/2026, sem confirmar contas ou balcões
+- ✅ Todos os 107 códigos publicados disponíveis no seletor; 69 códigos bancários no grupo aleatório predefinido
+- ✅ Gera entre 1 e 100 IBANs, sem repetições dentro do mesmo lote e sem truncar quantidades inválidas
+- ✅ Botões de cópia acessíveis por teclado e alternativa manual quando o navegador recusa a cópia
+- ✅ Interface clara, um IBAN pronto à chegada e um único fluxo para gerar de 1 a 100
+- ✅ Pesquisa de bancos por nome ou código e cópia de todos os resultados apresentados
+- ✅ PWA com caminhos e ícones corrigidos e atualização por confirmação; aceitação em dispositivos instalados continua necessária
 - ✅ Interface simples e intuitiva
-- ✅ **100% testado** com Vitest
+- ✅ Testes Vitest com vetor SWIFT, controlos independentes, entradas inválidas e colisões forçadas
 
 
 ## 🚀 Como Utilizar
 
 ### 🌐 Método Online
 
-1. Acede à versão online em: [IBAN Fresquinho](https://andrenevesgomes.github.io/iban-fresquinho/)
-2. Clica em **Gerar IBAN** ou gerar múltiplos conforme necessário
-3. Podes copiar o IBAN com um clique
-4. Funciona em dark mode e como aplicação PWA móvel
+1. Acede à versão online em: [IBAN Fresquinho](https://iban-fresquinho.vercel.app/)
+2. Um IBAN está pronto logo à chegada, com cópia imediata num clique
+3. Seleciona um ou vários bancos nos atalhos ou na pesquisa por nome/código. A seleção é partilhada entre ambos; **Concluir** fecha o seletor e **Limpar seleção** repõe o grupo predefinido. Escolhe a quantidade (`1` a `100`) e clica em **Gerar**
+4. Para vários resultados, **Copiar todos** copia todos os IBANs gerados. A confirmação aparece no botão e na barra de resultados, que acompanha a deslocação da lista
+
+Com vários bancos selecionados, um único IBAN usa um banco escolhido aleatoriamente dessa seleção; pode repetir o banco anterior. Os lotes percorrem a seleção pela ordem escolhida. Inclui modo claro/escuro e suporte offline como PWA.
+
+Os atalhos de quantidade `1`, `5` e `6` alteram apenas o próximo pedido; os resultados mantêm-se até clicar em **Gerar**. O seletor de bancos aceita navegação por setas e `Enter` quando a pesquisa devolve um único código.
+
+Apenas a preferência de tema é guardada em `localStorage`; os IBANs gerados não são guardados pelo gerador. As animações de resposta são breves e respeitam a preferência de movimento reduzido. O modo offline requer uma primeira visita online e a instalação bem-sucedida da cache da PWA.
 
 ### 📍 Método Local (Desenvolvimento)
+
+Recomendado: Node.js 24 LTS e npm. Os requisitos mínimos técnicos estão em `engines` no [package.json](package.json); o lockfile fixa as versões. Não são necessárias variáveis de ambiente para gerar IBANs.
 
 ```bash
 # Clonar o repositório
@@ -59,7 +71,7 @@ git clone https://github.com/andrenevesgomes/iban-fresquinho.git
 cd iban-fresquinho
 
 # Instalar dependências
-npm install
+npm ci
 
 # Iniciar servidor de desenvolvimento
 npm run dev
@@ -86,6 +98,7 @@ npm run build
 | `npm run lint` | Verifica erros de linting |
 | `npm run lint:fix` | Corrige erros de linting automaticamente |
 | `npm run format` | Formata o código com Prettier |
+| `npm run format:check` | Verifica a formatação sem alterar ficheiros |
 | `npm run typecheck` | Verifica tipos TypeScript |
 
 ### Estrutura do Projeto
@@ -112,7 +125,7 @@ iban-fresquinho/
 Os IBANs portugueses seguem a estrutura (25 caracteres):
 
 ```
-PT XX BBBB SSSS CCCCCCCCCCC KK
+PT 50 BBBB SSSS CCCCCCCCCCC KK
 │  │  │    │    │           │
 │  │  │    │    │           └─ Dígitos de controlo NIB (2)
 │  │  │    │    └───────────── Número da conta (11)
@@ -126,6 +139,8 @@ PT XX BBBB SSSS CCCCCCCCCCC KK
 
 1. **Dígitos de controlo NIB**: `98 - mod97(bankCode + branchCode + accountNumber + "00")`
 2. **Dígitos de verificação IBAN**: `98 - mod97(BBAN + "PT00")` (ISO 13616)
+
+Antes do cálculo, as letras ASCII são convertidas em números (`PT` = `2529`). A validação exige `PT50`, 21 algarismos no BBAN, os dígitos NIB calculados e resto internacional igual a 1. Os identificadores são strings; zeros iniciais são preservados. Bancos suportados na geração e confirmação de contas reais são conceitos diferentes.
 
 ## 🧑‍💻 Tecnologias utilizadas
 
@@ -149,24 +164,36 @@ A generator of **valid** Portuguese IBANs for software testing, development, and
 
 - ✅ Generates Portuguese IBANs with **valid check digits** (ISO 13616)
 - ✅ Correctly calculates **NIB control digits** (Portuguese standard)
-- ✅ Shows the corresponding bank name
-- ✅ Allows generating multiple IBANs at once (up to 100)
-- ✅ Copy to clipboard with a single click
-- ✅ Automatic dark mode support
-- ✅ Works offline as a Progressive Web App (PWA)
+- ✅ Bank labels checked against Banco de Portugal's list dated 13/10/2026, without verifying accounts or branches
+- ✅ All 107 published codes are selectable; 69 bank codes form the default random pool
+- ✅ Generates 1 to 100 unique identifiers within each batch; invalid quantities are rejected
+- ✅ Keyboard-accessible copy buttons and selected-text fallback when clipboard access fails
+- ✅ Light interface, an IBAN ready on arrival and one workflow for quantities 1-100
+- ✅ Search banks by name or code and copy all displayed results together
+- ✅ Corrected PWA paths/icons and consent-based updates; installed-device acceptance is still required
 - ✅ Simple and intuitive interface
-- ✅ **100% tested** with Vitest
+- ✅ Vitest checks with a SWIFT vector, independent checksums, invalid inputs and forced collisions
 
 ### 🚀 How to Use
 
 #### 🌐 Online Method
 
-1. Access the online version at: [IBAN Fresquinho](https://andrenevesgomes.github.io/iban-fresquinho/)
-2. Click on **Generate IBAN** or generate multiple as needed
-3. You can copy the IBAN with a click
-4. Works in dark mode and as a mobile PWA application
+1. Access the online version at: [IBAN Fresquinho](https://iban-fresquinho.vercel.app/)
+2. An IBAN is ready on arrival with one-click copy
+3. Select one or more banks using the shortcuts or name/code search. Both share the same selection; **Concluir** closes the picker and **Limpar seleção** restores the default pool. Choose a quantity (`1` to `100`), then click **Gerar**
+4. For batches, **Copiar todos** copies one raw IBAN per line. Confirmation appears on the button and in the results toolbar, which stays visible while scrolling the list
+
+With multiple banks selected, a single IBAN uses a randomly chosen bank from that selection; consecutive requests may choose the same bank. Batches cycle through the selection in the chosen order. Supports light/dark mode and offline PWA usage.
+
+The `1`, `5` and `6` quantity shortcuts change only the next request; existing results stay until **Gerar** is pressed. The bank picker supports arrow-key navigation and `Enter` when a search returns one code.
+
+Only the theme preference is saved in `localStorage`; the generator does not store generated IBANs. Brief feedback animations respect reduced-motion preferences. Offline use requires an initial online visit and successful PWA caching.
+
+Generated identifiers may coincide with assigned account numbers. Mathematical validity does not verify an account, branch or ownership. Use only for authorised tests, never for payments.
 
 #### 📍 Local Method (Development)
+
+Recommended: Node.js 24 LTS and npm. See [package.json](package.json) for technical engine requirements. Use the lockfile; IBAN generation needs no environment variables.
 
 ```bash
 # Clone the repository
@@ -174,7 +201,7 @@ git clone https://github.com/andrenevesgomes/iban-fresquinho.git
 cd iban-fresquinho
 
 # Install dependencies
-npm install
+npm ci
 
 # Start development server
 npm run dev
@@ -191,7 +218,7 @@ npm run build
 Portuguese IBANs follow this structure (25 characters):
 
 ```
-PT XX BBBB SSSS CCCCCCCCCCC KK
+PT 50 BBBB SSSS CCCCCCCCCCC KK
 │  │  │    │    │           │
 │  │  │    │    │           └─ NIB control digits (2)
 │  │  │    │    └───────────── Account number (11)
@@ -206,6 +233,8 @@ PT XX BBBB SSSS CCCCCCCCCCC KK
 1. **NIB control digits**: `98 - mod97(bankCode + branchCode + accountNumber + "00")`
 2. **IBAN check digits**: `98 - mod97(BBAN + "PT00")` (ISO 13616)
 
+ASCII letters are expanded before calculation (`PT` = `2529`). Validation requires `PT50`, 21 numeric BBAN characters, the calculated domestic control digits and international remainder 1. Identifiers remain strings. Recognised generator bank codes do not prove that accounts or branches exist.
+
 ### 🧑‍💻 Technologies used
 
 - **[TypeScript](https://www.typescriptlang.org/)** - Static typing
@@ -218,6 +247,18 @@ PT XX BBBB SSSS CCCCCCCCCCC KK
 
 </details>
 
+## Release Checks
+
+Phase 1 covers IBAN generation only. NIFs and vehicle data are not included. The public URL above is not evidence that the latest local changes have been deployed.
+
+Before publishing, run `npm ci`, `npm run typecheck`, `npm run lint`, `npm run format:check`, `npm run test:coverage`, `npm audit --audit-level=moderate`, and `npm run build`. Check the built preview for multi-bank selection, copy feedback with 100 results, keyboard operation and narrow layouts.
+
+CI validates pushes to `release/iban-v2` without merging them into `main`. GitHub Pages deployment is manual and publishes only `dist/`. Vercel deployment depends on its connected repository and branch settings; a fork push alone does not establish a production release. Check the live URL and consent-based PWA update after an approved deployment.
+
+Automated tests and accessibility checks do not establish complete WCAG conformance, Lighthouse scores, insurer acceptance or account ownership. The bank catalogue records the official source URL, date and download hash; the current tests do not re-download or hash the original workbook.
+
 ## 📄 License
 
 MIT © [André Neves Gomes](https://github.com/andrenevesgomes)
+
+Font, icon and photograph licences: [third-party notices](public/third-party-notices.txt).

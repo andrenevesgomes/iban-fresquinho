@@ -1,5 +1,15 @@
 import { bankCodes, bankMap, type IBANResult, type IBANStructure } from './types';
 
+export const MAX_IBAN_BATCH_SIZE = 100;
+
+function isNumericString(value: string, length: number): boolean {
+  return typeof value === 'string' && value.length === length && !/[^0-9]/.test(value);
+}
+
+function normalizeIBAN(iban: string): string {
+  return typeof iban === 'string' ? iban.replace(/ /g, '').toUpperCase() : '';
+}
+
 /**
  * Pads a number with leading zeros to achieve the specified length.
  * @param num - The number to pad.
@@ -17,19 +27,18 @@ export function pad(num: number, length: number): string {
  * @returns The remainder when divided by 97.
  */
 export function mod97(value: string): number {
-  // Convert letters to numbers (A=10, B=11, ..., Z=35)
-  const expanded = value.replace(/[A-Z]/g, (char) =>
-    (char.charCodeAt(0) - 55).toString()
-  );
-
-  // Process in chunks to avoid JavaScript integer limitations
-  let remainder = expanded;
-  while (remainder.length > 2) {
-    const block = remainder.substring(0, 9);
-    remainder = (parseInt(block, 10) % 97).toString() + remainder.substring(block.length);
+  if (typeof value !== 'string' || value.length === 0 || /[^0-9A-Z]/.test(value)) {
+    throw new RangeError('Expected a non-empty string of digits and uppercase ASCII letters');
   }
 
-  return parseInt(remainder, 10) % 97;
+  let remainder = 0;
+  for (const character of value) {
+    const code = character.charCodeAt(0);
+    const numericValue = code >= 65 ? code - 55 : code - 48;
+    remainder = (remainder * (code >= 65 ? 100 : 10) + numericValue) % 97;
+  }
+
+  return remainder;
 }
 
 /**
@@ -54,17 +63,29 @@ export function calculateNIBControlDigits(
   branchCode: string,
   accountNumber: string
 ): string {
+  if (
+    !isNumericString(bankCode, 4) ||
+    !isNumericString(branchCode, 4) ||
+    !isNumericString(accountNumber, 11)
+  ) {
+    throw new RangeError('Expected bank (4), branch (4) and account (11) digits');
+  }
+
   const nibBase = bankCode + branchCode + accountNumber;
   return pad(98 - mod97(nibBase + '00'), 2);
 }
 
 /**
- * Calculates IBAN check digits according to ISO 13616.
+ * Calculates international check digits for a Portuguese BBAN.
  * @param bban - The Basic Bank Account Number (21 digits for Portugal).
- * @param countryCode - The country code (e.g., "PT").
+ * @param countryCode - The supported country code, "PT".
  * @returns The 2-digit IBAN check digits.
  */
 export function calculateIBANCheckDigits(bban: string, countryCode: string): string {
+  if (countryCode !== 'PT' || !isNumericString(bban, 21)) {
+    throw new RangeError('Expected a Portuguese BBAN of 21 digits');
+  }
+
   return pad(98 - mod97(bban + countryCode + '00'), 2);
 }
 
@@ -78,10 +99,17 @@ export function createIBAN(specificBankCode?: string): IBANResult {
   const countryCode = 'PT';
 
   // Select bank code (random or specified)
-  const bankCode = specificBankCode ?? bankCodes[Math.floor(Math.random() * bankCodes.length)];
-  
-  if (!bankCode) {
-    throw new Error('No bank codes available');
+  const bankCode =
+    specificBankCode === undefined
+      ? bankCodes[Math.floor(Math.random() * bankCodes.length)]
+      : specificBankCode;
+
+  if (
+    !bankCode ||
+    !isNumericString(bankCode, 4) ||
+    !Object.prototype.hasOwnProperty.call(bankMap, bankCode)
+  ) {
+    throw new RangeError('Unsupported bank code');
   }
 
   // Generate random branch code (4 digits) and account number (11 digits)
@@ -103,34 +131,29 @@ export function createIBAN(specificBankCode?: string): IBANResult {
   return {
     iban,
     bankCode,
-    bankName: bankMap[bankCode] ?? 'Unknown Bank',
+    bankName: bankMap[bankCode]!,
   };
 }
 
 /**
- * Validates an IBAN using the mod97 algorithm.
+ * Validates Portuguese structure, international and domestic control digits.
  * @param iban - The IBAN string to validate.
  * @returns True if the IBAN is valid, false otherwise.
  */
 export function validateIBAN(iban: string): boolean {
-  // Remove spaces and convert to uppercase
-  const cleaned = iban.replace(/\s/g, '').toUpperCase();
-
-  // Check length for Portuguese IBAN
-  if (cleaned.length !== 25) {
+  const cleaned = normalizeIBAN(iban);
+  if (!cleaned.startsWith('PT50') || !isNumericString(cleaned.substring(4), 21)) {
     return false;
   }
 
-  // Check country code
-  if (!cleaned.startsWith('PT')) {
-    return false;
-  }
-
-  // Rearrange: move first 4 chars to end
+  const expectedNIBDigits = calculateNIBControlDigits(
+    cleaned.substring(4, 8),
+    cleaned.substring(8, 12),
+    cleaned.substring(12, 23)
+  );
   const rearranged = cleaned.substring(4) + cleaned.substring(0, 4);
 
-  // Valid IBAN has mod97 = 1
-  return mod97(rearranged) === 1;
+  return cleaned.substring(23) === expectedNIBDigits && mod97(rearranged) === 1;
 }
 
 /**
@@ -139,9 +162,9 @@ export function validateIBAN(iban: string): boolean {
  * @returns The parsed IBAN structure or null if invalid.
  */
 export function parseIBAN(iban: string): IBANStructure | null {
-  const cleaned = iban.replace(/\s/g, '').toUpperCase();
+  const cleaned = normalizeIBAN(iban);
 
-  if (cleaned.length !== 25 || !cleaned.startsWith('PT')) {
+  if (!validateIBAN(cleaned)) {
     return null;
   }
 
@@ -161,16 +184,61 @@ export function parseIBAN(iban: string): IBANStructure | null {
  * @returns The formatted IBAN with spaces every 4 characters.
  */
 export function formatIBAN(iban: string): string {
-  const cleaned = iban.replace(/\s/g, '');
-  return cleaned.match(/.{1,4}/g)?.join(' ') ?? iban;
+  const cleaned = normalizeIBAN(iban);
+  if (!validateIBAN(cleaned)) {
+    throw new RangeError('Invalid Portuguese IBAN');
+  }
+
+  return cleaned.match(/.{1,4}/g)!.join(' ');
 }
 
 /**
- * Generates multiple valid IBANs.
- * @param count - Number of IBANs to generate (max 100).
- * @returns Array of IBAN results.
+ * Generates a batch of unique IBANs, with at most ten attempts per requested item.
+ * @param count - Integer number of IBANs to generate, from 1 to 100.
+ * @param specificBankCode - Optional single bank code or array of bank codes to cycle/draw from.
+ * @returns A complete batch, or throws if the quantity or collision limit is invalid.
  */
-export function createMultipleIBANs(count: number): IBANResult[] {
-  const safeCount = Math.min(Math.max(1, count), 100);
-  return Array.from({ length: safeCount }, () => createIBAN());
+export function createMultipleIBANs(
+  count: number,
+  specificBankCode?: string | readonly string[]
+): IBANResult[] {
+  if (!Number.isInteger(count) || count < 1 || count > MAX_IBAN_BATCH_SIZE) {
+    throw new RangeError(`Expected an integer quantity from 1 to ${MAX_IBAN_BATCH_SIZE}`);
+  }
+
+  const pool = Array.isArray(specificBankCode)
+    ? specificBankCode
+    : specificBankCode !== undefined
+      ? [specificBankCode as string]
+      : undefined;
+
+  if (pool && pool.length === 0) {
+    throw new RangeError('Unsupported bank code');
+  }
+  if (pool) {
+    for (const code of pool) {
+      if (
+        !code ||
+        !isNumericString(code, 4) ||
+        !Object.prototype.hasOwnProperty.call(bankMap, code)
+      ) {
+        throw new RangeError('Unsupported bank code');
+      }
+    }
+  }
+
+  const results = new Map<string, IBANResult>();
+  const startOffset =
+    pool && pool.length > 1 && count === 1 ? Math.floor(Math.random() * pool.length) : 0;
+  for (let attempt = 0; attempt < count * 10 && results.size < count; attempt++) {
+    const code = pool ? pool[(startOffset + results.size) % pool.length] : undefined;
+    const result = createIBAN(code);
+    results.set(result.iban, result);
+  }
+
+  if (results.size !== count) {
+    throw new Error('Unable to generate a unique batch within the attempt limit');
+  }
+
+  return [...results.values()];
 }

@@ -1,0 +1,1618 @@
+{
+    "schemaVersion":  2,
+    "source":  {
+                   "publisher":  "Banco de Portugal",
+                   "url":  "https://www.bportugal.pt/sites/default/files/documents/2024-01/ListaIBAN.xls",
+                   "documentUpdatedAt":  "2026-10-13",
+                   "retrievedAt":  "2026-10-14",
+                   "file":  "ListaIBAN-2026-10-13.xls",
+                   "sha256":  "afa48cc1801d1c6be3fda2c0749f056d7cdc3bf7c0dd829b2b71a5996f7393f9",
+                   "sheet":  "Lista",
+                   "dateCell":  "A188",
+                   "reuseTerms":  "https://www.bportugal.pt/page/avisos-legais"
+               },
+    "scope":  "Complete institution rows and notes from this dated official workbook, not a live directory. Codes normalise source footnotes only; raw source columns and row numbers are preserved. Application labels, grouping and default-generation policy are defined separately.",
+    "transition":  {
+                       "bankCode":  "0079",
+                       "successorBankCode":  "0170",
+                       "effectiveDate":  "2025-11-21",
+                       "endDate":  null,
+                       "sourceNote":  4,
+                       "sourceRow":  181,
+                       "meaning":  "The source states that 0079 IBANs remain valid for a transitional period; no end date is provided. Exclusion from default generation is an application policy, not official invalidation."
+                   },
+    "counts":  {
+                   "institutionRows":  174,
+                   "ibanCodes":  107
+               },
+    "records":  [
+                    {
+                        "row":  2,
+                        "code":  "0001",
+                        "rawBankCode":  "0001",
+                        "financialInstitutionCode":  "0001",
+                        "officialName":  "BANCO DE PORTUGAL, EP",
+                        "institutionType":  "Banco Central",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  3,
+                        "code":  "0005",
+                        "rawBankCode":  "0005",
+                        "financialInstitutionCode":  "0005",
+                        "officialName":  "ABANCA SERVICIOS FINANCIEROS, E.F.C., S.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições financeiras filiais de instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  4,
+                        "code":  "0007",
+                        "rawBankCode":  "0007",
+                        "financialInstitutionCode":  "0007",
+                        "officialName":  "NOVO BANCO, S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  5,
+                        "code":  "0008",
+                        "rawBankCode":  "0008",
+                        "financialInstitutionCode":  "0008",
+                        "officialName":  "BANCO BAI EUROPA S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  6,
+                        "code":  "0010",
+                        "rawBankCode":  "0010",
+                        "financialInstitutionCode":  "0010",
+                        "officialName":  "BANCO BPI S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  7,
+                        "code":  "0014",
+                        "rawBankCode":  "0014",
+                        "financialInstitutionCode":  "0014",
+                        "officialName":  "BANCO INVEST, SA",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  8,
+                        "code":  "0018",
+                        "rawBankCode":  "0018",
+                        "financialInstitutionCode":  "0018",
+                        "officialName":  "BANCO SANTANDER TOTTA, S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  9,
+                        "code":  "0019",
+                        "rawBankCode":  "0019",
+                        "financialInstitutionCode":  "0019",
+                        "officialName":  "BANCO BILBAO VIZCAYA ARGENTARIA, S.A., SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  10,
+                        "code":  "0022",
+                        "rawBankCode":  "0022",
+                        "financialInstitutionCode":  "0022",
+                        "officialName":  "BANCO DO BRASIL AG - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  11,
+                        "code":  "0023",
+                        "rawBankCode":  "0023",
+                        "financialInstitutionCode":  "0023",
+                        "officialName":  "BANCO ACTIVOBANK, S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  12,
+                        "code":  "0025",
+                        "rawBankCode":  "0025",
+                        "financialInstitutionCode":  "0025",
+                        "officialName":  "CAIXA - BANCO DE INVESTIMENTO, S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  13,
+                        "code":  "0032",
+                        "rawBankCode":  "0032",
+                        "financialInstitutionCode":  "0032",
+                        "officialName":  "BARCLAYS BANK IRELAND PLC - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  14,
+                        "code":  "0033",
+                        "rawBankCode":  "0033",
+                        "financialInstitutionCode":  "0033",
+                        "officialName":  "BANCO COMERCIAL PORTUGUÊS, SA",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  15,
+                        "code":  "0034",
+                        "rawBankCode":  "0034",
+                        "financialInstitutionCode":  "0034",
+                        "officialName":  "BNP PARIBAS",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  16,
+                        "code":  "0035",
+                        "rawBankCode":  "0035",
+                        "financialInstitutionCode":  "0035",
+                        "officialName":  "CAIXA GERAL DE DEPÓSITOS, S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  17,
+                        "code":  "0036",
+                        "rawBankCode":  "0036",
+                        "financialInstitutionCode":  "0036",
+                        "officialName":  "CAIXA ECONÓMICA MONTEPIO GERAL, CAIXA ECONÓMICA BANCÁRIA, SA",
+                        "institutionType":  "Caixas Económicas",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  18,
+                        "code":  "0043",
+                        "rawBankCode":  "0043",
+                        "financialInstitutionCode":  "0043",
+                        "officialName":  "DEUTSCHE BANK AKTIENGESELLSCHAFT - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  19,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "1280",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO MÉDIO AVE CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  20,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "1290",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE VILA VERDE E DE TERRAS DO BOURO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  21,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "1320",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE TERRAS DO SOUSA, AVE, BASTO E TÂMEGA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  22,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "1340",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO VALE DO SOUSA E BAIXO TÂMEGA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  23,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "1400",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE PAREDES, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  24,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "1420",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO NOROESTE, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  25,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "1440",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DA ÁREA METROPOLITANA DO PORTO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  26,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "1460",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE PÓVOA DE VARZIM,VILA DO CONDE E ESPOSENDE, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  27,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "1470",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO ALTO CÁVADO E BASTO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  28,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "2040",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO ALTO DOURO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  29,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "2090",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO BEIRA DOURO E LAFÕES, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  30,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "2140",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO DOURO E CÔA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  31,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "2160",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO VALE DO TÁVORA E DOURO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  32,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "2190",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DA TERRA QUENTE, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  33,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "2230",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE TRÁS-OS-MONTES E ALTO DOURO, C.R.L.",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  34,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "2260",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DOURO E SABOR, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  35,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3010",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO BAIXO MONDEGO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  36,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3020",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE CANTANHEDE E MIRA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  37,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3030",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE COIMBRA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  38,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3060",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO VALE DO DÃO E ALTO VOUGA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  39,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3090",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE OLIVEIRA DE AZEMÉIS E ESTARREJA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  40,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3110",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO CENTRO LITORAL, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  41,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3160",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE TERRAS DE SANTA MARIA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  42,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3210",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE OLIVEIRA DO BAIRRO, ALBERGARIA E SEVER, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  43,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3220",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DA COSTA VERDE, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  44,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3240",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO BAIXO VOUGA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  45,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3340",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE VAGOS, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  46,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3400",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DA BAIRRADA E AGUIEIRA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  47,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3450",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO BEIRA CENTRO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  48,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "3470",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE TERRAS DE VIRIATO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  49,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "4020",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DA REGIÃO DO FUNDÃO E SABUGAL, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  50,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "4050",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DA BEIRA BAIXA (SUL), CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  51,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "4080",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DA SERRA DA ESTRELA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  52,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "4110",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DA ZONA DO PINHAL, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  53,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5020",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE ALCOBAÇA, CARTAXO, NAZARÉ, RIO MAIOR E SANTARÉM, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  54,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5050",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE ALENQUER, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  55,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5070",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE AZAMBUJA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  56,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5080",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DA BATALHA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  57,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5120",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE CADAVAL, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  58,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5130",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE CALDAS DA RAINHA, ÓBIDOS E PENICHE, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  59,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5140",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE LOURES, SINTRA E LITORAL, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  60,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5170",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE CORUCHE, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  61,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5190",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE LOURINHÃ, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  62,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5230",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE PERNES E ALCANHÕES, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  63,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5240",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE PORTO DE MÓS, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  64,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5270",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE SALVATERRA DE MAGOS, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  65,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5310",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE SOBRAL DE MONTE AGRAÇO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  66,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5360",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE VILA FRANCA DE XIRA E ARRUDA DOS VINHOS, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  67,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5430",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO RIBATEJO NORTE E TRAMAGAL, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  68,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5460",
+                        "officialName":  "CAIXA DE CREDITO AGRICOLA MUTUO DE ENTRE TEJO E SADO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  69,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "5470",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO RIBATEJO SUL, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  70,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "6040",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE ALJUSTREL E ALMODÔVAR, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  71,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "6100",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO ALENTEJO SUL, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  72,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "6150",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO NORDESTE ALENTEJANO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  73,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "6160",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE ELVAS, CAMPO MAIOR E BORBA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  74,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "6170",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE ESTREMOZ, MONFORTE E ARRONCHES, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  75,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "6240",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE MORAVIS, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  76,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "6250",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO GUADIANA INTERIOR, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  77,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "6320",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DA COSTA AZUL, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  78,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "6330",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE SÃO TEOTÓNIO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  79,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "6430",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO NORTE ALENTEJANO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  80,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "6440",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO ALENTEJO CENTRAL, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  81,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "7010",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE ALBUFEIRA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  82,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "7130",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO TERRAS DO ARADE, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  83,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "7140",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO SOTAVENTO ALGARVIO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  84,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "7210",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DO ALGARVE, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  85,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "8050",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DOS AÇORES, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  86,
+                        "code":  "0045",
+                        "rawBankCode":  "0045",
+                        "financialInstitutionCode":  "9000",
+                        "officialName":  "CAIXA CENTRAL - CAIXA CENTRAL DE CRÉDITO AGRÍCOLA MÚTUO, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  87,
+                        "code":  "0047",
+                        "rawBankCode":  "0047",
+                        "financialInstitutionCode":  "0047",
+                        "officialName":  "HAITONG BANK, S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  88,
+                        "code":  "0048",
+                        "rawBankCode":  "0048",
+                        "financialInstitutionCode":  "0048",
+                        "officialName":  "BANCO FINANTIA, SA",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  89,
+                        "code":  "0059",
+                        "rawBankCode":  "0059",
+                        "financialInstitutionCode":  "0059",
+                        "officialName":  "CAIXA ECONÓMICA DA MISERICÓRDIA DE ANGRA DO HEROÍSMO, CAIXA ECONÓMICA BANCÁRIA, SA",
+                        "institutionType":  "Caixas Económicas",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  90,
+                        "code":  "0061",
+                        "rawBankCode":  "0061",
+                        "financialInstitutionCode":  "0061",
+                        "officialName":  "BANCO DE INVESTIMENTO GLOBAL S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  91,
+                        "code":  "0063",
+                        "rawBankCode":  "0063",
+                        "financialInstitutionCode":  "0063",
+                        "officialName":  "BISON BANK, S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  92,
+                        "code":  "0064",
+                        "rawBankCode":  "0064",
+                        "financialInstitutionCode":  "0064",
+                        "officialName":  "BANCO PORTUGUÊS DE GESTÃO S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  93,
+                        "code":  "0065",
+                        "rawBankCode":  "0065",
+                        "financialInstitutionCode":  "0065",
+                        "officialName":  "BEST - BANCO ELECTRÓNICO DE SERVIÇO TOTAL, SA",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  94,
+                        "code":  "0073",
+                        "rawBankCode":  "0073",
+                        "financialInstitutionCode":  "0073",
+                        "officialName":  "SANTANDER CONSUMER FINANCE S.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  95,
+                        "code":  "0079",
+                        "rawBankCode":  "0079(4)",
+                        "financialInstitutionCode":  "0170",
+                        "officialName":  "ABANCA PORTUGAL, S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  4
+                    },
+                    {
+                        "row":  96,
+                        "code":  "0097",
+                        "rawBankCode":  "0097",
+                        "financialInstitutionCode":  "0097",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DA CHAMUSCA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  97,
+                        "code":  "0098",
+                        "rawBankCode":  "0098",
+                        "financialInstitutionCode":  "0098",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE BOMBARRAL, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  98,
+                        "code":  "0160",
+                        "rawBankCode":  "0160",
+                        "financialInstitutionCode":  "0160",
+                        "officialName":  "NOVO BANCO DOS AÇORES, SA",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  99,
+                        "code":  "0169",
+                        "rawBankCode":  "0169",
+                        "financialInstitutionCode":  "0169",
+                        "officialName":  "CITIBANK EUROPE PLC, SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  100,
+                        "code":  "0170",
+                        "rawBankCode":  "0170",
+                        "financialInstitutionCode":  "0170",
+                        "officialName":  "ABANCA PORTUGAL, S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  101,
+                        "code":  "0171",
+                        "rawBankCode":  "0171",
+                        "financialInstitutionCode":  "0171",
+                        "officialName":  "RCI BANQUE SUCURSAL PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  102,
+                        "code":  "0172",
+                        "rawBankCode":  "0172",
+                        "financialInstitutionCode":  "0172",
+                        "officialName":  "BMW BANK GMBH, SUCURSAL PORTUGUESA",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  103,
+                        "code":  "0173",
+                        "rawBankCode":  "0173",
+                        "financialInstitutionCode":  "0173",
+                        "officialName":  "EDMOND DE ROTHSCHILD (EUROPE) SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  104,
+                        "code":  "0189",
+                        "rawBankCode":  "0189",
+                        "financialInstitutionCode":  "0189",
+                        "officialName":  "BANCO ATLÂNTICO EUROPA, SA",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  105,
+                        "code":  "0191",
+                        "rawBankCode":  "0191",
+                        "financialInstitutionCode":  "0191",
+                        "officialName":  "BNI - BANCO DE NEGÓCIOS INTERNACIONAL (EUROPA), S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  106,
+                        "code":  "0193",
+                        "rawBankCode":  "0193",
+                        "financialInstitutionCode":  "0193",
+                        "officialName":  "BANCO CTT, S.A.",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  107,
+                        "code":  "0235",
+                        "rawBankCode":  "0235",
+                        "financialInstitutionCode":  "0235",
+                        "officialName":  "BANCO L.J. CARREGOSA, SA",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  108,
+                        "code":  "0238",
+                        "rawBankCode":  "0238",
+                        "financialInstitutionCode":  "0238",
+                        "officialName":  "BNP PARIBAS LEASE GROUP SA",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  109,
+                        "code":  "0244",
+                        "rawBankCode":  "0244",
+                        "financialInstitutionCode":  "0244",
+                        "officialName":  "IBERCAJA BANCO, SA - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de Crédito com sede na UE",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  110,
+                        "code":  "0246",
+                        "rawBankCode":  "0246",
+                        "financialInstitutionCode":  "0246",
+                        "officialName":  "BANCO PRIMUS, SA",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  111,
+                        "code":  "0259",
+                        "rawBankCode":  "0259",
+                        "financialInstitutionCode":  "0259",
+                        "officialName":  "DE LAGE LANDEN INTERNATIONAL B.V. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  112,
+                        "code":  "0264",
+                        "rawBankCode":  "0264",
+                        "financialInstitutionCode":  "0264",
+                        "officialName":  "VOLKSWAGEN BANK GMBH - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  113,
+                        "code":  "0266",
+                        "rawBankCode":  "0266",
+                        "financialInstitutionCode":  "0266",
+                        "officialName":  "BANK OF CHINA (EUROPE) S.A. LISBON BRANCH - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  114,
+                        "code":  "0267",
+                        "rawBankCode":  "0267",
+                        "financialInstitutionCode":  "0267",
+                        "officialName":  "UBS EUROPE SE - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  115,
+                        "code":  "0269",
+                        "rawBankCode":  "0269",
+                        "financialInstitutionCode":  "0269",
+                        "officialName":  "BANKINTER, S.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  116,
+                        "code":  "0271",
+                        "rawBankCode":  "0271",
+                        "financialInstitutionCode":  "0271",
+                        "officialName":  "TOYOTA KREDITBANK GMBH - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  117,
+                        "code":  "0272",
+                        "rawBankCode":  "0272",
+                        "financialInstitutionCode":  "0272",
+                        "officialName":  "WIZINK BANK, S.A.U. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  118,
+                        "code":  "0274",
+                        "rawBankCode":  "0274",
+                        "financialInstitutionCode":  "0274",
+                        "officialName":  "CECABANK, S.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  119,
+                        "code":  "0275",
+                        "rawBankCode":  "0275",
+                        "financialInstitutionCode":  "0275",
+                        "officialName":  "BANCO DE SABADELL - S.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  120,
+                        "code":  "0276",
+                        "rawBankCode":  "0276",
+                        "financialInstitutionCode":  "0276",
+                        "officialName":  "BFF BANK S.P.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  121,
+                        "code":  "0278",
+                        "rawBankCode":  "0278",
+                        "financialInstitutionCode":  "0278",
+                        "officialName":  "GRENKE BANK AG - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  122,
+                        "code":  "0280",
+                        "rawBankCode":  "0280",
+                        "financialInstitutionCode":  "0280",
+                        "officialName":  "EFG BANK (LUXEMBOURG) S.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  123,
+                        "code":  "0281",
+                        "rawBankCode":  "0281",
+                        "financialInstitutionCode":  "0281",
+                        "officialName":  "CAJA RURAL DEL SUR, SOCIEDAD COOPERATIVA DE CRÉDITO – SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  124,
+                        "code":  "0282",
+                        "rawBankCode":  "0282",
+                        "financialInstitutionCode":  "0282",
+                        "officialName":  "CA INDOSUEZ WEALTH (EUROPE) – SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  125,
+                        "code":  "0283",
+                        "rawBankCode":  "0283",
+                        "financialInstitutionCode":  "0283",
+                        "officialName":  "BANK JULIUS BAER EUROPE S.A., SUCURSAL PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  126,
+                        "code":  "0284",
+                        "rawBankCode":  "0284",
+                        "financialInstitutionCode":  "0284",
+                        "officialName":  "BTG PACTUAL EUROPE S.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  127,
+                        "code":  "0285",
+                        "rawBankCode":  "0285",
+                        "financialInstitutionCode":  "0285",
+                        "officialName":  "ITAÚ EUROPE S.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  128,
+                        "code":  "0286",
+                        "rawBankCode":  "0286",
+                        "financialInstitutionCode":  "0286",
+                        "officialName":  "TRADE REPUBLIC BANK GMBH, SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de Crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  129,
+                        "code":  "0305",
+                        "rawBankCode":  "0305",
+                        "financialInstitutionCode":  "0305",
+                        "officialName":  "321CRÉDITO, INSTITUIÇÃO FINANCEIRA DE CRÉDITO S.A.",
+                        "institutionType":  "Instituições Financeiras de Crédito",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  130,
+                        "code":  "0314",
+                        "rawBankCode":  "0314",
+                        "financialInstitutionCode":  "0314",
+                        "officialName":  "SOFID - SOCIEDADE PARA O FINANCIAMENTO DO DESENVOLVIMENTO, INSTITUIÇÃO FINANCEIRA DE CRÉDITO, SA",
+                        "institutionType":  "Instituições Financeiras de Crédito",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  131,
+                        "code":  "0329",
+                        "rawBankCode":  "0329",
+                        "financialInstitutionCode":  "0329",
+                        "officialName":  "REALTRANSFER - INSTITUIÇÃO DE PAGAMENTO, SA",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  132,
+                        "code":  "0500",
+                        "rawBankCode":  "0500",
+                        "financialInstitutionCode":  "0500",
+                        "officialName":  "ING BANK N.V. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  133,
+                        "code":  "0642",
+                        "rawBankCode":  "0642",
+                        "financialInstitutionCode":  "0642",
+                        "officialName":  "BNP PARIBAS FACTOR S.A. – SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições financeiras filiais de instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  134,
+                        "code":  "0698",
+                        "rawBankCode":  "0698",
+                        "financialInstitutionCode":  "0698",
+                        "officialName":  "UNICRE - INSTITUIÇÃO FINANCEIRA DE CRÉDITO, S.A.",
+                        "institutionType":  "Instituições Financeiras de Crédito",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  135,
+                        "code":  "0771",
+                        "rawBankCode":  "0771",
+                        "financialInstitutionCode":  "0771",
+                        "officialName":  "CRÉDIT AGRICOLE LEASING \u0026 FACTORING, S.A. – SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  136,
+                        "code":  "0780",
+                        "rawBankCode":  "0780",
+                        "financialInstitutionCode":  "0780",
+                        "officialName":  "CA AUTO BANK S.P.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  137,
+                        "code":  "0781",
+                        "rawBankCode":  "0781",
+                        "financialInstitutionCode":  "0781",
+                        "officialName":  "AGENCIA DE GESTAO DA TESOURARIA E DA DIVIDA PUBLICA - IGCP, E.P.E.",
+                        "institutionType":  "Entidade Gestora da Tesouraria e da Divida Publica",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  138,
+                        "code":  "0796",
+                        "rawBankCode":  "0796",
+                        "financialInstitutionCode":  "0796",
+                        "officialName":  "MONTEPIO CRÉDITO - INSTITUIÇÃO FINANCEIRA DE CRÉDITO, S.A.",
+                        "institutionType":  "Instituições Financeiras de Crédito",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  139,
+                        "code":  "0800",
+                        "rawBankCode":  "0800",
+                        "financialInstitutionCode":  "0800",
+                        "officialName":  "BBVA, INSTITUIÇÃO FINANCEIRA DE CRÉDITO S.A.",
+                        "institutionType":  "Instituições Financeiras de Crédito",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  140,
+                        "code":  "0812",
+                        "rawBankCode":  "0812",
+                        "financialInstitutionCode":  "0812",
+                        "officialName":  "NOVACÂMBIOS - INSTITUIÇÃO DE PAGAMENTO, S.A.",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  141,
+                        "code":  "0824",
+                        "rawBankCode":  "0824",
+                        "financialInstitutionCode":  "0824",
+                        "officialName":  "UNICÂMBIO - INSTITUIÇÃO DE PAGAMENTO, S.A.",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  142,
+                        "code":  "0848",
+                        "rawBankCode":  "0848",
+                        "financialInstitutionCode":  "0848",
+                        "officialName":  "BNP PARIBAS PERSONAL FINANCE, S.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  143,
+                        "code":  "0881",
+                        "rawBankCode":  "0881",
+                        "financialInstitutionCode":  "0881",
+                        "officialName":  "ONEY BANK - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  144,
+                        "code":  "0916",
+                        "rawBankCode":  "0916",
+                        "financialInstitutionCode":  "0916",
+                        "officialName":  "BANCO CREDIBOM, SA",
+                        "institutionType":  "Bancos",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  145,
+                        "code":  "0921",
+                        "rawBankCode":  "0921",
+                        "financialInstitutionCode":  "0921",
+                        "officialName":  "COFIDIS",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  146,
+                        "code":  "2307",
+                        "rawBankCode":  "2307",
+                        "financialInstitutionCode":  "2307",
+                        "officialName":  "LUMON FX EUROPE LIMITED - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de moeda eletrónica com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  147,
+                        "code":  "3560",
+                        "rawBankCode":  "3560",
+                        "financialInstitutionCode":  "3560",
+                        "officialName":  "REVOLUT BANK UAB - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  148,
+                        "code":  "3574",
+                        "rawBankCode":  "3574",
+                        "financialInstitutionCode":  "3574",
+                        "officialName":  "YOUNITED S.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  149,
+                        "code":  "3581",
+                        "rawBankCode":  "3581",
+                        "financialInstitutionCode":  "3581",
+                        "officialName":  "UNION BANCAIRE PRIVÉE (EUROPE), S.A. – SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  150,
+                        "code":  "5180",
+                        "rawBankCode":  "5180",
+                        "financialInstitutionCode":  "5180",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE LEIRIA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  151,
+                        "code":  "5200",
+                        "rawBankCode":  "5200",
+                        "financialInstitutionCode":  "5200",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE MAFRA, CRL",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  152,
+                        "code":  "5340",
+                        "rawBankCode":  "5340",
+                        "financialInstitutionCode":  "5340",
+                        "officialName":  "CAIXA DE CRÉDITO AGRÍCOLA MÚTUO DE TORRES VEDRAS, C.R.L",
+                        "institutionType":  "Caixa Central e Caixas de Crédito Agrícola Mútuo",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  153,
+                        "code":  "5564",
+                        "rawBankCode":  "5564",
+                        "financialInstitutionCode":  "5564",
+                        "officialName":  "CAIXABANK PAYMENTS \u0026 CONSUMER, E.F.C. EP S.A. - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições financeiras filiais de instituições de crédito com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  154,
+                        "code":  "5810",
+                        "rawBankCode":  "5810",
+                        "financialInstitutionCode":  "5810",
+                        "officialName":  "FINANCIÈRE DES PAIEMENTS ÉLECTRONIQUES SAS - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de pagamento com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  155,
+                        "code":  "5826",
+                        "rawBankCode":  "5826",
+                        "financialInstitutionCode":  "5826",
+                        "officialName":  "EBURY PARTNERS BELGIUM - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de pagamento com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  156,
+                        "code":  "5845",
+                        "rawBankCode":  "5845",
+                        "financialInstitutionCode":  "5845",
+                        "officialName":  "UNIFIEDPOST PAYMENTS - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de pagamento com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  157,
+                        "code":  "5949",
+                        "rawBankCode":  "5949",
+                        "financialInstitutionCode":  "5949",
+                        "officialName":  "CHANGEGROUP SWEDEN PORTUGAL BRANCH - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de pagamento com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  158,
+                        "code":  "7500",
+                        "rawBankCode":  "7500",
+                        "financialInstitutionCode":  "7500",
+                        "officialName":  "UNIVERSO, IME, S.A.",
+                        "institutionType":  "Instituições de moeda eletrónica com sede em Portugal",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  159,
+                        "code":  "7501",
+                        "rawBankCode":  "7501",
+                        "financialInstitutionCode":  "7501",
+                        "officialName":  "MARTRUST EUROPE, S.A.",
+                        "institutionType":  "Instituições de moeda eletrónica com sede em Portugal",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  160,
+                        "code":  "7837",
+                        "rawBankCode":  "7837",
+                        "financialInstitutionCode":  "9799",
+                        "officialName":  "VIVABANK SINGLE MEMBER BANKING S.A",
+                        "institutionType":  "Instituições de crédito com sede na UE - Livre prestação de serviços em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  161,
+                        "code":  "7972",
+                        "rawBankCode":  "7972",
+                        "financialInstitutionCode":  "7972",
+                        "officialName":  "CURRENCIES DIRECT SPAIN, EDE, S.L., SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de moeda eletrónica com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  162,
+                        "code":  "8115",
+                        "rawBankCode":  "8115",
+                        "financialInstitutionCode":  "8115",
+                        "officialName":  "CTT - CORREIOS DE PORTUGAL, SA",
+                        "institutionType":  "Entidades de Servicos Postais Prestadoras de Servicos Financeiros",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  163,
+                        "code":  "8700",
+                        "rawBankCode":  "8700",
+                        "financialInstitutionCode":  "8700",
+                        "officialName":  "LUSOPAY, INSTITUIÇÃO DE PAGAMENTO, LDA",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  164,
+                        "code":  "8701",
+                        "rawBankCode":  "8701",
+                        "financialInstitutionCode":  "8701",
+                        "officialName":  "PAYSHOP (PORTUGAL), S.A.",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  165,
+                        "code":  "8703",
+                        "rawBankCode":  "8703",
+                        "financialInstitutionCode":  "8703",
+                        "officialName":  "SIBS PAGAMENTOS, S.A.",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  166,
+                        "code":  "8705",
+                        "rawBankCode":  "8705",
+                        "financialInstitutionCode":  "8705",
+                        "officialName":  "ALTICE PAY, S.A.",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  167,
+                        "code":  "8706",
+                        "rawBankCode":  "8706",
+                        "financialInstitutionCode":  "8706",
+                        "officialName":  "EASYPAY - INSTITUIÇÃO DE PAGAMENTO, LDA",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  168,
+                        "code":  "8707",
+                        "rawBankCode":  "8707",
+                        "financialInstitutionCode":  "8707",
+                        "officialName":  "IFTHENPAY, LDA",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  169,
+                        "code":  "8708",
+                        "rawBankCode":  "8708",
+                        "financialInstitutionCode":  "8708",
+                        "officialName":  "MAXPAY - INSTITUIÇÃO DE PAGAMENTO, LDA",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  170,
+                        "code":  "8709",
+                        "rawBankCode":  "8709",
+                        "financialInstitutionCode":  "8709",
+                        "officialName":  "EUPAGO - INSTITUIÇÃO DE PAGAMENTO, LDA",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  171,
+                        "code":  "8710",
+                        "rawBankCode":  "8710",
+                        "financialInstitutionCode":  "8710",
+                        "officialName":  "PAYPAYUE - INSTITUIÇÃO DE PAGAMENTO, UNIPESSOAL, LDA",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  172,
+                        "code":  "8711",
+                        "rawBankCode":  "8711",
+                        "financialInstitutionCode":  "8711",
+                        "officialName":  "RAIZE - INSTITUIÇÃO DE PAGAMENTOS, SA",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  173,
+                        "code":  "8714",
+                        "rawBankCode":  "8714",
+                        "financialInstitutionCode":  "8714",
+                        "officialName":  "VIA VERDE PAY, S.A.",
+                        "institutionType":  "Instituições de Pagamento",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  174,
+                        "code":  "8863",
+                        "rawBankCode":  "8863",
+                        "financialInstitutionCode":  "8863",
+                        "officialName":  "MONTY GLOBAL PAYMENTS S.A. UNIPESSOAL - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de pagamento com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    },
+                    {
+                        "row":  175,
+                        "code":  "9871",
+                        "rawBankCode":  "9871",
+                        "financialInstitutionCode":  "9871",
+                        "officialName":  "UNIVERSAL IFX LIMITED - SUCURSAL EM PORTUGAL",
+                        "institutionType":  "Instituições de pagamento com sede na UE - Sucursais em PT",
+                        "sourceNote":  null
+                    }
+                ],
+    "notes":  [
+                  {
+                      "number":  1,
+                      "row":  178,
+                      "text":  "(1) O mesmo código de banco no IBAN pode ser utilizado por diferentes agentes financeiros do mesmo Grupo bancário.\n     The same IBAN Bank Identifier may be used by different institutions of the same banking group."
+                  },
+                  {
+                      "number":  2,
+                      "row":  179,
+                      "text":  "(2) São listadas as instituições identificadas no n.º 1 do Artigo 11.º do Regime Jurídico dos Serviços de Pagamento e da Moeda Eletrónica (aprovado pelo Decreto-Lei n.º 91/2018 de 12 de novembro), exceto as Sociedades Financeiras com sede em Portugal cujo objeto compreenda a prestação de serviços de pagamento, referidas na alínea d), ou seja, aquelas que constam do n.º 1 da alínea b) do Artigo 6.º do Regime Geral das Instituições de Crédito e Sociedades Financeiras (aprovado pelo Decreto-Lei n.º 298/92, de 31 de dezembro).\nAlgumas destas instituições podem não prestar efetivamente serviços de pagamento. Também não estão incluídas as Instituições que operam em Portugal em regime de Livre Prestação de Serviços. / All institutions considered under point 1 of Article 11 from Decree-Law n.º 91/2018, of 12 November, are listed (point 1 of Article 1 of the Directive (EU) 2015/2366 of the European Parliament and of the Council of 25 November 2015), except those included in point d), that are listed under point 1 of Article 6 (b) of Decree-Law 298/92 of 31 December. Some of these institutions may not effectively provide payment services. Also not included Institutions in exercice of freedom to Provide Services."
+                  },
+                  {
+                      "number":  3,
+                      "row":  180,
+                      "text":  "(3) O  mesmo agente financeiro pode utilizar diferentes códigos de banco no IBAN (por exemplo na sequência de processos de fusão entre instituições).\n     One institution may use different IBAN Bank Identifiers (for example as result of a mergers between institutions)."
+                  },
+                  {
+                      "number":  4,
+                      "row":  181,
+                      "text":  "(4) Em 21 de novembro de 2025, verificou-se uma integração da entidade com o código 0079, na entidade com o código 0170. Por um período transitório, os códigos IBAN associados ao código 0079 permanecerão válidos.\n    On November 21, 2025, there was an integration of the entity with code 0079 into the entity with code 0170. For a transitional period, the IBAN codes associated with code 0079 will remain valid."
+                  }
+              ]
+}
