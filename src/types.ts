@@ -1,23 +1,4 @@
-/**
- * Map of bank codes to their respective names.
- */
-export const bankMap: Record<string, string> = {
-  '0007': 'Novo Banco',
-  '0010': 'BPI',
-  '0018': 'Santander Totta',
-  '0033': 'Millennium BCP',
-  '0035': 'Caixa Geral de Depósitos',
-  '0045': 'Crédito Agrícola',
-  '0079': 'Abanca',
-  '0086': 'Banco Invest',
-  '0103': 'Banco BIC',
-  '0121': 'Banco Carregosa',
-} as const;
-
-/**
- * Array of all available bank codes.
- */
-export const bankCodes: string[] = Object.keys(bankMap);
+export { bankMap, bankCodes } from './banks';
 
 /**
  * Result of IBAN generation.

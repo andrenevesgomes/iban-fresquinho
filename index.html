@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,10 +32,14 @@
     
     <!-- Theme -->
     <meta name="theme-color" content="#7d0022" />
-    
+
+    <!-- Local fonts -->
+    <link rel="preload" href="/node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+
     <!-- Favicon -->
-    <link rel="icon" href="/icons/favicon.ico" />
-    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    <link rel="icon" href="./icons/favicon.ico" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -56,117 +60,168 @@
     </script>
   </head>
   
-  <body class="bg-bourdeaux dark:bg-gray-900 text-gray-900 dark:text-white flex flex-col items-center justify-center min-h-screen p-6 transition-colors">
-    <!-- Header -->
-    <header class="text-center mb-10 animate-fadeIn">
-      <h1 class="text-4xl font-bold tracking-tight cursive text-white dark:text-white">
-        IBAN Fresquinho
-      </h1>
-      <p class="text-sm text-white/90 dark:text-gray-300 mt-2">
-        Gera IBANs portugueses válidos (falsos) para testes e desenvolvimento
-      </p>
-      <p class="text-xs mt-1 italic text-white/60 dark:text-gray-400">
-        Inspirado por uma mente brilhante e um coração que ama bordô 🌸
-      </p>
+  <body>
+    <a class="skip-link" href="#main">Saltar para o conteúdo</a>
+    <header class="site-header">
+      <div class="brand">
+        <span class="brand-mark" data-icon="heart" aria-hidden="true"></span>
+        <div>
+          <h1>IBAN <span>Fresquinho</span></h1>
+          <p class="brand-subtitle">Gerador de teste · Portugal</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-button theme-button" type="button" aria-label="Modo escuro" aria-pressed="false" data-tooltip="Usar tema escuro">
+          <span id="theme-icon" data-icon="moon" aria-hidden="true"></span>
+        </button>
+      </div>
     </header>
 
-    <!-- Main IBAN Display -->
-    <main class="flex flex-col items-center w-full max-w-xl">
-      <div 
-        id="iban-single" 
-        class="iban-display"
-        aria-live="polite"
-        aria-label="IBAN gerado"
-      >
-        Clica abaixo para gerar
-      </div>
-      
-      <div 
-        id="bank-name" 
-        class="mb-6 text-sm text-gray-100 dark:text-gray-400 h-5"
-        aria-live="polite"
-      ></div>
-
-      <!-- Action Buttons -->
-      <div class="flex gap-4 mb-10">
-        <button 
-          id="generate-btn"
-          class="btn-primary"
-          aria-label="Gerar novo IBAN"
-        >
-          Gerar IBAN
-        </button>
-        
-        <button 
-          id="copy-btn"
-          class="btn-secondary"
-          aria-label="Copiar IBAN para área de transferência"
-        >
-          Copiar
-          <span 
-            id="copyTooltip" 
-            class="absolute -top-8 left-1/2 transform -translate-x-1/2 text-xs text-white bg-gray-700 px-2 py-1 rounded hidden"
-            role="status"
-          >
-            Copiado!
-          </span>
-        </button>
+    <main id="main" class="workspace">
+      <div id="update-notice" class="update-notice" hidden>
+        <p id="update-status" role="status"></p>
+        <button id="update-app" class="text-button" type="button">Atualizar</button>
       </div>
 
-      <!-- Multiple IBANs Section -->
-      <details class="w-full text-center">
-        <summary class="cursor-pointer text-lg text-white font-medium hover:text-white/80 transition-colors">
-          Gerar múltiplos IBANs
-        </summary>
-        
-        <div class="mt-4 flex flex-col items-center">
-          <div class="flex items-center justify-center gap-2 mb-4">
-            <label for="count-input" class="text-lg text-white dark:text-white">
-              Quantos?
-            </label>
-            <input 
-              type="number" 
-              id="count-input" 
-              value="2" 
-              min="1" 
-              max="20"
-              class="w-20 px-2 py-1 rounded border text-gray-900 dark:text-white dark:bg-gray-800 focus:ring-2 focus:ring-white/50 outline-none"
-              aria-label="Número de IBANs a gerar"
-            />
+      <section class="studio" aria-labelledby="studio-title">
+        <div class="workspace-heading">
+          <p class="eyebrow">Um cuidado a menos no teu dia</p>
+          <h2 id="studio-title">IBAN português, pronto a usar<span class="heading-dot">.</span></h2>
+        </div>
+
+        <form id="generation-form" class="generator" novalidate>
+          <div class="bank-control">
+            <div class="field-heading">
+              <label id="bank-label" for="open-bank">Banco</label>
+              <span class="field-hint">Podes combinar vários atalhos ou abrir a lista completa</span>
+            </div>
+            <div id="favorite-banks" class="favorite-banks" role="group" aria-label="Bancos mais usados">
+              <button type="button" class="bank-pill is-active" data-favorite="" aria-pressed="true">Qualquer</button>
+              <button type="button" class="bank-pill" data-favorite="0035" aria-pressed="false">CGD</button>
+              <button type="button" class="bank-pill" data-favorite="0033" aria-pressed="false">Millennium</button>
+              <button type="button" class="bank-pill" data-favorite="0018" aria-pressed="false">Santander</button>
+              <button type="button" class="bank-pill" data-favorite="0010" aria-pressed="false">BPI</button>
+              <button type="button" class="bank-pill" data-favorite="0007" aria-pressed="false">Novo Banco</button>
+              <button type="button" class="bank-pill" data-favorite="0045" aria-pressed="false">Crédito Agrícola</button>
+              <button type="button" class="bank-pill" data-favorite="0170" aria-pressed="false">Abanca</button>
+            </div>
+            <button id="open-bank" class="bank-trigger" type="button" aria-haspopup="dialog" aria-controls="bank-dialog" aria-labelledby="bank-label selected-bank" aria-describedby="bank-note">
+              <span class="control-icon" data-icon="landmark" aria-hidden="true"></span>
+              <span id="selected-bank">Qualquer banco</span>
+              <span class="bank-trigger-hint">Todos (107)</span>
+              <span data-icon="chevron" aria-hidden="true"></span>
+            </button>
           </div>
-          
-          <div 
-            id="iban-list" 
-            class="flex flex-col gap-2 items-center justify-center w-full max-w-lg mb-4 transition-all"
-            role="list"
-            aria-label="Lista de IBANs gerados"
-          ></div>
-          
-          <button 
-            id="generate-multiple-btn"
-            class="btn-primary"
-            aria-label="Gerar múltiplos IBANs"
-          >
-            Gerar Múltiplos
-          </button>
+          <div class="quantity-control">
+            <label for="count-input">Quantidade</label>
+            <div class="quantity-bar">
+              <div class="quick-counts" role="group" aria-label="Quantidades rápidas">
+                <button type="button" class="chip-button is-active" data-preset="1" aria-label="Selecionar quantidade 1" aria-pressed="true">1</button>
+                <button type="button" class="chip-button" data-preset="5" aria-label="Selecionar quantidade 5" aria-pressed="false">5</button>
+                <button type="button" class="chip-button" data-preset="6" aria-label="Selecionar quantidade 6" aria-pressed="false">6</button>
+              </div>
+              <div class="stepper">
+                <button id="decrease-count" type="button" class="icon-button" aria-label="Diminuir quantidade" data-tooltip="Diminuir" disabled><span data-icon="minus" aria-hidden="true"></span></button>
+                <input id="count-input" type="number" value="1" min="1" max="100" step="1" required aria-describedby="count-error" />
+                <button id="increase-count" type="button" class="icon-button" aria-label="Aumentar quantidade" data-tooltip="Aumentar"><span data-icon="plus" aria-hidden="true"></span></button>
+              </div>
+              <button id="generate-btn" class="primary-button" type="submit"><span data-icon="refresh" aria-hidden="true"></span>Gerar</button>
+            </div>
+          </div>
+        </form>
+        <p id="bank-note" class="inline-note" role="status"></p>
+        <p id="count-error" class="inline-error" role="alert"></p>
+        <p id="generation-status" class="sr-only" role="status" aria-atomic="true"></p>
+
+        <section class="results" aria-labelledby="results-heading">
+          <div class="results-toolbar">
+            <div class="results-title-group">
+              <h3 id="results-heading">O teu IBAN</h3>
+              <p id="copy-status" class="copy-feedback" role="status" aria-atomic="true"></p>
+            </div>
+            <button id="copy-all" class="text-button" type="button" hidden><span data-icon="copy" aria-hidden="true"></span><span id="copy-all-label">Copiar todos</span></button>
+          </div>
+          <div id="copy-fallback" class="copy-fallback" hidden>
+            <div class="fallback-heading">
+              <label for="copy-value">IBAN para cópia manual</label>
+              <button id="close-copy" class="icon-button" type="button" aria-label="Fechar cópia manual" data-tooltip="Fechar"><span data-icon="close" aria-hidden="true"></span></button>
+            </div>
+            <textarea id="copy-value" rows="2" readonly spellcheck="false"></textarea>
+          </div>
+          <ul id="iban-list" class="result-list" aria-label="IBANs gerados"></ul>
+          <noscript><p class="inline-error">É necessário ativar JavaScript para gerar IBANs.</p></noscript>
+          <div class="validity-note">
+            <span data-icon="shield" aria-hidden="true"></span>
+            <p>Formato e controlo válidos (ISO 13616 &amp; NIB).<br class="mobile-break" /> <span>Existência da conta não verificada.</span></p>
+          </div>
+        </section>
+      </section>
+
+      <details class="about">
+        <summary>Sobre estes dados e algoritmos <span data-icon="chevron" aria-hidden="true"></span></summary>
+        <div class="about-content">
+          <p>Os IBANs são gerados localmente neste dispositivo com estrutura portuguesa (<code>PT50</code> + 21 dígitos) e dígitos de controlo NIB e ISO 13616 válidos. Não confirmam uma conta real, o seu titular ou a aceitação por uma seguradora. Podem coincidir com números já atribuídos. Apenas para testes autorizados.</p>
+          <p id="source-note"></p>
+          <p>“Qualquer banco” usa o grupo bancário predefinido. As restantes instituições e os códigos transitórios estão disponíveis na pesquisa por nome ou código.</p>
         </div>
       </details>
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-10 text-xs text-white/60 dark:text-gray-400 text-center">
-      <p>Desenvolvido com carinho para uma menina especial. ❤️</p>
-      <p class="mt-1">
-        <a 
-          href="https://github.com/andrenevesgomes/iban-fresquinho" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="hover:text-white/80 transition-colors underline"
-        >
-          Ver código no GitHub
-        </a>
-      </p>
+    <footer class="site-footer">
+      <div class="dedication">
+        <button id="sunflower-trigger" class="icon-button sunflower-trigger" type="button" aria-label="Girassol" data-tooltip="Girassol"><span data-icon="flower" aria-hidden="true"></span></button>
+        <p>Feito com carinho.</p>
+      </div>
+      <a href="https://github.com/andrenevesgomes/iban-fresquinho" target="_blank" rel="noopener noreferrer">Código aberto<span data-icon="external" aria-hidden="true"></span></a>
     </footer>
+
+    <dialog id="sunflower-dialog" class="sunflower-dialog" aria-labelledby="sunflower-title" data-nosnippet>
+      <button id="close-sunflower" class="icon-button sunflower-close" type="button" aria-label="Fechar mensagem"><span data-icon="close" aria-hidden="true"></span></button>
+      <div class="sunflower-photo"><img id="sunflower-image" width="800" height="500" alt="Girassóis amarelos voltados para a luz" decoding="async" /></div>
+      <div class="sunflower-note">
+        <div class="sunflower-note-header">
+          <span class="note-flower" data-icon="flower" aria-hidden="true"></span>
+          <span id="sunflower-tag" class="sunflower-tag">Dedicatória · 1 / 6</span>
+        </div>
+        <div id="sunflower-card" class="sunflower-card">
+          <h2 id="sunflower-title">Para quem me inspira todos os dias.</h2>
+          <p id="sunflower-lead" class="sunflower-lead">Entre tantos testes, validações e correrias, há uma certeza que nunca falha: tu és o meu lado bom do dia.</p>
+          <p id="sunflower-sub" class="sunflower-sub">Fiz este pequeno canto a pensar em ti — para que até os minutos mais repetitivos do trabalho tenham um bocadinho do meu colo e do meu orgulho por ti.</p>
+        </div>
+        <blockquote id="sunflower-whisper" class="sunflower-whisper">“Como os girassóis procuram a luz, eu procuro o teu sorriso.”</blockquote>
+        <div class="sunflower-actions">
+          <button id="next-sunflower" class="sunflower-next" type="button">
+            <span data-icon="heart" aria-hidden="true"></span>
+            <span>Outra dedicatória</span>
+          </button>
+          <span class="sunflower-signature">Sempre teu, com todo o meu amor.</span>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="bank-dialog" class="bank-dialog" aria-labelledby="bank-dialog-title">
+      <div class="dialog-heading">
+        <div>
+          <h2 id="bank-dialog-title">Escolher bancos</h2>
+          <p class="dialog-subtitle">Seleciona um ou vários bancos para os próximos IBANs</p>
+        </div>
+        <button id="close-bank" class="icon-button" type="button" aria-label="Fechar escolha de banco" data-tooltip="Fechar"><span data-icon="close" aria-hidden="true"></span></button>
+      </div>
+      <div class="bank-search-field">
+        <span data-icon="search" aria-hidden="true"></span>
+        <label class="sr-only" for="bank-search">Pesquisar banco por nome ou código</label>
+        <input id="bank-search" type="search" placeholder="Nome ou código do banco" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="bank-dialog-toolbar">
+        <p id="bank-search-status" class="search-status" role="status" aria-live="polite"></p>
+        <div class="bank-dialog-actions">
+          <button id="clear-banks" class="text-button" type="button" hidden>Limpar seleção</button>
+          <button id="done-bank" class="dialog-done-button" type="button">Concluir</button>
+        </div>
+      </div>
+      <ul id="bank-options" class="bank-options" aria-label="Bancos e instituições"></ul>
+      <p id="bank-empty" class="bank-empty" hidden>Nenhum banco encontrado.</p>
+    </dialog>
 
     <!-- Main Script -->
     <script type="module" src="/src/main.ts"></script>

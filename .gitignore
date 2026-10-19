@@ -25,6 +25,8 @@ coverage/
 .env
 .env.local
 .env.*.local
+.vercel/
+.pnpm-store/
 
 # TypeScript cache
 *.tsbuildinfo

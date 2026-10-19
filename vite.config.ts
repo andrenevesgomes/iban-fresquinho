@@ -1,46 +1,53 @@
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import hosting from './vercel.json';
 
 export default defineConfig({
+  base: './',
   plugins: [
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
+      injectRegister: false,
       includeAssets: ['icons/favicon.ico', 'icons/*.png'],
       manifest: {
         name: 'IBAN Fresquinho',
-        short_name: 'IBAN Fresh',
+        short_name: 'IBAN Fresquinho',
+        lang: 'pt-PT',
+        id: '.',
+        scope: '.',
         description: 'Gerador de IBANs portugueses válidos para testes e desenvolvimento',
-        theme_color: '#7d0022',
-        background_color: '#7d0022',
+        theme_color: '#f7f7f8',
+        background_color: '#f7f7f8',
         display: 'standalone',
-        start_url: '/iban-fresquinho/',
+        start_url: '.',
         icons: [
           {
-            src: 'icons/icon-192x192.png',
+            src: 'icons/android-chrome-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'icons/icon-512x512.png',
+            src: 'icons/android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-          },
-          {
-            src: 'icons/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
           },
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg}'],
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: false,
+        sourcemap: false,
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,woff2}'],
       },
     }),
   ],
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: false,
+  },
+  preview: {
+    headers: Object.fromEntries(hosting.headers[0]!.headers.map(({ key, value }) => [key, value])),
   },
   server: {
     port: 3000,
