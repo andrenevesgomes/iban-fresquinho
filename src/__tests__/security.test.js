@@ -61,21 +61,24 @@ describe('Security configuration', () => {
     expect(headers['Content-Security-Policy']).toContain(`'sha256-${hash}'`);
   });
 
-  it('uses immutable actions and frozen script-free installs in both workflows', () => {
-    for (const file of ['.github/workflows/ci.yml', '.github/workflows/static.yml']) {
+  it.each(['.github/workflows/ci.yml', '.github/workflows/static.yml'])(
+    'uses immutable actions and frozen script-free installs in %s',
+    (file) => {
       const workflow = load(read(file));
       expect(workflow.permissions).toEqual({ contents: 'read' });
-      for (const job of Object.values(workflow.jobs)) {
-        for (const step of job.steps) {
-          if (step.uses) expect(step.uses).toMatch(/@[a-f0-9]{40}$/);
-          if (step.uses?.startsWith('actions/checkout@'))
-            expect(step.with['persist-credentials']).toBe(false);
-          if (step.run?.includes(' install '))
-            expect(step.run).toBe('pnpm install --frozen-lockfile --ignore-scripts');
-          expect(step.run ?? '').not.toMatch(/\bnpm (ci|install|run)/);
-        }
+      const steps = Object.values(workflow.jobs).flatMap((job) => job.steps);
+      for (const step of steps) {
+        if (step.uses) expect(step.uses).toMatch(/@[a-f0-9]{40}$/);
+        if (step.uses?.startsWith('actions/checkout@'))
+          expect(step.with['persist-credentials']).toBe(false);
+        if (step.run?.includes(' install '))
+          expect(step.run).toBe('pnpm install --frozen-lockfile --ignore-scripts');
+        expect(step.run ?? '').not.toMatch(/\bnpm (ci|install|run)/);
       }
     }
+  );
+
+  it('keeps Pages deployment manual and dependent on the verified build', () => {
     const pages = load(read('.github/workflows/static.yml'));
     expect(Object.keys(pages.on)).toEqual(['workflow_dispatch']);
     expect(pages.jobs.deploy.needs).toBe('build');
