@@ -43,6 +43,7 @@ Um gerador de IBANs portugueses válidos para testes de software, desenvolviment
 - ✅ Pesquisa de bancos por nome ou código e cópia de todos os resultados apresentados
 - ✅ PWA com caminhos e ícones corrigidos e atualização por confirmação; aceitação em dispositivos instalados continua necessária
 - ✅ Interface simples e intuitiva
+- ✅ NIF Fresquinho: NIFs de pessoa singular ou empresa, de 1 a 100, com dígito de controlo módulo 11
 - ✅ Testes Vitest com vetor SWIFT, controlos independentes, entradas inválidas e colisões forçadas
 
 
@@ -59,7 +60,9 @@ Com vários bancos selecionados, um único IBAN usa um banco escolhido aleatoria
 
 Os atalhos de quantidade `1`, `5` e `6` alteram apenas o próximo pedido; os resultados mantêm-se até clicar em **Gerar**. O seletor de bancos aceita navegação por setas e `Enter` quando a pesquisa devolve um único código.
 
-Apenas a preferência de tema é guardada em `localStorage`; os IBANs gerados não são guardados pelo gerador. As animações de resposta são breves e respeitam a preferência de movimento reduzido. O modo offline requer uma primeira visita online e a instalação bem-sucedida da cache da PWA.
+**NIF Fresquinho:** clica no prefixo do título (**IBAN**) e escolhe **NIF** para gerar de 1 a 100 identificadores para **Pessoa singular** (gamas `1`, `2`, `3`) ou **Empresa** (perfil limitado à gama `5`). Mudar de ferramenta preserva os resultados, a quantidade e as escolhas de cada uma. Mudar o perfil só afeta a próxima geração. As gamas especiais estão excluídas, sem que isso as torne inválidas. Os NIFs podem coincidir com números atribuídos; não é consultada a AT nem o VIES.
+
+Apenas a preferência de tema é guardada em `localStorage`; os IBANs e NIFs gerados ficam apenas em memória e são descartados ao recarregar. As animações de resposta são breves e respeitam a preferência de movimento reduzido. O modo offline requer uma primeira visita online e a instalação bem-sucedida da cache da PWA.
 
 ### 📍 Método Local (Desenvolvimento)
 
@@ -172,6 +175,7 @@ A generator of **valid** Portuguese IBANs for software testing, development, and
 - ✅ Search banks by name or code and copy all displayed results together
 - ✅ Corrected PWA paths/icons and consent-based updates; installed-device acceptance is still required
 - ✅ Simple and intuitive interface
+- ✅ NIF Fresquinho: individual or company NIFs, 1-100 at a time, with a modulo 11 check digit
 - ✅ Vitest checks with a SWIFT vector, independent checksums, invalid inputs and forced collisions
 
 ### 🚀 How to Use
@@ -187,7 +191,9 @@ With multiple banks selected, a single IBAN uses a randomly chosen bank from tha
 
 The `1`, `5` and `6` quantity shortcuts change only the next request; existing results stay until **Gerar** is pressed. The bank picker supports arrow-key navigation and `Enter` when a search returns one code.
 
-Only the theme preference is saved in `localStorage`; the generator does not store generated IBANs. Brief feedback animations respect reduced-motion preferences. Offline use requires an initial online visit and successful PWA caching.
+**NIF Fresquinho:** select the title prefix (**IBAN**) and choose **NIF** to generate 1-100 identifiers for **Pessoa singular** (ranges `1`, `2`, `3`) or **Empresa** (limited range `5` profile). Switching tools retains each tool's results, quantity and selections. Profile changes apply only to the next generation. Special ranges are excluded without implying they are invalid. NIFs may coincide with assigned numbers; no AT or VIES lookup is performed.
+
+Only the theme preference is saved in `localStorage`; generated IBANs and NIFs stay in memory and are discarded on reload. Brief feedback animations respect reduced-motion preferences. Offline use requires an initial online visit and successful PWA caching.
 
 Generated identifiers may coincide with assigned account numbers. Mathematical validity does not verify an account, branch or ownership. Use only for authorised tests, never for payments.
 
@@ -249,7 +255,7 @@ ASCII letters are expanded before calculation (`PT` = `2529`). Validation requir
 
 ## Release Checks
 
-Phase 1 covers IBAN generation only. NIFs and vehicle data are not included. The public URL above is not evidence that the latest local changes have been deployed.
+Phase 1 released IBAN generation. Phase 2 adds NIF generation, with independent in-memory state for each tool; its deliberately limited profiles, references and test-data constraints are documented in [docs/nif-reference.md](docs/nif-reference.md). The public URL reflects a change only after its approved pull request is merged and deployed. Vehicle data remains out of scope.
 
 Before publishing, run `pnpm install --frozen-lockfile`, `pnpm run typecheck`, `pnpm run lint`, `pnpm run format:check`, `pnpm run test:coverage`, `pnpm audit --audit-level=moderate`, and `pnpm run build`. Check the built preview for multi-bank selection, copy feedback with 100 results, keyboard operation and narrow layouts.
 

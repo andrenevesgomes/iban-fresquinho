@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { bankCatalogue } from '../banks';
+import { hasValidNIFChecksum } from '../nif';
 
 vi.mock('../styles.css', () => ({}));
 vi.mock('../pwa', () => ({ startPWA: vi.fn() }));
@@ -355,6 +356,244 @@ describe('IBAN workflow', () => {
   });
 });
 
+describe('IBAN and NIF Fresquinho', () => {
+  it('switches tools from the wordmark prefix through an accessible disclosure menu', () => {
+    const prefix = button('#tool-prefix');
+    const menu = document.querySelector<HTMLElement>('#tool-menu')!;
+    const key = (target: Element, name: string): void => {
+      target.dispatchEvent(new KeyboardEvent('keydown', { key: name, bubbles: true }));
+    };
+    const heading = (): string =>
+      document.querySelector('h1')!.textContent!.replace(/\s+/g, ' ').trim();
+    expect(heading()).toBe('IBAN Fresquinho');
+    expect(prefix.getAttribute('aria-expanded')).toBe('false');
+    expect(menu.hidden).toBe(true);
+    expect(button('#tab-iban').getAttribute('aria-current')).toBe('true');
+    expect(document.querySelector<HTMLElement>('#nif-controls')!.hidden).toBe(true);
+
+    prefix.click();
+    expect(menu.hidden).toBe(false);
+    expect(prefix.getAttribute('aria-expanded')).toBe('true');
+    expect(document.activeElement).toBe(button('#tab-iban'));
+    key(button('#tab-iban'), 'ArrowDown');
+    expect(document.activeElement).toBe(button('#tab-nif'));
+    key(button('#tab-nif'), 'ArrowDown');
+    expect(document.activeElement).toBe(button('#tab-iban'));
+    key(button('#tab-iban'), 'End');
+    expect(document.activeElement).toBe(button('#tab-nif'));
+    button('#tab-nif').click();
+
+    expect(menu.hidden).toBe(true);
+    expect(prefix.getAttribute('aria-expanded')).toBe('false');
+    expect(document.activeElement).toBe(prefix);
+    expect(heading()).toBe('NIF Fresquinho');
+    expect(button('#tab-nif').getAttribute('aria-current')).toBe('true');
+    expect(button('#tab-iban').getAttribute('aria-current')).toBe('false');
+    expect(document.querySelector<HTMLElement>('#iban-controls')!.hidden).toBe(true);
+    expect(document.querySelector<HTMLElement>('#nif-controls')!.hidden).toBe(false);
+    expect(document.querySelector<HTMLElement>('#nif-about')!.hidden).toBe(false);
+    expect(document.querySelector<HTMLElement>('#iban-about')!.hidden).toBe(true);
+    expect(document.querySelector('#iban-list')!.getAttribute('aria-label')).toBe('NIFs gerados');
+
+    key(prefix, 'ArrowUp');
+    expect(menu.hidden).toBe(false);
+    expect(document.activeElement).toBe(button('#tab-nif'));
+    key(button('#tab-nif'), 'Home');
+    expect(document.activeElement).toBe(button('#tab-iban'));
+    key(button('#tab-iban'), 'Escape');
+    expect(menu.hidden).toBe(true);
+    expect(document.activeElement).toBe(prefix);
+    expect(heading()).toBe('NIF Fresquinho');
+
+    key(prefix, 'ArrowDown');
+    expect(document.activeElement).toBe(button('#tab-iban'));
+    key(button('#tab-iban'), 'Tab');
+    expect(menu.hidden).toBe(true);
+    prefix.click();
+    document.body.click();
+    expect(menu.hidden).toBe(true);
+    prefix.click();
+    prefix.click();
+    expect(menu.hidden).toBe(true);
+    prefix.click();
+    key(prefix, 'Escape');
+    expect(menu.hidden).toBe(true);
+    key(prefix, 'Enter');
+    expect(menu.hidden).toBe(true);
+  });
+
+  it('restores each tool quantity, results and pending selection', () => {
+    choose('0035');
+    generate(6);
+    const ibans = identifiers();
+    button('#tab-nif').click();
+    expect(input('#count-input').value).toBe('1');
+    expect(identifiers()[0]).toMatch(/^[123][0-9]{8}$/);
+    const company = input('[name="nif-category"][value="company"]');
+    company.click();
+    generate(5);
+    const nifs = identifiers();
+    expect(nifs.every((value) => /^5[0-9]{8}$/.test(value))).toBe(true);
+    input('[name="nif-category"][value="individual"]').click();
+    expect(identifiers()).toEqual(nifs);
+    button('#tab-iban').click();
+    expect(input('#count-input').value).toBe('6');
+    expect(identifiers()).toEqual(ibans);
+    expect(button('[data-favorite="0035"]').getAttribute('aria-pressed')).toBe('true');
+    button('#tab-nif').click();
+    expect(input('#count-input').value).toBe('5');
+    expect(identifiers()).toEqual(nifs);
+    expect(input('[name="nif-category"][value="individual"]').checked).toBe(true);
+    expect(document.querySelector('.result-bank')!.textContent).toBe('Empresa (NIF/NIPC)');
+  });
+
+  it('ignores a pending IBAN copy after switching to NIF', async () => {
+    let finish: () => void = () => {};
+    writeText.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          finish = resolve;
+        })
+    );
+    button('.result-copy').click();
+    button('#tab-nif').click();
+    finish();
+    await Promise.resolve();
+    expect(document.querySelector('#copy-status')!.textContent).toBe('');
+    button('.result-copy').click();
+    await Promise.resolve();
+    expect(writeText.mock.calls[1]?.[0]).toMatch(/^[123][0-9]{8}$/);
+    expect(document.querySelector('#copy-status')!.textContent).toBe('NIF copiado.');
+  });
+
+  it.each([1, 5, 6, 100])(
+    'generates and copies %s company NIFs with the correct labels',
+    async (count) => {
+      button('#tab-nif').click();
+      input('[name="nif-category"][value="company"]').click();
+      generate(count);
+      const values = identifiers();
+      expect(values).toHaveLength(count);
+      expect(new Set(values).size).toBe(count);
+      expect(values.every((value) => value.startsWith('5') && hasValidNIFChecksum(value))).toBe(
+        true
+      );
+      expect(
+        [...rows()].every(
+          (row) => row.querySelector('.result-bank')!.textContent === 'Empresa (NIF/NIPC)'
+        )
+      ).toBe(true);
+      expect(button('.result-copy').getAttribute('aria-label')).toBe('Copiar NIF 1');
+      expect(button('#copy-all').hidden).toBe(count === 1);
+      expect(document.querySelector('#generation-status')!.textContent).toBe(
+        count === 1 ? 'Novo NIF pronto.' : `${count} NIFs prontos.`
+      );
+      input('[name="nif-category"][value="individual"]').click();
+      input('#count-input').value = '2';
+      button(count === 1 ? '.result-copy' : '#copy-all').click();
+      await Promise.resolve();
+      expect(writeText).toHaveBeenLastCalledWith(values.join('\n'));
+      expect(document.querySelector('#copy-status')!.textContent).toBe(
+        count === 1 ? 'NIF copiado.' : `${count} NIFs copiados.`
+      );
+    }
+  );
+
+  it('restores invalid quantities and errors independently without erasing results', () => {
+    const ibans = identifiers();
+    input('#count-input').value = '101';
+    generate();
+    button('#tab-nif').click();
+    expect(input('#count-input').hasAttribute('aria-invalid')).toBe(false);
+    expect(document.querySelector('#count-error')!.textContent).toBe('');
+    const nifs = identifiers();
+    input('#count-input').value = '';
+    generate();
+    expect(identifiers()).toEqual(nifs);
+    button('#tab-iban').click();
+    expect(input('#count-input').value).toBe('101');
+    expect(input('#count-input').getAttribute('aria-invalid')).toBe('true');
+    expect(identifiers()).toEqual(ibans);
+    button('#tab-nif').click();
+    expect(input('#count-input').value).toBe('');
+    expect(input('#count-input').getAttribute('aria-invalid')).toBe('true');
+    expect(document.querySelector('#count-error')!.textContent).toContain('1 e 100');
+    generate(6);
+    expect(document.querySelector('#count-error')!.textContent).toBe('');
+  });
+
+  it('keeps NIF results and errors after a bounded generation failure', () => {
+    button('#tab-nif').click();
+    input('[name="nif-category"][value="company"]').click();
+    generate(6);
+    const nifs = identifiers();
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    generate();
+    expect(identifiers()).toEqual(nifs);
+    expect(document.querySelector('#count-error')!.textContent).toContain('NIFs');
+    button('#tab-iban').click();
+    expect(document.querySelector('#count-error')!.textContent).toBe('');
+    button('#tab-nif').click();
+    expect(identifiers()).toEqual(nifs);
+    expect(document.querySelector('#count-error')!.textContent).toContain('NIFs');
+  });
+
+  it('keeps switching and reselecting a tab idempotent, without consuming randomness', () => {
+    button('#tab-nif').click();
+    const random = vi.spyOn(Math, 'random');
+    button('#tab-nif').click();
+    button('#tab-iban').click();
+    button('#tab-nif').click();
+    app.init();
+    expect(random).not.toHaveBeenCalled();
+    expect(window.localStorage.length).toBe(0);
+  });
+
+  it('selects every NIF for manual copying and clears fallback on a tool switch', async () => {
+    button('#tab-nif').click();
+    generate(6);
+    writeText.mockRejectedValue(new Error('Denied'));
+    button('#copy-all').click();
+    await Promise.resolve();
+    expect(input('#copy-value').value).toBe(identifiers().join('\n'));
+    expect(input('#copy-value').selectionEnd).toBe(input('#copy-value').value.length);
+    expect(document.querySelector('#copy-value-label')!.textContent).toBe('NIF para cópia manual');
+    button('#close-copy').click();
+    expect(document.activeElement).toBe(button('#copy-all'));
+    button('#copy-all').click();
+    await Promise.resolve();
+    button('#tab-iban').click();
+    expect(document.querySelector<HTMLElement>('#copy-fallback')!.hidden).toBe(true);
+    expect(input('#copy-value').value).toBe('');
+    expect(document.querySelector('#copy-status')!.textContent).toBe('');
+  });
+
+  it.each(['resolve', 'reject'])(
+    'ignores a stale NIF copy %s after a round trip to IBAN',
+    async (outcome) => {
+      button('#tab-nif').click();
+      let finish: () => void = () => {};
+      writeText.mockImplementationOnce(
+        () =>
+          new Promise<void>((resolve, reject) => {
+            finish = outcome === 'resolve' ? resolve : (): void => reject(new Error('Stale'));
+          })
+      );
+      button('.result-copy').click();
+      button('#tab-iban').click();
+      button('#tab-nif').click();
+      const current = identifiers();
+      button('.result-copy').click();
+      await Promise.resolve();
+      finish();
+      await Promise.resolve();
+      expect(identifiers()).toEqual(current);
+      expect(document.querySelector('#copy-status')!.textContent).toBe('NIF copiado.');
+      expect(document.querySelector<HTMLElement>('#copy-fallback')!.hidden).toBe(true);
+    }
+  );
+});
+
 describe('Discreet sunflower interaction', () => {
   it('requires five activations and preserves results, with Escape returning focus', () => {
     const previous = identifiers();
@@ -400,6 +639,31 @@ describe('Discreet sunflower interaction', () => {
     expect(document.activeElement).toBe(trigger);
   });
 
+  it('gives NIF Fresquinho its own prefix and its own Bordeaux Easter egg', () => {
+    expect(document.querySelector('#tool-prefix-text')!.textContent).toBe('IBAN');
+    const trigger = button('#sunflower-trigger');
+    expect(trigger.getAttribute('aria-label')).toBe('Girassol');
+
+    button('#tab-nif').click();
+    expect(document.querySelector('#tool-prefix-text')!.textContent).toBe('NIF');
+    expect(trigger.getAttribute('aria-label')).toBe('Segredo Bordô');
+
+    trigger.focus();
+    for (let count = 0; count < 5; count++) trigger.click();
+    const dialog = document.querySelector<HTMLDialogElement>('#sunflower-dialog')!;
+    expect(dialog.open).toBe(true);
+    expect(dialog.dataset.eggMode).toBe('nif');
+    expect(document.querySelector<HTMLElement>('#sunflower-photo-wrap')!.hidden).toBe(true);
+    expect(document.querySelector<HTMLElement>('#bordeaux-velvet-wrap')!.hidden).toBe(false);
+    expect(document.querySelector('#sunflower-tag')!.textContent).toBe('Bilhete · 1 / 6');
+    const firstNifTitle = document.querySelector('#sunflower-title')!.textContent;
+    button('#next-sunflower').click();
+    expect(document.querySelector('#sunflower-tag')!.textContent).toBe('Bilhete · 2 / 6');
+    expect(document.querySelector('#sunflower-title')!.textContent).not.toBe(firstNifTitle);
+    button('#close-sunflower').click();
+    expect(dialog.open).toBe(false);
+  });
+
   it('uses bounded event animations and skips them for reduced motion', () => {
     const animate = vi.fn();
     const cancel = vi.fn();
@@ -410,8 +674,8 @@ describe('Discreet sunflower interaction', () => {
     });
     try {
       generate(6);
-      expect(animate).toHaveBeenCalledTimes(2);
-      expect(cancel).toHaveBeenCalledTimes(2);
+      expect(animate).toHaveBeenCalledTimes(1);
+      expect(cancel).toHaveBeenCalledTimes(1);
       for (const call of animate.mock.calls) {
         expect(call[1].duration).toBeLessThanOrEqual(560);
         expect(call[1].iterations).toBeUndefined();
