@@ -53,6 +53,7 @@ interface IdentifierResult {
 
 interface ToolState {
   results: IdentifierResult[];
+  // Raw text, so an invalid entry and its error survive switching tools.
   quantity: string;
   error: string;
   invalid: boolean;
@@ -70,6 +71,7 @@ let activeTool: Tool = 'iban';
 let nifCategory: NIFCategory = 'individual';
 let selectedCodes: string[] = [];
 let initialized = false;
+// Bumped by every copy, generation and tool switch; a clipboard reply for an older value is ignored.
 let copyRequest = 0;
 let copyTrigger: HTMLButtonElement | null = null;
 let copiedButton: HTMLButtonElement | null = null;
@@ -411,6 +413,7 @@ function switchTool(next: Tool): void {
   flowerTrigger.classList.toggle('is-bordeaux-egg', next === 'nif');
   flowerTrigger.setAttribute('aria-label', next === 'iban' ? 'Girassol' : 'Segredo Bordô');
   flowerTrigger.dataset.tooltip = next === 'iban' ? 'Girassol' : 'Segredo Bordô';
+  // Only the first visit generates; later visits redraw stored results without using randomness.
   if (state.results.length === 0) generateResults();
   else renderResults();
 }
@@ -606,6 +609,7 @@ function toggleBankSelection(code?: string): void {
 }
 
 function buildBankOptionsOnce(): void {
+  // Rows are built once and filtered with `hidden`: rebuilding 108 rows per keystroke is slow on low-end machines.
   if (bankOptions.children.length > 0) return;
   const fragment = document.createDocumentFragment();
   const addOption = (name: string, detail: string, searchKey: string, code?: string): void => {
@@ -867,6 +871,7 @@ function init(): void {
     }
   };
 
+  // Only consecutive activations count; leaving the button starts over.
   flowerTrigger.addEventListener('blur', () => {
     flowerVisits = 0;
   });
