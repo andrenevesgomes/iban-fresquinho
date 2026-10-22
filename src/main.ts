@@ -9,9 +9,7 @@ import {
   Minus,
   Moon,
   Plus,
-  RefreshCw,
   Search,
-  ShieldCheck,
   Flower2,
   Sun,
   X,
@@ -19,9 +17,9 @@ import {
   type IconNode,
 } from 'lucide';
 import { createMultipleIBANs, formatIBAN, MAX_IBAN_BATCH_SIZE } from './iban';
+import { createMultipleNIFs, MAX_NIF_BATCH_SIZE, type NIFCategory } from './nif';
 import { bankCatalogue, bankReferenceSource } from './banks';
 import { startPWA } from './pwa';
-import type { IBANResult } from './types';
 
 function element<ElementType extends HTMLElement>(id: string): ElementType {
   const result = document.getElementById(id);
@@ -42,10 +40,38 @@ const bankTrigger = element<HTMLButtonElement>('open-bank');
 const copyAll = element<HTMLButtonElement>('copy-all');
 const decrease = element<HTMLButtonElement>('decrease-count');
 const increase = element<HTMLButtonElement>('increase-count');
+const toolPrefix = element<HTMLButtonElement>('tool-prefix');
+const toolMenu = element<HTMLUListElement>('tool-menu');
 
-let results: IBANResult[] = [];
+type Tool = 'iban' | 'nif';
+
+interface IdentifierResult {
+  value: string;
+  formatted: string;
+  label: string;
+}
+
+interface ToolState {
+  results: IdentifierResult[];
+  // Raw text, so an invalid entry and its error survive switching tools.
+  quantity: string;
+  error: string;
+  invalid: boolean;
+}
+
+const toolStates: Record<Tool, ToolState> = {
+  iban: { results: [], quantity: '1', error: '', invalid: false },
+  nif: { results: [], quantity: '1', error: '', invalid: false },
+};
+const nifLabels: Record<NIFCategory, string> = {
+  individual: 'Pessoa singular',
+  company: 'Empresa (NIF/NIPC)',
+};
+let activeTool: Tool = 'iban';
+let nifCategory: NIFCategory = 'individual';
 let selectedCodes: string[] = [];
 let initialized = false;
+// Bumped by every copy, generation and tool switch; a clipboard reply for an older value is ignored.
 let copyRequest = 0;
 let copyTrigger: HTMLButtonElement | null = null;
 let copiedButton: HTMLButtonElement | null = null;
@@ -96,6 +122,45 @@ const SUNFLOWER_DEDICATIONS: readonly SunflowerDedication[] = [
   },
 ];
 
+const NIF_LOVE_NOTES: readonly SunflowerDedication[] = [
+  {
+    title: 'O único número que me importa é o nosso.',
+    lead: 'Podes gerar cem identificadores por segundo, mas no mundo inteiro nunca haverá ninguém igual a ti.',
+    sub: 'Criei o NIF Fresquinho para que também aqui sintas que penso nos teus dias, no teu rigor e em tudo o que faz de ti uma mulher extraordinária.',
+    whisper: '“Na minha vida não há sorteios: escolher-te-ia em todas as tentativas.”',
+  },
+  {
+    title: 'Identificação confirmada: o amor da minha vida.',
+    lead: 'Adoro ver a tua inteligência em ação, a forma como encontras o que escapa a toda a gente e ainda guardas doçura para nós.',
+    sub: 'Quando o ecrã cansar, lembra-te que tens sempre um abraço apertado à tua espera logo ali ao fundo do dia.',
+    whisper: '“És a minha pessoa singular favorita — e o nosso futuro é a minha melhor empresa.”',
+  },
+  {
+    title: 'Dígito de controlo: 100% apaixonado por ti.',
+    lead: 'Nem a fórmula mais exata consegue medir a paz que sinto quando chego perto de ti e o dia finalmente abranda.',
+    sub: 'Que cada pequeno atalho desta página seja um lembrete silencioso do quanto te admiro e do quanto gosto de cuidar de ti.',
+    whisper: '“Todas as contas batem certo quando estou de mão dada contigo.”',
+  },
+  {
+    title: 'Um segredo em bordô guardado para os teus olhos.',
+    lead: 'Sabia que ias descobrir este cantinho. Porque tu reparas em tudo, sentes tudo e iluminas tudo à tua volta.',
+    sub: 'Obrigado por seres a minha companheira de todas as horas, dos planos grandes aos cafés partilhados a meio da semana.',
+    whisper: '“O teu sorriso é a única validação de que preciso para ganhar o dia.”',
+  },
+  {
+    title: 'Singular no talento, imensa no coração.',
+    lead: 'Qualquer equipa tem sorte em ter o teu olhar atento, mas a sorte grande saiu-me a mim no dia em que entraste na minha vida.',
+    sub: 'Continua a brilhar com essa mistura linda de força e ternura. Eu estarei sempre aqui para celebrar cada conquista tua.',
+    whisper: '“Entre milhões de números, tu és a minha única resposta.”',
+  },
+  {
+    title: 'A nossa história é o meu projeto favorito.',
+    lead: 'Mais uma ferramenta fresquinha para a tua caixa de testes, feita com o mesmo amor do primeiro dia e ainda mais admiração.',
+    sub: 'Prometo continuar a inventar mil maneiras de te arrancar um sorriso, dentro e fora do ecrã.',
+    whisper: '“Amar-te é a certeza mais bonita que levo comigo todos os dias.”',
+  },
+];
+
 function animateFeedback(
   target: HTMLElement,
   frames: Keyframe[],
@@ -142,18 +207,19 @@ function resetCopyFeedback(): void {
 function quantity(): number | null {
   const value = countInput.value;
   const count = Number(value);
-  return /^[0-9]+$/.test(value) &&
-    Number.isInteger(count) &&
-    count >= 1 &&
-    count <= MAX_IBAN_BATCH_SIZE
+  return /^[0-9]+$/.test(value) && Number.isInteger(count) && count >= 1 && count <= batchLimit()
     ? count
     : null;
+}
+
+function batchLimit(): number {
+  return activeTool === 'iban' ? MAX_IBAN_BATCH_SIZE : MAX_NIF_BATCH_SIZE;
 }
 
 function updateStepper(): void {
   const count = quantity();
   decrease.disabled = count === 1;
-  increase.disabled = count === MAX_IBAN_BATCH_SIZE;
+  increase.disabled = count === batchLimit();
   for (const chip of document.querySelectorAll<HTMLButtonElement>('[data-preset]')) {
     const active = Number(chip.dataset.preset) === count;
     chip.classList.toggle('is-active', active);
@@ -171,12 +237,13 @@ function applyTheme(theme: 'light' | 'dark'): void {
   toggle.dataset.tooltip = theme === 'dark' ? 'Usar tema claro' : 'Usar tema escuro';
   document
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute('content', theme === 'dark' ? '#17171a' : '#faf9fa');
+    ?.setAttribute('content', theme === 'dark' ? '#171517' : '#f7f3ee');
 }
 
 async function copyResult(value: string, trigger: HTMLButtonElement, count = 1): Promise<void> {
   resetCopyFeedback();
   const request = ++copyRequest;
+  const name = activeTool.toUpperCase();
   copyTrigger = trigger;
   try {
     if (!navigator.clipboard?.writeText) {
@@ -184,7 +251,7 @@ async function copyResult(value: string, trigger: HTMLButtonElement, count = 1):
     }
     await navigator.clipboard.writeText(value);
     if (request !== copyRequest) return;
-    copyStatus.textContent = count === 1 ? 'IBAN copiado.' : `${count} IBANs copiados.`;
+    copyStatus.textContent = count === 1 ? `${name} copiado.` : `${count} ${name}s copiados.`;
     copiedButton = trigger;
     trigger.classList.add('is-copied');
     if (trigger === copyAll) {
@@ -219,57 +286,29 @@ async function copyResult(value: string, trigger: HTMLButtonElement, count = 1):
 }
 
 function generateResults(): void {
-  const hadResults = results.length > 0;
+  const state = toolStates[activeTool];
+  const hadResults = state.results.length > 0;
+  const name = activeTool.toUpperCase();
   const count = quantity();
   if (count === null) {
-    countError.textContent = `Escolhe um número inteiro entre 1 e ${MAX_IBAN_BATCH_SIZE}.`;
+    countError.textContent = `Escolhe um número inteiro entre 1 e ${batchLimit()}.`;
     countInput.setAttribute('aria-invalid', 'true');
     countInput.focus();
     return;
   }
   countInput.removeAttribute('aria-invalid');
   try {
-    results = createMultipleIBANs(count, selectedCodes.length > 0 ? selectedCodes : undefined);
+    state.results = generateIdentifiers(count);
   } catch {
-    countError.textContent = 'Não foi possível gerar os IBANs. Tenta novamente.';
+    countError.textContent = `Não foi possível gerar os ${name}s. Tenta novamente.`;
     return;
   }
   countError.textContent = '';
   resetCopyFeedback();
   updateStepper();
-  const fragment = document.createDocumentFragment();
-  results.forEach((result, index) => {
-    const row = document.createElement('li');
-    row.className = 'result-row';
-    const content = document.createElement('div');
-    content.className = 'result-content';
-    const identifier = document.createElement('code');
-    identifier.className = 'identifier';
-    if (results.length === 1) identifier.id = 'iban-single';
-    identifier.textContent = formatIBAN(result.iban);
-    const bankName = document.createElement('p');
-    bankName.className = 'result-bank';
-    bankName.textContent = result.bankName;
-    content.append(identifier, bankName);
-    const copy = document.createElement('button');
-    copy.type = 'button';
-    copy.className = 'icon-button result-copy';
-    copy.dataset.tooltip = 'Copiar IBAN';
-    copy.setAttribute('aria-label', `Copiar IBAN ${index + 1}`);
-    copy.appendChild(icon(Copy));
-    copy.addEventListener('click', () => {
-      void copyResult(result.iban, copy);
-    });
-    row.append(content, copy);
-    fragment.appendChild(row);
-  });
-  resultList.replaceChildren(fragment);
-  resultList.classList.toggle('is-single', results.length === 1);
-  element('results-heading').textContent =
-    results.length === 1 ? 'O teu IBAN' : `Os teus ${results.length} IBANs`;
-  copyAll.hidden = results.length < 2;
+  renderResults();
   element('generation-status').textContent =
-    results.length === 1 ? 'Novo IBAN pronto.' : `${results.length} IBANs prontos.`;
+    count === 1 ? `Novo ${name} pronto.` : `${count} ${name}s prontos.`;
   if (hadResults) {
     animateFeedback(
       resultList,
@@ -279,13 +318,191 @@ function generateResults(): void {
       ],
       520
     );
-    const refresh = element('generate-btn').querySelector<HTMLElement>('[data-icon]');
-    if (refresh)
-      animateFeedback(
-        refresh,
-        [{ transform: 'rotate(0deg)' }, { transform: 'rotate(180deg)' }],
-        540
-      );
+  }
+}
+
+function generateIdentifiers(count: number): IdentifierResult[] {
+  if (activeTool === 'nif') {
+    return createMultipleNIFs(count, nifCategory).map(({ nif, category }) => ({
+      value: nif,
+      formatted: nif,
+      label: nifLabels[category],
+    }));
+  }
+  return createMultipleIBANs(count, selectedCodes.length > 0 ? selectedCodes : undefined).map(
+    ({ iban, bankName }) => ({ value: iban, formatted: formatIBAN(iban), label: bankName })
+  );
+}
+
+function renderResults(): void {
+  const results = toolStates[activeTool].results;
+  const name = activeTool.toUpperCase();
+  const fragment = document.createDocumentFragment();
+  results.forEach((result, index) => {
+    const row = document.createElement('li');
+    row.className = 'result-row';
+    const content = document.createElement('div');
+    content.className = 'result-content';
+    const identifier = document.createElement('code');
+    identifier.className = 'identifier';
+    if (results.length === 1) identifier.id = `${activeTool}-single`;
+    identifier.textContent = result.formatted;
+    const bankName = document.createElement('p');
+    bankName.className = 'result-bank';
+    bankName.textContent = result.label;
+    content.append(identifier, bankName);
+    const copy = document.createElement('button');
+    copy.type = 'button';
+    copy.className = 'icon-button result-copy';
+    copy.dataset.tooltip = `Copiar ${name}`;
+    copy.setAttribute('aria-label', `Copiar ${name} ${index + 1}`);
+    copy.appendChild(icon(Copy));
+    copy.addEventListener('click', () => {
+      void copyResult(result.value, copy);
+    });
+    row.append(content, copy);
+    fragment.appendChild(row);
+  });
+  resultList.replaceChildren(fragment);
+  resultList.classList.toggle('is-single', results.length === 1);
+  resultList.setAttribute('aria-label', `${name}s gerados`);
+  element('results-heading').textContent =
+    results.length === 1 ? `O teu ${name}` : `Os teus ${results.length} ${name}s`;
+  copyAll.hidden = results.length < 2;
+}
+
+function switchTool(next: Tool): void {
+  if (next === activeTool) return;
+  const previous = toolStates[activeTool];
+  previous.quantity = countInput.value;
+  previous.error = countError.textContent ?? '';
+  previous.invalid = countInput.getAttribute('aria-invalid') === 'true';
+  resetCopyFeedback();
+  copyTrigger = null;
+  activeTool = next;
+  const state = toolStates[next];
+  countInput.value = state.quantity;
+  countInput.max = String(batchLimit());
+  countError.textContent = state.error;
+  if (state.invalid) countInput.setAttribute('aria-invalid', 'true');
+  else countInput.removeAttribute('aria-invalid');
+  updateStepper();
+  for (const tool of ['iban', 'nif'] as const) {
+    const active = tool === next;
+    element(`tab-${tool}`).setAttribute('aria-current', String(active));
+    element(`${tool}-controls`).hidden = !active;
+    element(`${tool}-validity`).hidden = !active;
+    element(`${tool}-about`).hidden = !active;
+  }
+  element('bank-note').hidden = next !== 'iban';
+  const prefixText = element('tool-prefix-text');
+  prefixText.textContent = next.toUpperCase();
+  animateFeedback(
+    prefixText,
+    [
+      { opacity: 0, transform: 'translateY(0.4em)' },
+      { opacity: 1, transform: 'translateY(0)' },
+    ],
+    420
+  );
+  element('copy-value-label').textContent = `${next.toUpperCase()} para cópia manual`;
+  element('generation-status').textContent = '';
+  const flowerTrigger = element<HTMLButtonElement>('sunflower-trigger');
+  const triggerSlot = element('easter-trigger-icon');
+  triggerSlot.replaceChildren(icon(next === 'iban' ? Flower2 : Heart));
+  flowerTrigger.classList.toggle('is-bordeaux-egg', next === 'nif');
+  flowerTrigger.setAttribute('aria-label', next === 'iban' ? 'Girassol' : 'Segredo Bordô');
+  flowerTrigger.dataset.tooltip = next === 'iban' ? 'Girassol' : 'Segredo Bordô';
+  // Only the first visit generates; later visits redraw stored results without using randomness.
+  if (state.results.length === 0) generateResults();
+  else renderResults();
+}
+
+function toolOptions(): HTMLButtonElement[] {
+  return [...toolMenu.querySelectorAll<HTMLButtonElement>('[data-tool]')];
+}
+
+function openToolMenu(focus: 'current' | 'first' | 'last'): void {
+  toolMenu.hidden = false;
+  toolPrefix.setAttribute('aria-expanded', 'true');
+  const options = toolOptions();
+  const target =
+    focus === 'first'
+      ? options[0]
+      : focus === 'last'
+        ? options[options.length - 1]
+        : options.find((option) => option.dataset.tool === activeTool);
+  target?.focus();
+  animateFeedback(
+    toolMenu,
+    [
+      { opacity: 0, transform: 'translateY(-4px)' },
+      { opacity: 1, transform: 'translateY(0)' },
+    ],
+    260
+  );
+}
+
+function closeToolMenu(returnFocus: boolean): void {
+  if (toolMenu.hidden) return;
+  toolMenu.hidden = true;
+  toolPrefix.setAttribute('aria-expanded', 'false');
+  if (returnFocus) toolPrefix.focus();
+}
+
+function initTools(): void {
+  const picker = toolPrefix.closest<HTMLElement>('.wordmark-wrap')!;
+  toolPrefix.addEventListener('click', () => {
+    if (toolMenu.hidden) openToolMenu('current');
+    else closeToolMenu(false);
+  });
+  toolPrefix.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeToolMenu(false);
+      return;
+    }
+    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+    event.preventDefault();
+    openToolMenu(event.key === 'ArrowDown' ? 'first' : 'last');
+  });
+  for (const option of toolOptions()) {
+    option.addEventListener('click', () => {
+      const tool = option.dataset.tool;
+      if (tool === 'iban' || tool === 'nif') switchTool(tool);
+      closeToolMenu(true);
+    });
+  }
+  toolMenu.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeToolMenu(true);
+      return;
+    }
+    if (event.key === 'Tab') {
+      closeToolMenu(false);
+      return;
+    }
+    if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+    const options = toolOptions();
+    const index = options.indexOf(document.activeElement as HTMLButtonElement);
+    event.preventDefault();
+    const next =
+      event.key === 'Home'
+        ? 0
+        : event.key === 'End'
+          ? options.length - 1
+          : (index + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+    options[next]?.focus();
+  });
+  document.addEventListener('click', (event) => {
+    if (!picker.contains(event.target as Node | null)) closeToolMenu(false);
+  });
+  for (const radio of document.querySelectorAll<HTMLInputElement>('[name="nif-category"]')) {
+    radio.addEventListener('change', () => {
+      if (radio.checked && (radio.value === 'individual' || radio.value === 'company')) {
+        nifCategory = radio.value;
+      }
+    });
   }
 }
 
@@ -392,6 +609,7 @@ function toggleBankSelection(code?: string): void {
 }
 
 function buildBankOptionsOnce(): void {
+  // Rows are built once and filtered with `hidden`: rebuilding 108 rows per keystroke is slow on low-end machines.
   if (bankOptions.children.length > 0) return;
   const fragment = document.createDocumentFragment();
   const addOption = (name: string, detail: string, searchKey: string, code?: string): void => {
@@ -468,16 +686,13 @@ function init(): void {
   initialized = true;
   const icons: Record<string, IconNode> = {
     heart: Heart,
-    landmark: Landmark,
     chevron: ChevronDown,
     minus: Minus,
     moon: Moon,
     plus: Plus,
-    refresh: RefreshCw,
     copy: Copy,
     close: X,
     search: Search,
-    shield: ShieldCheck,
     flower: Flower2,
     sun: Sun,
     external: ArrowUpRight,
@@ -549,13 +764,14 @@ function init(): void {
     button.addEventListener('click', () => {
       const count = quantity();
       countInput.value = String(
-        count === null ? 1 : Math.min(MAX_IBAN_BATCH_SIZE, Math.max(1, count + change))
+        count === null ? 1 : Math.min(batchLimit(), Math.max(1, count + change))
       );
       updateStepper();
     });
   }
   copyAll.addEventListener('click', () => {
-    void copyResult(results.map(({ iban }) => iban).join('\n'), copyAll, results.length);
+    const results = toolStates[activeTool].results;
+    void copyResult(results.map(({ value }) => value).join('\n'), copyAll, results.length);
   });
   element('close-copy').addEventListener('click', () => {
     resetCopyFeedback();
@@ -620,16 +836,27 @@ function init(): void {
   const flowerCard = element<HTMLDivElement>('sunflower-card');
   const flowerWhisper = element<HTMLElement>('sunflower-whisper');
   let flowerVisits = 0;
-  let dedicationIndex = 0;
+  const dedicationIndices: Record<Tool, number> = { iban: 0, nif: 0 };
 
-  const renderDedication = (index: number, animateNote = false): void => {
-    const item = SUNFLOWER_DEDICATIONS[index % SUNFLOWER_DEDICATIONS.length]!;
+  const renderDedication = (tool: Tool, index: number, animateNote = false): void => {
+    const collection = tool === 'iban' ? SUNFLOWER_DEDICATIONS : NIF_LOVE_NOTES;
+    const item = collection[index % collection.length]!;
+    const isIban = tool === 'iban';
+    flowerDialog.dataset.eggMode = tool;
+    element('sunflower-photo-wrap').hidden = !isIban;
+    element('bordeaux-velvet-wrap').hidden = isIban;
+    element('note-emblem').replaceChildren(icon(isIban ? Flower2 : Heart));
     element('sunflower-title').textContent = item.title;
     element('sunflower-lead').textContent = item.lead;
     element('sunflower-sub').textContent = item.sub;
     flowerWhisper.textContent = item.whisper;
+    const prefix = isIban ? 'Dedicatória' : 'Bilhete';
     element('sunflower-tag').textContent =
-      `Dedicatória · ${(index % SUNFLOWER_DEDICATIONS.length) + 1} / ${SUNFLOWER_DEDICATIONS.length}`;
+      `${prefix} · ${(index % collection.length) + 1} / ${collection.length}`;
+    element('next-sunflower-label').textContent = isIban ? 'Outra dedicatória' : 'Outro bilhete';
+    element('sunflower-signature').textContent = isIban
+      ? 'Sempre teu, com todo o meu amor.'
+      : 'Teu em todos os detalhes, hoje e sempre.';
     if (animateNote) {
       animateFeedback(
         flowerCard,
@@ -644,6 +871,7 @@ function init(): void {
     }
   };
 
+  // Only consecutive activations count; leaving the button starts over.
   flowerTrigger.addEventListener('blur', () => {
     flowerVisits = 0;
   });
@@ -661,11 +889,13 @@ function init(): void {
     );
     if (flowerVisits < 5) return;
     flowerVisits = 0;
-    renderDedication(dedicationIndex, false);
-    element<HTMLImageElement>('sunflower-image').src = new URL(
-      'images/sunflowers.jpg',
-      document.baseURI
-    ).href;
+    renderDedication(activeTool, dedicationIndices[activeTool], false);
+    if (activeTool === 'iban') {
+      element<HTMLImageElement>('sunflower-image').src = new URL(
+        'images/sunflowers.jpg',
+        document.baseURI
+      ).href;
+    }
     flowerDialog.showModal();
     element<HTMLButtonElement>('close-sunflower').focus();
     animateFeedback(
@@ -675,8 +905,9 @@ function init(): void {
     );
   });
   element('next-sunflower').addEventListener('click', () => {
-    dedicationIndex = (dedicationIndex + 1) % SUNFLOWER_DEDICATIONS.length;
-    renderDedication(dedicationIndex, true);
+    const collection = activeTool === 'iban' ? SUNFLOWER_DEDICATIONS : NIF_LOVE_NOTES;
+    dedicationIndices[activeTool] = (dedicationIndices[activeTool] + 1) % collection.length;
+    renderDedication(activeTool, dedicationIndices[activeTool], true);
   });
   element('close-sunflower').addEventListener('click', () => closeDialogSmoothly(flowerDialog));
   flowerDialog.addEventListener('click', (event) => {
@@ -689,6 +920,7 @@ function init(): void {
       closeDialogSmoothly(flowerDialog);
     }
   });
+  initTools();
   renderBankOptions();
   generateResults();
 }

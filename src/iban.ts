@@ -228,6 +228,7 @@ export function createMultipleIBANs(
   }
 
   const results = new Map<string, IBANResult>();
+  // A single IBAN starts at a random selected bank; batches cycle through the selection in order.
   const startOffset =
     pool && pool.length > 1 && count === 1 ? Math.floor(Math.random() * pool.length) : 0;
   for (let attempt = 0; attempt < count * 10 && results.size < count; attempt++) {
