@@ -16,6 +16,8 @@ pnpm run build
 
 Then check the built app with `pnpm run preview`: desktop and a narrow phone width, light and dark themes, keyboard-only use, and copying a batch of 100.
 
+`.gitattributes` keeps every file Prettier checks in LF, so `format:check` gives the same result on Windows and in CI.
+
 ## Release flow
 
 Production is the `main` branch of [andrenevesgomes/iban-fresquinho](https://github.com/andrenevesgomes/iban-fresquinho), deployed by Vercel.
@@ -29,7 +31,9 @@ Production is the `main` branch of [andrenevesgomes/iban-fresquinho](https://git
 
 The GitHub Pages workflow (`static.yml`) runs only when started by hand. Pages does not apply `vercel.json`, so it serves the app without the security headers.
 
-Dependabot opens weekly pull requests for npm packages and GitHub Actions.
+Dependabot opens weekly pull requests for npm packages and GitHub Actions. Merge one only when its CI passes. Vercel deploys `main` even when CI fails, so after merging a batch, check that CI on `main` is green and run the quality gate locally once.
+
+CI also runs `pnpm audit`, so a newly published advisory can turn `main` red without any code change. Fix it with an exact-version update on a branch, as for any other dependency.
 
 ## Recipes
 
