@@ -1,266 +1,95 @@
-# IBAN Fresquinho 🏦
+# IBAN Fresquinho
 
-[![CI](https://github.com/andrenevesgomes/iban-fresquinho/actions/workflows/ci.yml/badge.svg)](https://github.com/andrenevesgomes/iban-fresquinho/actions/workflows/ci.yml)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-8-646CFF.svg)](https://vite.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-38B2AC.svg)](https://tailwindcss.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-> 🇵🇹 Inspirado por uma mente brilhante e um coração que ama bordô.
-
+> 🇵🇹 Inspirado por uma mente brilhante e um coração que ama bordô.<br>
 > 🇬🇧 Inspired by a brilliant mind and a heart that loves bordeaux.
 
-Um gerador de IBANs portugueses **válidos** para testes de software, desenvolvimento e demonstrações.
+[![CI](https://github.com/andrenevesgomes/iban-fresquinho/actions/workflows/ci.yml/badge.svg)](https://github.com/andrenevesgomes/iban-fresquinho/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**Nota de validade:** os IBANs gerados têm estrutura portuguesa (`PT50` + 21 dígitos) e dígitos de controlo IBAN/NIB matematicamente válidos (ISO 13616). Podem coincidir com números já atribuídos: não se verifica a existência da conta, o balcão ou a titularidade. Usar apenas em testes autorizados, nunca para pagamentos.
+Fresh Portuguese test data with valid check digits, generated entirely in the browser.
 
-## 📚 Índice / Table of Contents
+**Live:** [iban-fresquinho.vercel.app](https://iban-fresquinho.vercel.app/)
 
-- [IBAN Fresquinho 🏦](#iban-fresquinho-)
-  - [📚 Índice / Table of Contents](#-índice--table-of-contents)
-  - [✨ Funcionalidades](#-funcionalidades)
-  - [🚀 Como Utilizar](#-como-utilizar)
-  - [🛠️ Desenvolvimento](#️-desenvolvimento)
-  - [💡 Sobre o formato de IBANs portugueses](#-sobre-o-formato-de-ibans-portugueses)
-  - [🧑‍💻 Tecnologias utilizadas](#-tecnologias-utilizadas)
+| Tool                | Generates                                                                 | Checked by                                 |
+| ------------------- | ------------------------------------------------------------------------- | ------------------------------------------ |
+| **IBAN Fresquinho** | Portuguese IBANs (`PT50` + 21 digits) for any of 107 published bank codes | NIB control digits and ISO 13616 modulo 97 |
+| **NIF Fresquinho**  | Individual (ranges 1, 2, 3) or company (range 5) taxpayer numbers         | Modulo 11 check digit                      |
 
+> [!IMPORTANT]
+> Results are mathematically valid test data. Nothing is looked up: a value may coincide with a real account or taxpayer, and validity proves neither existence nor ownership. Use only in authorised test environments, never for payments or identity checks.
 
-<details>
-<summary><h2>🇵🇹 Versão Portuguesa</h2></summary>
+## Em português
 
-Um gerador de IBANs portugueses válidos para testes de software, desenvolvimento e demonstrações.
+Gera IBANs e NIFs portugueses com dígitos de controlo válidos, diretamente no navegador. Clica no prefixo do título (**IBAN**) para mudar para **NIF**. Escolhe os bancos ou o perfil, a quantidade (1 a 100) e clica em **Gerar**; cada resultado copia-se num clique. Nada é enviado para um servidor e só a preferência de tema fica guardada.
 
+## Using it
 
-## ✨ Funcionalidades
+1. Open the site. One IBAN is ready on arrival.
+2. Select the title prefix (**IBAN**) to switch to **NIF**. Each tool keeps its own results, quantity and choices.
+3. **IBAN:** combine bank shortcuts, or open **Lista completa** to search all 107 codes by name or code. **NIF:** choose **Pessoa singular** or **Empresa**.
+4. Pick a quantity (1–100, with shortcuts 1, 5 and 6) and press **Gerar**. Choices apply to the next generation only.
+5. Copy one value, or **Copiar todos** for one value per line. If the browser blocks the clipboard, the values are shown pre-selected for manual copying.
 
-- ✅ Gera IBANs portugueses com **dígitos de verificação válidos** (ISO 13616)
-- ✅ Calcula corretamente os **dígitos de controlo NIB** (norma portuguesa)
-- ✅ Designações bancárias verificadas na lista do Banco de Portugal de 13/10/2026, sem confirmar contas ou balcões
-- ✅ Todos os 107 códigos publicados disponíveis no seletor; 69 códigos bancários no grupo aleatório predefinido
-- ✅ Gera entre 1 e 100 IBANs, sem repetições dentro do mesmo lote e sem truncar quantidades inválidas
-- ✅ Botões de cópia acessíveis por teclado e alternativa manual quando o navegador recusa a cópia
-- ✅ Interface clara, um IBAN pronto à chegada e um único fluxo para gerar de 1 a 100
-- ✅ Pesquisa de bancos por nome ou código e cópia de todos os resultados apresentados
-- ✅ PWA com caminhos e ícones corrigidos e atualização por confirmação; aceitação em dispositivos instalados continua necessária
-- ✅ Interface simples e intuitiva
-- ✅ Testes Vitest com vetor SWIFT, controlos independentes, entradas inválidas e colisões forçadas
+It works offline after the first visit, follows the system theme until you pick light or dark, and supports keyboard use and reduced motion.
 
+## Development
 
-## 🚀 Como Utilizar
-
-### 🌐 Método Online
-
-1. Acede à versão online em: [IBAN Fresquinho](https://iban-fresquinho.vercel.app/)
-2. Um IBAN está pronto logo à chegada, com cópia imediata num clique
-3. Seleciona um ou vários bancos nos atalhos ou na pesquisa por nome/código. A seleção é partilhada entre ambos; **Concluir** fecha o seletor e **Limpar seleção** repõe o grupo predefinido. Escolhe a quantidade (`1` a `100`) e clica em **Gerar**
-4. Para vários resultados, **Copiar todos** copia todos os IBANs gerados. A confirmação aparece no botão e na barra de resultados, que acompanha a deslocação da lista
-
-Com vários bancos selecionados, um único IBAN usa um banco escolhido aleatoriamente dessa seleção; pode repetir o banco anterior. Os lotes percorrem a seleção pela ordem escolhida. Inclui modo claro/escuro e suporte offline como PWA.
-
-Os atalhos de quantidade `1`, `5` e `6` alteram apenas o próximo pedido; os resultados mantêm-se até clicar em **Gerar**. O seletor de bancos aceita navegação por setas e `Enter` quando a pesquisa devolve um único código.
-
-Apenas a preferência de tema é guardada em `localStorage`; os IBANs gerados não são guardados pelo gerador. As animações de resposta são breves e respeitam a preferência de movimento reduzido. O modo offline requer uma primeira visita online e a instalação bem-sucedida da cache da PWA.
-
-### 📍 Método Local (Desenvolvimento)
-
-Recomendado: Node.js 24 LTS e pnpm 10.34.7, fixado no [package.json](package.json). O [pnpm-lock.yaml](pnpm-lock.yaml) é o único lockfile. Os requisitos mínimos técnicos estão em `engines`; não são necessárias variáveis de ambiente para gerar IBANs. Usar uma instalação existente de pnpm ou o Corepack; não é necessário alterar ferramentas globais.
+Requires Node.js 20.19+, 22.12+ or 24+ (24 LTS recommended) and pnpm 10.34.7, which is pinned in `package.json` and available through Corepack.
 
 ```bash
-# Clonar o repositório
 git clone https://github.com/andrenevesgomes/iban-fresquinho.git
 cd iban-fresquinho
-
-# Instalar dependências
 corepack pnpm install --frozen-lockfile
-
-# Iniciar servidor de desenvolvimento
 pnpm run dev
-
-# Correr testes
-pnpm test
-
-# Build para produção
-pnpm run build
 ```
 
-## 🛠️ Desenvolvimento
+| Command                  | Purpose                                            |
+| ------------------------ | -------------------------------------------------- |
+| `pnpm run dev`           | Development server                                 |
+| `pnpm run build`         | Type-check and build to `dist/`                    |
+| `pnpm run preview`       | Serve `dist/` with the production security headers |
+| `pnpm test`              | Tests in watch mode (`test:run` for a single run)  |
+| `pnpm run test:coverage` | Single run with coverage                           |
+| `pnpm run typecheck`     | TypeScript only                                    |
+| `pnpm run lint`          | ESLint (`lint:fix` to apply fixes)                 |
+| `pnpm run format`        | Prettier (`format:check` to verify only)           |
 
-### Scripts Disponíveis
+Before opening a pull request, run the full quality gate described in [docs/maintaining.md](docs/maintaining.md#quality-gate).
 
-| Comando | Descrição |
-|---------|-----------|
-| `pnpm run dev` | Inicia o servidor de desenvolvimento |
-| `pnpm run build` | Compila para produção |
-| `pnpm run preview` | Pré-visualiza o build com os cabeçalhos de segurança |
-| `pnpm test` | Corre os testes em modo watch |
-| `pnpm run test:run` | Corre os testes uma vez |
-| `pnpm run test:coverage` | Corre os testes com cobertura |
-| `pnpm run lint` | Verifica erros de linting |
-| `pnpm run lint:fix` | Corrige erros de linting automaticamente |
-| `pnpm run format` | Formata o código com Prettier |
-| `pnpm run format:check` | Verifica a formatação sem alterar ficheiros |
-| `pnpm run typecheck` | Verifica tipos TypeScript |
+## Project layout
 
-### Estrutura do Projeto
-
-```
-iban-fresquinho/
-├── src/
-│   ├── __tests__/
-│   │   └── iban.test.ts    # Testes unitários
-│   ├── iban.ts              # Lógica de geração de IBAN
-│   ├── types.ts             # Definições TypeScript
-│   ├── main.ts              # Ponto de entrada da aplicação
-│   └── styles.css           # Estilos Tailwind
-├── index.html               # HTML principal
-├── vite.config.ts           # Configuração Vite
-├── tailwind.config.js       # Configuração Tailwind
-├── tsconfig.json            # Configuração TypeScript
-├── vitest.config.ts         # Configuração Vitest
-└── eslint.config.js         # Configuração ESLint
+```text
+src/
+  main.ts            UI: tool switching, per-tool state, bank picker, clipboard, theme, dialogs
+  iban.ts            IBAN generation, validation, parsing and formatting (no DOM)
+  nif.ts             NIF generation and checksum validation (no DOM)
+  banks.ts           Bank catalogue derived from docs/bank-reference.json
+  types.ts           Shared IBAN types
+  pwa.ts             Service worker registration and consent-based updates
+  styles.css         Design tokens and component styles
+  __tests__/         Domain, UI (jsdom), PWA and security-configuration tests
+docs/                Architecture, maintenance and domain references
+public/              Icons, images, robots/sitemap and third-party notices
+index.html           Markup, metadata and structured data
+vercel.json          Hosting headers, including the Content Security Policy
+vite.config.ts       Build, PWA manifest and preview headers
+pnpm-workspace.yaml  Supply-chain settings for pnpm
 ```
 
-## 💡 Sobre o formato de IBANs portugueses
+## Documentation
 
-Os IBANs portugueses seguem a estrutura (25 caracteres):
+| Document                                 | Read it to…                                                         |
+| ---------------------------------------- | ------------------------------------------------------------------- |
+| [Architecture](docs/architecture.md)     | Understand how the modules, state and UI fit together               |
+| [Maintaining](docs/maintaining.md)       | Release, add a tool, update the bank list, change headers or design |
+| [IBAN reference](docs/iban-reference.md) | Check the IBAN format, algorithms and bank catalogue policy         |
+| [NIF reference](docs/nif-reference.md)   | Check the NIF rules, generated ranges and legal sources             |
+| [Security](SECURITY.md)                  | Review data handling, supply-chain controls and hosting limits      |
 
-```
-PT 50 BBBB SSSS CCCCCCCCCCC KK
-│  │  │    │    │           │
-│  │  │    │    │           └─ Dígitos de controlo NIB (2)
-│  │  │    │    └───────────── Número da conta (11)
-│  │  │    └────────────────── Código da agência (4)
-│  │  └─────────────────────── Código do banco (4)
-│  └────────────────────────── Dígitos de verificação IBAN (2)
-└───────────────────────────── Código do país
-```
+## Privacy
 
-### Algoritmos Implementados
+There is no backend, analytics or external lookup. Generated values live in memory and disappear on reload; only the theme preference (`iban-theme`) is stored. Hosting providers may still log ordinary page requests.
 
-1. **Dígitos de controlo NIB**: `98 - mod97(bankCode + branchCode + accountNumber + "00")`
-2. **Dígitos de verificação IBAN**: `98 - mod97(BBAN + "PT00")` (ISO 13616)
+## Licence
 
-Antes do cálculo, as letras ASCII são convertidas em números (`PT` = `2529`). A validação exige `PT50`, 21 algarismos no BBAN, os dígitos NIB calculados e resto internacional igual a 1. Os identificadores são strings; zeros iniciais são preservados. Bancos suportados na geração e confirmação de contas reais são conceitos diferentes.
-
-## 🧑‍💻 Tecnologias utilizadas
-
-- **[TypeScript](https://www.typescriptlang.org/)** - Tipagem estática
-- **[Vite](https://vitejs.dev/)** - Build tool e dev server
-- **[Tailwind CSS](https://tailwindcss.com/)** - Framework CSS
-- **[Vitest](https://vitest.dev/)** - Framework de testes
-- **[ESLint](https://eslint.org/)** + **[Prettier](https://prettier.io/)** - Linting e formatação
-- **[GitHub Actions](https://github.com/features/actions)** - CI/CD
-- **PWA** - Progressive Web App com vite-plugin-pwa
-
-</details>
-
-<details>
-<summary><h2>🇬🇧 English Version</h2></summary>
-
-A generator of **valid** Portuguese IBANs for software testing, development, and demonstrations.
-
-
-### ✨ Features
-
-- ✅ Generates Portuguese IBANs with **valid check digits** (ISO 13616)
-- ✅ Correctly calculates **NIB control digits** (Portuguese standard)
-- ✅ Bank labels checked against Banco de Portugal's list dated 13/10/2026, without verifying accounts or branches
-- ✅ All 107 published codes are selectable; 69 bank codes form the default random pool
-- ✅ Generates 1 to 100 unique identifiers within each batch; invalid quantities are rejected
-- ✅ Keyboard-accessible copy buttons and selected-text fallback when clipboard access fails
-- ✅ Light interface, an IBAN ready on arrival and one workflow for quantities 1-100
-- ✅ Search banks by name or code and copy all displayed results together
-- ✅ Corrected PWA paths/icons and consent-based updates; installed-device acceptance is still required
-- ✅ Simple and intuitive interface
-- ✅ Vitest checks with a SWIFT vector, independent checksums, invalid inputs and forced collisions
-
-### 🚀 How to Use
-
-#### 🌐 Online Method
-
-1. Access the online version at: [IBAN Fresquinho](https://iban-fresquinho.vercel.app/)
-2. An IBAN is ready on arrival with one-click copy
-3. Select one or more banks using the shortcuts or name/code search. Both share the same selection; **Concluir** closes the picker and **Limpar seleção** restores the default pool. Choose a quantity (`1` to `100`), then click **Gerar**
-4. For batches, **Copiar todos** copies one raw IBAN per line. Confirmation appears on the button and in the results toolbar, which stays visible while scrolling the list
-
-With multiple banks selected, a single IBAN uses a randomly chosen bank from that selection; consecutive requests may choose the same bank. Batches cycle through the selection in the chosen order. Supports light/dark mode and offline PWA usage.
-
-The `1`, `5` and `6` quantity shortcuts change only the next request; existing results stay until **Gerar** is pressed. The bank picker supports arrow-key navigation and `Enter` when a search returns one code.
-
-Only the theme preference is saved in `localStorage`; the generator does not store generated IBANs. Brief feedback animations respect reduced-motion preferences. Offline use requires an initial online visit and successful PWA caching.
-
-Generated identifiers may coincide with assigned account numbers. Mathematical validity does not verify an account, branch or ownership. Use only for authorised tests, never for payments.
-
-#### 📍 Local Method (Development)
-
-Recommended: Node.js 24 LTS and pnpm 10.34.7, pinned in [package.json](package.json). [pnpm-lock.yaml](pnpm-lock.yaml) is the only lockfile. Use an existing pnpm installation or Corepack; no global tool replacement is required. See `engines` for technical Node requirements. IBAN generation needs no environment variables.
-
-```bash
-# Clone the repository
-git clone https://github.com/andrenevesgomes/iban-fresquinho.git
-cd iban-fresquinho
-
-# Install dependencies
-corepack pnpm install --frozen-lockfile
-
-# Start development server
-pnpm run dev
-
-# Run tests
-pnpm test
-
-# Build for production
-pnpm run build
-```
-
-### 💡 About Portuguese IBAN format
-
-Portuguese IBANs follow this structure (25 characters):
-
-```
-PT 50 BBBB SSSS CCCCCCCCCCC KK
-│  │  │    │    │           │
-│  │  │    │    │           └─ NIB control digits (2)
-│  │  │    │    └───────────── Account number (11)
-│  │  │    └────────────────── Branch code (4)
-│  │  └─────────────────────── Bank code (4)
-│  └────────────────────────── IBAN check digits (2)
-└───────────────────────────── Country code
-```
-
-### Implemented Algorithms
-
-1. **NIB control digits**: `98 - mod97(bankCode + branchCode + accountNumber + "00")`
-2. **IBAN check digits**: `98 - mod97(BBAN + "PT00")` (ISO 13616)
-
-ASCII letters are expanded before calculation (`PT` = `2529`). Validation requires `PT50`, 21 numeric BBAN characters, the calculated domestic control digits and international remainder 1. Identifiers remain strings. Recognised generator bank codes do not prove that accounts or branches exist.
-
-### 🧑‍💻 Technologies used
-
-- **[TypeScript](https://www.typescriptlang.org/)** - Static typing
-- **[Vite](https://vitejs.dev/)** - Build tool and dev server
-- **[Tailwind CSS](https://tailwindcss.com/)** - CSS framework
-- **[Vitest](https://vitest.dev/)** - Testing framework
-- **[ESLint](https://eslint.org/)** + **[Prettier](https://prettier.io/)** - Linting and formatting
-- **[GitHub Actions](https://github.com/features/actions)** - CI/CD
-- **PWA** - Progressive Web App with vite-plugin-pwa
-
-</details>
-
-## Release Checks
-
-Phase 1 covers IBAN generation only. NIFs and vehicle data are not included. The public URL above is not evidence that the latest local changes have been deployed.
-
-Before publishing, run `pnpm install --frozen-lockfile`, `pnpm run typecheck`, `pnpm run lint`, `pnpm run format:check`, `pnpm run test:coverage`, `pnpm audit --audit-level=moderate`, and `pnpm run build`. Check the built preview for multi-bank selection, copy feedback with 100 results, keyboard operation and narrow layouts.
-
-CI validates pushes to `release/iban-v2` without merging them into `main`. GitHub Pages deployment is manual and publishes only `dist/`. Vercel deployment depends on its connected repository and branch settings; a fork push alone does not establish a production release. Check the live URL and consent-based PWA update after an approved deployment.
-
-Automated tests and accessibility checks do not establish complete WCAG conformance, Lighthouse scores, insurer acceptance or account ownership. The bank catalogue records the official source URL, date and download hash; the current tests do not re-download or hash the original workbook.
-
-The application has no analytics client, backend or account lookup. Its own runtime code does not send generated identifiers to a server. Hosting providers can still log ordinary asset requests. Installation scripts and pnpm hooks are disabled; new dependency resolutions use a one-day release-age delay. These controls reduce risk, not guarantee safety. See [SECURITY.md](SECURITY.md) for limits, updates and deployment requirements.
-
-## 📄 License
-
-MIT © [André Neves Gomes](https://github.com/andrenevesgomes)
-
-Font, icon and photograph licences: [third-party notices](public/third-party-notices.txt).
+MIT © [André Neves Gomes](https://github.com/andrenevesgomes). Fonts, icons and the photograph are listed in the [third-party notices](public/third-party-notices.txt).

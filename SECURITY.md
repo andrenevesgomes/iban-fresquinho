@@ -4,12 +4,14 @@
 
 IBAN Fresquinho is a static, client-side test-data generator. It does not look up accounts, accept payment instructions or authenticate users. Mathematical validity does not prove that a number is unassigned, that an account exists or that an insurer accepts it. Generated numbers may coincide with real accounts. Use only in authorised test environments, never for payments or identity verification.
 
+The NIF feature also generates identifiers without querying AT, VIES or any registry. Checksum validity does not verify taxpayer registration, ownership, tax status or an unassigned number. Individual ranges 1-3 and the limited company range 5 are generation profiles, not an exhaustive validation of Portuguese taxpayer categories.
+
 No absolute security guarantee is possible. A compromised browser, device, extension, dependency or hosting account remains outside the generator's protection.
 
 ## Data Handling
 
-- Generation and bank search stay in browser memory. Reloading clears generated results and bank selections.
-- Only `iban-theme` is stored in localStorage. The PWA caches application assets, not generated IBANs.
+- Generation, bank search and each tool's results and selections stay in browser memory. Reloading clears both IBAN and NIF state.
+- Only `iban-theme` is stored in localStorage. The PWA caches application assets, not generated IBANs or NIFs.
 - The application has no analytics client or telemetry endpoint. Hosting providers may log normal page and asset requests, including IP addresses.
 - Copy buttons write only after a user action; the app does not read the clipboard. Clipboard history and operating-system synchronisation are outside its control.
 - Labels and generated values use textContent rather than inserting user-provided HTML.

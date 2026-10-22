@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- Primary Meta Tags -->
-    <title>IBAN Fresquinho - Gere IBANs Portugueses para Testes</title>
-    <meta name="title" content="IBAN Fresquinho - Gere IBANs Portugueses para Testes" />
-    <meta name="description" content="Gere IBANs portugueses válidos para testes e desenvolvimento. Inspirado por uma mente brilhante e um coração que ama bordô." />
-    <meta name="keywords" content="gerador de iban, iban portugal, gerador iban pt, iban teste, iban fresquinho, criar iban teste" />
+    <title>IBAN Fresquinho - IBANs e NIFs para testes</title>
+    <meta name="title" content="IBAN Fresquinho - IBANs e NIFs para testes" />
+    <meta name="description" content="Gere IBANs e NIFs portugueses localmente para testes de software, com dígitos de controlo válidos. Sem consultar contas ou contribuintes." />
+    <meta name="keywords" content="gerador de iban, iban portugal, iban teste, iban fresquinho, gerador nif, nif teste" />
     <meta name="robots" content="index, follow" />
     <meta name="google-site-verification" content="y4IXZhBzZRUxK7cq8UmLsnuq_BiXv5qrQVzR5De6XBg" />
     <link rel="canonical" href="https://iban-fresquinho.vercel.app/" />
@@ -16,8 +16,8 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://iban-fresquinho.vercel.app/" />
-    <meta property="og:title" content="Gerador de IBAN Português | IBAN Fresquinho - IBANs para Testes" />
-    <meta property="og:description" content="Gere IBANs portugueses válidos para testes e desenvolvimento. Ferramenta gratuita online para testers e desenvolvedores." />
+    <meta property="og:title" content="IBAN Fresquinho - IBANs e NIFs para testes" />
+    <meta property="og:description" content="Gerador local de IBANs e NIFs portugueses para testes de software. Sem consultar contas ou contribuintes." />
     <meta property="og:image" content="https://iban-fresquinho.vercel.app/images/bank-social-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -26,8 +26,8 @@
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://iban-fresquinho.vercel.app/" />
-    <meta property="twitter:title" content="Gerador de IBAN Português | IBAN Fresquinho" />
-    <meta property="twitter:description" content="Gere IBANs portugueses válidos para testes e desenvolvimento. Ferramenta gratuita online para testers e desenvolvedores." />
+    <meta property="twitter:title" content="IBAN Fresquinho - IBANs e NIFs para testes" />
+    <meta property="twitter:description" content="Gerador local de IBANs e NIFs portugueses para testes de software. Sem consultar contas ou contribuintes." />
     <meta property="twitter:image" content="https://iban-fresquinho.vercel.app/images/bank-social-image.jpg" />
     
     <!-- Theme -->
@@ -48,7 +48,7 @@
         "@type": "WebApplication",
         "name": "IBAN Fresquinho",
         "url": "https://iban-fresquinho.vercel.app/",
-        "description": "Gerador de IBANs portugueses válidos para testes e desenvolvimento.",
+        "description": "Gerador local de IBANs e NIFs portugueses para testes de software.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -64,11 +64,28 @@
     <a class="skip-link" href="#main">Saltar para o conteúdo</a>
     <header class="site-header">
       <div class="brand">
-        <span class="brand-mark" data-icon="heart" aria-hidden="true"></span>
-        <div>
-          <h1>IBAN <span>Fresquinho</span></h1>
-          <p class="brand-subtitle">Gerador de teste · Portugal</p>
+        <div class="wordmark-wrap">
+          <h1 class="wordmark">
+            <button id="tool-prefix" class="tool-prefix" type="button" aria-expanded="false" aria-controls="tool-menu" aria-describedby="tool-prefix-hint"><span id="tool-prefix-text" class="tool-prefix-text">IBAN</span><span class="tool-prefix-caret" data-icon="chevron" aria-hidden="true"></span></button>
+            <span class="wordmark-name">Fresquinho</span>
+          </h1>
+          <span id="tool-prefix-hint" class="sr-only">Mudar de gerador</span>
+          <ul id="tool-menu" class="tool-menu" aria-label="Geradores Fresquinho" hidden>
+            <li>
+              <button id="tab-iban" class="tool-option" type="button" data-tool="iban" aria-current="true">
+                <span class="tool-option-name"><span>IBAN</span> Fresquinho</span>
+                <span class="tool-option-detail">Contas bancárias portuguesas</span>
+              </button>
+            </li>
+            <li>
+              <button id="tab-nif" class="tool-option" type="button" data-tool="nif" aria-current="false">
+                <span class="tool-option-name"><span>NIF</span> Fresquinho</span>
+                <span class="tool-option-detail">Contribuintes, singulares e empresas</span>
+              </button>
+            </li>
+          </ul>
         </div>
+        <p class="brand-line">Um cuidado a menos no teu dia.</p>
       </div>
       <div class="header-actions">
         <button id="theme-toggle" class="icon-button theme-button" type="button" aria-label="Modo escuro" aria-pressed="false" data-tooltip="Usar tema escuro">
@@ -83,38 +100,49 @@
         <button id="update-app" class="text-button" type="button">Atualizar</button>
       </div>
 
-      <section class="studio" aria-labelledby="studio-title">
-        <div class="workspace-heading">
-          <p class="eyebrow">Um cuidado a menos no teu dia</p>
-          <h2 id="studio-title">IBAN português, pronto a usar<span class="heading-dot">.</span></h2>
-        </div>
-
+      <section id="generator-panel" class="studio">
         <form id="generation-form" class="generator" novalidate>
-          <div class="bank-control">
-            <div class="field-heading">
+          <div id="iban-controls" class="form-row bank-control">
+            <div class="row-label">
               <label id="bank-label" for="open-bank">Banco</label>
-              <span class="field-hint">Podes combinar vários atalhos ou abrir a lista completa</span>
+              <span class="row-hint">Podes juntar vários</span>
             </div>
-            <div id="favorite-banks" class="favorite-banks" role="group" aria-label="Bancos mais usados">
-              <button type="button" class="bank-pill is-active" data-favorite="" aria-pressed="true">Qualquer</button>
-              <button type="button" class="bank-pill" data-favorite="0035" aria-pressed="false">CGD</button>
-              <button type="button" class="bank-pill" data-favorite="0033" aria-pressed="false">Millennium</button>
-              <button type="button" class="bank-pill" data-favorite="0018" aria-pressed="false">Santander</button>
-              <button type="button" class="bank-pill" data-favorite="0010" aria-pressed="false">BPI</button>
-              <button type="button" class="bank-pill" data-favorite="0007" aria-pressed="false">Novo Banco</button>
-              <button type="button" class="bank-pill" data-favorite="0045" aria-pressed="false">Crédito Agrícola</button>
-              <button type="button" class="bank-pill" data-favorite="0170" aria-pressed="false">Abanca</button>
+            <div class="row-field">
+              <div id="favorite-banks" class="favorite-banks" role="group" aria-label="Bancos mais usados">
+                <button type="button" class="bank-pill is-active" data-favorite="" aria-pressed="true">Qualquer</button>
+                <button type="button" class="bank-pill" data-favorite="0035" aria-pressed="false">CGD</button>
+                <button type="button" class="bank-pill" data-favorite="0033" aria-pressed="false">Millennium</button>
+                <button type="button" class="bank-pill" data-favorite="0018" aria-pressed="false">Santander</button>
+                <button type="button" class="bank-pill" data-favorite="0010" aria-pressed="false">BPI</button>
+                <button type="button" class="bank-pill" data-favorite="0007" aria-pressed="false">Novo Banco</button>
+                <button type="button" class="bank-pill" data-favorite="0045" aria-pressed="false">Crédito Agrícola</button>
+                <button type="button" class="bank-pill" data-favorite="0170" aria-pressed="false">Abanca</button>
+              </div>
+              <button id="open-bank" class="bank-trigger" type="button" aria-haspopup="dialog" aria-controls="bank-dialog" aria-labelledby="bank-label selected-bank" aria-describedby="bank-note">
+                <span id="selected-bank">Qualquer banco</span>
+                <span class="bank-trigger-hint">Lista completa</span>
+                <span data-icon="chevron" aria-hidden="true"></span>
+              </button>
             </div>
-            <button id="open-bank" class="bank-trigger" type="button" aria-haspopup="dialog" aria-controls="bank-dialog" aria-labelledby="bank-label selected-bank" aria-describedby="bank-note">
-              <span class="control-icon" data-icon="landmark" aria-hidden="true"></span>
-              <span id="selected-bank">Qualquer banco</span>
-              <span class="bank-trigger-hint">Todos (107)</span>
-              <span data-icon="chevron" aria-hidden="true"></span>
-            </button>
           </div>
-          <div class="quantity-control">
-            <label for="count-input">Quantidade</label>
-            <div class="quantity-bar">
+          <div id="nif-controls" class="form-row nif-control" hidden>
+            <div class="row-label">
+              <span id="nif-profile-label" class="field-label">Perfil</span>
+              <span class="row-hint">Gamas 1 a 3, ou 5</span>
+            </div>
+            <div class="row-field">
+              <div class="segmented" role="radiogroup" aria-labelledby="nif-profile-label">
+                <label class="segment"><input class="sr-only" type="radio" name="nif-category" value="individual" checked /><span>Pessoa singular</span></label>
+                <label class="segment"><input class="sr-only" type="radio" name="nif-category" value="company" /><span>Empresa</span></label>
+              </div>
+            </div>
+          </div>
+          <div class="form-row quantity-control">
+            <div class="row-label">
+              <label for="count-input">Quantidade</label>
+              <span class="row-hint">Até 100 de cada vez</span>
+            </div>
+            <div class="row-field quantity-bar">
               <div class="quick-counts" role="group" aria-label="Quantidades rápidas">
                 <button type="button" class="chip-button is-active" data-preset="1" aria-label="Selecionar quantidade 1" aria-pressed="true">1</button>
                 <button type="button" class="chip-button" data-preset="5" aria-label="Selecionar quantidade 5" aria-pressed="false">5</button>
@@ -125,7 +153,7 @@
                 <input id="count-input" type="number" value="1" min="1" max="100" step="1" required aria-describedby="count-error" />
                 <button id="increase-count" type="button" class="icon-button" aria-label="Aumentar quantidade" data-tooltip="Aumentar"><span data-icon="plus" aria-hidden="true"></span></button>
               </div>
-              <button id="generate-btn" class="primary-button" type="submit"><span data-icon="refresh" aria-hidden="true"></span>Gerar</button>
+              <button id="generate-btn" class="primary-button" type="submit">Gerar</button>
             </div>
           </div>
         </form>
@@ -143,7 +171,7 @@
           </div>
           <div id="copy-fallback" class="copy-fallback" hidden>
             <div class="fallback-heading">
-              <label for="copy-value">IBAN para cópia manual</label>
+              <label id="copy-value-label" for="copy-value">IBAN para cópia manual</label>
               <button id="close-copy" class="icon-button" type="button" aria-label="Fechar cópia manual" data-tooltip="Fechar"><span data-icon="close" aria-hidden="true"></span></button>
             </div>
             <textarea id="copy-value" rows="2" readonly spellcheck="false"></textarea>
@@ -151,36 +179,45 @@
           <ul id="iban-list" class="result-list" aria-label="IBANs gerados"></ul>
           <noscript><p class="inline-error">É necessário ativar JavaScript para gerar IBANs.</p></noscript>
           <div class="validity-note">
-            <span data-icon="shield" aria-hidden="true"></span>
-            <p>Formato e controlo válidos (ISO 13616 &amp; NIB).<br class="mobile-break" /> <span>Existência da conta não verificada.</span></p>
+            <p id="iban-validity">Formato e controlo válidos (ISO 13616 &amp; NIB).<br class="mobile-break" /> <span>Existência da conta não verificada.</span></p>
+            <p id="nif-validity" hidden>Formato e dígito de controlo válidos.<br class="mobile-break" /> <span>Pode coincidir com um NIF atribuído. Apenas para testes autorizados.</span></p>
           </div>
         </section>
       </section>
 
       <details class="about">
         <summary>Sobre estes dados e algoritmos <span data-icon="chevron" aria-hidden="true"></span></summary>
-        <div class="about-content">
+        <div id="iban-about" class="about-content">
           <p>Os IBANs são gerados localmente neste dispositivo com estrutura portuguesa (<code>PT50</code> + 21 dígitos) e dígitos de controlo NIB e ISO 13616 válidos. Não confirmam uma conta real, o seu titular ou a aceitação por uma seguradora. Podem coincidir com números já atribuídos. Apenas para testes autorizados.</p>
           <p id="source-note"></p>
           <p>“Qualquer banco” usa o grupo bancário predefinido. As restantes instituições e os códigos transitórios estão disponíveis na pesquisa por nome ou código.</p>
+        </div>
+        <div id="nif-about" class="about-content" hidden>
+          <p>Os NIFs são gerados localmente com nove algarismos e dígito de controlo módulo 11. Não é consultada a AT nem o VIES. Não se confirma atribuição, titularidade, situação fiscal ou aceitação por uma seguradora. Podem coincidir com números reais; apenas para testes autorizados.</p>
+          <p>Pessoa singular: gamas 1, 2 e 3. Empresa: perfil limitado à gama 5 do NIF/NIPC, não a todas as pessoas coletivas. Gamas especiais estão excluídas da geração, sem que isso as torne inválidas.</p>
+          <p>Referências: <a href="https://data.dre.pt/eli/dec-lei/14/2013/01/28/p/dre/pt/pdf" target="_blank" rel="noopener noreferrer">Decreto-Lei 14/2013</a>, <a href="https://data.dre.pt/eli/dec-lei/129/1998/05/13/p/dre/pt/pdf" target="_blank" rel="noopener noreferrer">regime do RNPC</a> e <a href="https://info.portaldasfinancas.gov.pt/pt/destaques/Paginas/Atribuicao_Nova_Gama_de_NIF_a_Pessoas_Singulares.aspx" target="_blank" rel="noopener noreferrer">nota da AT sobre a gama 3</a>.</p>
         </div>
       </details>
     </main>
 
     <footer class="site-footer">
       <div class="dedication">
-        <button id="sunflower-trigger" class="icon-button sunflower-trigger" type="button" aria-label="Girassol" data-tooltip="Girassol"><span data-icon="flower" aria-hidden="true"></span></button>
-        <p>Feito com carinho.</p>
+        <button id="sunflower-trigger" class="icon-button sunflower-trigger" type="button" aria-label="Girassol" data-tooltip="Girassol"><span id="easter-trigger-icon" data-icon="flower" aria-hidden="true"></span></button>
+        <p id="footer-dedication-text">Feito com carinho.</p>
       </div>
       <a href="https://github.com/andrenevesgomes/iban-fresquinho" target="_blank" rel="noopener noreferrer">Código aberto<span data-icon="external" aria-hidden="true"></span></a>
     </footer>
 
-    <dialog id="sunflower-dialog" class="sunflower-dialog" aria-labelledby="sunflower-title" data-nosnippet>
+    <dialog id="sunflower-dialog" class="sunflower-dialog" data-egg-mode="iban" aria-labelledby="sunflower-title" data-nosnippet>
       <button id="close-sunflower" class="icon-button sunflower-close" type="button" aria-label="Fechar mensagem"><span data-icon="close" aria-hidden="true"></span></button>
-      <div class="sunflower-photo"><img id="sunflower-image" width="800" height="500" alt="Girassóis amarelos voltados para a luz" decoding="async" /></div>
+      <div id="sunflower-photo-wrap" class="sunflower-photo"><img id="sunflower-image" width="800" height="500" alt="Girassóis amarelos voltados para a luz" decoding="async" /></div>
+      <div id="bordeaux-velvet-wrap" class="bordeaux-velvet" hidden>
+        <p class="velvet-acronym"><span>N</span>úmero de <span>I</span>dentificação da <span>F</span>elicidade</p>
+        <p class="velvet-kicker">Dígito de controlo válido, sem colisões nem repetidos: és única.</p>
+      </div>
       <div class="sunflower-note">
         <div class="sunflower-note-header">
-          <span class="note-flower" data-icon="flower" aria-hidden="true"></span>
+          <span id="note-emblem" class="note-flower" data-icon="flower" aria-hidden="true"></span>
           <span id="sunflower-tag" class="sunflower-tag">Dedicatória · 1 / 6</span>
         </div>
         <div id="sunflower-card" class="sunflower-card">
@@ -192,9 +229,9 @@
         <div class="sunflower-actions">
           <button id="next-sunflower" class="sunflower-next" type="button">
             <span data-icon="heart" aria-hidden="true"></span>
-            <span>Outra dedicatória</span>
+            <span id="next-sunflower-label">Outra dedicatória</span>
           </button>
-          <span class="sunflower-signature">Sempre teu, com todo o meu amor.</span>
+          <span id="sunflower-signature" class="sunflower-signature">Sempre teu, com todo o meu amor.</span>
         </div>
       </div>
     </dialog>
