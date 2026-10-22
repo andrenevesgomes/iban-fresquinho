@@ -705,7 +705,7 @@ function init(): void {
     typeof window.matchMedia === 'function'
       ? window.matchMedia('(prefers-color-scheme: dark)')
       : null;
-  let savedTheme: string | null = null;
+  let savedTheme: string | null;
   try {
     savedTheme = window.localStorage.getItem('iban-theme');
   } catch {

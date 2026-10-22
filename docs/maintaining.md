@@ -2,7 +2,7 @@
 
 ## Quality gate
 
-Run all of these before opening a pull request. CI runs the same checks on Node 20, 22 and 24 for every pull request to `main` and every push to `main`.
+Run all of these before opening a pull request. CI runs the same checks on Node 22 and 24 for every pull request to `main` and every push to `main`.
 
 ```bash
 pnpm install --frozen-lockfile
