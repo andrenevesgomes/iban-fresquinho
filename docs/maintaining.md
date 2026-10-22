@@ -82,7 +82,9 @@ Do not add other inline scripts or styles; move them to files instead.
 ### Add or update a dependency
 
 - Versions are exact (no `^` or `~`); the security test enforces it.
-- pnpm ignores install scripts and only resolves versions published at least one day ago (`pnpm-workspace.yaml`). Do not turn these off to make an install pass.
+- pnpm ignores install scripts and only resolves versions published at least three days ago (`pnpm-workspace.yaml`). Do not turn these off to make an install pass.
+- Keep that window equal to Dependabot's cooldown (its default is three days). If a locked version is younger than Dependabot's window, every Dependabot npm update fails until it ages.
+- For an urgent security fix younger than three days, add only that package to `minimumReleaseAgeExclude` in `pnpm-workspace.yaml`, and remove it once the version is old enough.
 - Review the lockfile diff before committing.
 - Fonts and images must be self-hosted. Add their licence to `public/third-party-notices.txt`.
 

@@ -1,7 +1,8 @@
 ignoreScripts: true
 ignorePnpmfile: true
 enablePrePostScripts: false
-minimumReleaseAge: 1440
+# Same window as Dependabot's default cooldown: it rejects locks on versions younger than this.
+minimumReleaseAge: 4320
 blockExoticSubdeps: true
 verifyStoreIntegrity: true
 strictStorePkgContentCheck: true
