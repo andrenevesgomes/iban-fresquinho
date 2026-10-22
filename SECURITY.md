@@ -19,7 +19,7 @@ No absolute security guarantee is possible. A compromised browser, device, exten
 
 ## Dependencies And CI
 
-- pnpm 10.34.7 is pinned to retain the existing Node 20/22/24 compatibility. Direct dependencies are exact versions; pnpm-lock.yaml is the only lockfile.
+- pnpm 10.34.7 is pinned. Supported Node.js versions are 22.13+ and 24+; Node 20 reached end of life in April 2026 and is no longer tested. Direct dependencies are exact versions; pnpm-lock.yaml is the only lockfile.
 - Use `pnpm install --frozen-lockfile`. Project policy blocks install scripts, pnpmfile hooks and automatic pre/post commands. Explicit build/test commands still execute trusted project and dependency code.
 - `minimumReleaseAge: 1440` delays newly resolved versions by one day. It is not a malware detector or a retroactive guarantee for an existing lockfile.
 - Store integrity verification and exotic transitive-source restrictions remain enabled. Protect the pnpm store and workspace from untrusted writers.
