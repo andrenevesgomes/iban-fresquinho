@@ -34,7 +34,7 @@ It works offline after the first visit, follows the system theme until you pick 
 
 ## Development
 
-Requires Node.js 20.19+, 22.12+ or 24+ (24 LTS recommended) and pnpm 10.34.7, which is pinned in `package.json` and available through Corepack.
+Requires Node.js 22.13+ or 24+ (24 LTS recommended) and pnpm 10.34.7, which is pinned in `package.json` and available through Corepack.
 
 ```bash
 git clone https://github.com/andrenevesgomes/iban-fresquinho.git

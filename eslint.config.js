@@ -1,57 +1,19 @@
 import js from '@eslint/js';
-import typescript from '@typescript-eslint/eslint-plugin';
-import typescriptParser from '@typescript-eslint/parser';
-import prettier from 'eslint-plugin-prettier';
-import prettierConfig from 'eslint-config-prettier';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import prettier from 'eslint-config-prettier';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-export default [
+export default defineConfig(
+  globalIgnores(['dist/', 'coverage/']),
   js.configs.recommended,
   {
     files: ['src/**/*.ts'],
+    extends: [tseslint.configs.recommended],
     languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: 'module',
-        project: './tsconfig.json',
-      },
-      globals: {
-        document: 'readonly',
-        window: 'readonly',
-        navigator: 'readonly',
-        console: 'readonly',
-        setTimeout: 'readonly',
-        HTMLDivElement: 'readonly',
-        HTMLInputElement: 'readonly',
-        HTMLButtonElement: 'readonly',
-        HTMLSpanElement: 'readonly',
-        HTMLParagraphElement: 'readonly',
-        HTMLSelectElement: 'readonly',
-        HTMLOptionElement: 'readonly',
-        HTMLOptGroupElement: 'readonly',
-        HTMLLIElement: 'readonly',
-        HTMLElement: 'readonly',
-        HTMLDialogElement: 'readonly',
-        HTMLTextAreaElement: 'readonly',
-        HTMLUListElement: 'readonly',
-        HTMLFormElement: 'readonly',
-        SVGElement: 'readonly',
-        HTMLImageElement: 'readonly',
-        Storage: 'readonly',
-        DOMParser: 'readonly',
-        Event: 'readonly',
-        KeyboardEvent: 'readonly',
-        URL: 'readonly',
-      },
-    },
-    plugins: {
-      '@typescript-eslint': typescript,
-      prettier: prettier,
+      globals: globals.browser,
     },
     rules: {
-      ...typescript.configs['recommended'].rules,
-      ...prettierConfig.rules,
-      'prettier/prettier': 'error',
       '@typescript-eslint/explicit-function-return-type': 'warn',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'error',
@@ -61,6 +23,11 @@ export default [
     },
   },
   {
-    ignores: ['dist/**', 'node_modules/**', '*.config.js', '*.config.ts'],
+    files: ['src/**/*.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
   },
-];
+  // Formatting is checked by `pnpm run format:check`; this only switches off conflicting rules.
+  prettier
+);

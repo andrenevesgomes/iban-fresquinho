@@ -19,15 +19,15 @@ No absolute security guarantee is possible. A compromised browser, device, exten
 
 ## Dependencies And CI
 
-- pnpm 10.34.7 is pinned to retain the existing Node 20/22/24 compatibility. Direct dependencies are exact versions; pnpm-lock.yaml is the only lockfile.
+- pnpm 10.34.7 is pinned. Supported Node.js versions are 22.13+ and 24+; Node 20 reached end of life in April 2026 and is no longer tested. Direct dependencies are exact versions; pnpm-lock.yaml is the only lockfile.
 - Use `pnpm install --frozen-lockfile`. Project policy blocks install scripts, pnpmfile hooks and automatic pre/post commands. Explicit build/test commands still execute trusted project and dependency code.
 - `minimumReleaseAge: 1440` delays newly resolved versions by one day. It is not a malware detector or a retroactive guarantee for an existing lockfile.
 - Store integrity verification and exotic transitive-source restrictions remain enabled. Protect the pnpm store and workspace from untrusted writers.
 - The optional `trustPolicy: no-downgrade` heuristic was evaluated but is not enabled: existing packages on parallel release lines required accumulating provenance exceptions. No exceptions are configured. This is a limitation, not proof of package safety.
-- During migration, GHSA-f29h-pxvx-f335 was checked: the existing eslint-config-prettier 9.1.2 is the patched 9.x version, not affected 9.1.1. A provenance warning alone is not a compromise finding.
+- GHSA-f29h-pxvx-f335 affected eslint-config-prettier 9.1.1 only. The project used the patched 9.1.2 and now uses 10.1.8. A provenance warning alone is not a compromise finding.
 - CI action revisions are pinned to commit hashes. Checkout does not persist credentials; tests use read-only repository permissions. Pages deployment remains manual and uploads only dist.
 - CI runs a dependency audit and tests, including security-configuration checks. A clean audit means no known matching advisories were reported at that time, not that no vulnerabilities exist.
-- ESLint 8 and some transitive build dependencies are deprecated. A separate compatibility-tested toolchain upgrade is still needed; do not hide warnings or use forced bulk upgrades as a security shortcut.
+- The lint and test toolchain is on supported major versions (ESLint 10, typescript-eslint 8, Vitest 5). Some transitive build dependencies may still report deprecations; upgrade them in reviewed, compatibility-tested steps rather than hiding warnings or forcing bulk upgrades.
 
 ## Hosting
 
