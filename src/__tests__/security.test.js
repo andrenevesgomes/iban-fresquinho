@@ -19,7 +19,7 @@ describe('Security configuration', () => {
       ignoreScripts: true,
       ignorePnpmfile: true,
       enablePrePostScripts: false,
-      minimumReleaseAge: 1440,
+      minimumReleaseAge: 4320,
       blockExoticSubdeps: true,
       verifyStoreIntegrity: true,
       strictStorePkgContentCheck: true,
