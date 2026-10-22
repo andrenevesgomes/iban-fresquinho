@@ -27,7 +27,7 @@ No absolute security guarantee is possible. A compromised browser, device, exten
 - GHSA-f29h-pxvx-f335 affected eslint-config-prettier 9.1.1 only. The project used the patched 9.1.2 and now uses 10.1.8. A provenance warning alone is not a compromise finding.
 - CI action revisions are pinned to commit hashes. Checkout does not persist credentials; tests use read-only repository permissions. Pages deployment remains manual and uploads only dist.
 - CI runs a dependency audit and tests, including security-configuration checks. A clean audit means no known matching advisories were reported at that time, not that no vulnerabilities exist.
-- The lint toolchain is on supported major versions (ESLint 10, typescript-eslint 8). Some transitive build dependencies may still report deprecations; upgrade them in reviewed, compatibility-tested steps rather than hiding warnings or forcing bulk upgrades.
+- The lint and test toolchain is on supported major versions (ESLint 10, typescript-eslint 8, Vitest 5). Some transitive build dependencies may still report deprecations; upgrade them in reviewed, compatibility-tested steps rather than hiding warnings or forcing bulk upgrades.
 
 ## Hosting
 
