@@ -24,10 +24,10 @@ No absolute security guarantee is possible. A compromised browser, device, exten
 - `minimumReleaseAge: 1440` delays newly resolved versions by one day. It is not a malware detector or a retroactive guarantee for an existing lockfile.
 - Store integrity verification and exotic transitive-source restrictions remain enabled. Protect the pnpm store and workspace from untrusted writers.
 - The optional `trustPolicy: no-downgrade` heuristic was evaluated but is not enabled: existing packages on parallel release lines required accumulating provenance exceptions. No exceptions are configured. This is a limitation, not proof of package safety.
-- During migration, GHSA-f29h-pxvx-f335 was checked: the existing eslint-config-prettier 9.1.2 is the patched 9.x version, not affected 9.1.1. A provenance warning alone is not a compromise finding.
+- GHSA-f29h-pxvx-f335 affected eslint-config-prettier 9.1.1 only. The project used the patched 9.1.2 and now uses 10.1.8. A provenance warning alone is not a compromise finding.
 - CI action revisions are pinned to commit hashes. Checkout does not persist credentials; tests use read-only repository permissions. Pages deployment remains manual and uploads only dist.
 - CI runs a dependency audit and tests, including security-configuration checks. A clean audit means no known matching advisories were reported at that time, not that no vulnerabilities exist.
-- ESLint 8 and some transitive build dependencies are deprecated. A separate compatibility-tested toolchain upgrade is still needed; do not hide warnings or use forced bulk upgrades as a security shortcut.
+- The lint toolchain is on supported major versions (ESLint 10, typescript-eslint 8). Some transitive build dependencies may still report deprecations; upgrade them in reviewed, compatibility-tested steps rather than hiding warnings or forcing bulk upgrades.
 
 ## Hosting
 
