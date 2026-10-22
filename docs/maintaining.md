@@ -31,7 +31,7 @@ Production is the `main` branch of [andrenevesgomes/iban-fresquinho](https://git
 
 The GitHub Pages workflow (`static.yml`) runs only when started by hand. Pages does not apply `vercel.json`, so it serves the app without the security headers.
 
-Dependabot opens weekly pull requests for npm packages and GitHub Actions. Merge one only when its CI passes. Vercel deploys `main` even when CI fails, so after merging a batch, check that CI on `main` is green and run the quality gate locally once.
+Dependabot checks npm packages and GitHub Actions weekly. Minor and patch updates arrive as one grouped pull request per ecosystem; each major update arrives on its own, because it needs its migration guide read. Versions it deliberately skips are listed under [Pinned on purpose](#pinned-on-purpose). Merge a pull request only when its CI passes. Vercel deploys `main` even when CI fails, so after merging, check that CI on `main` is green and run the quality gate locally once.
 
 CI also runs `pnpm audit`, so a newly published advisory can turn `main` red without any code change. Fix it with an exact-version update on a branch, as for any other dependency.
 
@@ -85,6 +85,23 @@ Do not add other inline scripts or styles; move them to files instead.
 - pnpm ignores install scripts and only resolves versions published at least one day ago (`pnpm-workspace.yaml`). Do not turn these off to make an install pass.
 - Review the lockfile diff before committing.
 - Fonts and images must be self-hosted. Add their licence to `public/third-party-notices.txt`.
+
+## Pinned on purpose
+
+These are held back deliberately. Check the condition before upgrading, and update this table when it changes.
+
+| Tool          | Held at                        | Why                                                                                                                       | Revisit when                                                                          |
+| ------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| pnpm          | 10.x                           | Dependabot supports pnpm 7 to 10 only. On pnpm 11 or later its npm updates would stop working.                            | GitHub's Dependabot documentation lists the newer pnpm major as supported.            |
+| TypeScript    | 5.9                            | typescript-eslint supports TypeScript below 6.1. `dependabot.yml` ignores TypeScript 6.1 and later.                       | typescript-eslint's peer range includes the new version; then remove the ignore rule. |
+| `@types/node` | Lowest supported Node.js major | Newer types would allow Node.js APIs that the lowest supported version lacks. `dependabot.yml` ignores its major updates. | The minimum Node.js version is raised (see below).                                    |
+
+## Support calendar
+
+| Date          | Action                                                                                                           |
+| ------------- | ---------------------------------------------------------------------------------------------------------------- |
+| 30 April 2027 | Node.js 22 reaches end of life: drop it from `engines` and the CI matrix, and move `@types/node` to the 24 line. |
+| 30 April 2028 | Node.js 24 reaches end of life: move to the next even-numbered LTS line.                                         |
 
 ## Design rules
 
