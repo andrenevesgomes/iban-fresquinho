@@ -113,6 +113,6 @@ These keep the interface feeling made by hand rather than generated. Please keep
 - No pill badges, icon badges or decorative icons. Icons appear only where they act (copy, close, theme, steppers).
 - Thin rules structure the page: a single column up to 820 px, form rows with the label on the left and the control on the right.
 - Colour roles: Bordeaux (`--wine`) for the prefix and selected options, ink (`--ink`) for the main action. Define every colour for both themes. Licence plates are the exception: they keep their real colours in both themes.
-- Type: Manrope for the interface, IBM Plex Mono for generated values.
+- Type: Manrope for the interface, IBM Plex Mono for generated values, Barlow Semi Condensed (a DIN-style face) only for licence plate lettering.
 - Controls are at least 44 px tall, show a visible focus ring, and animations are short and skipped for reduced motion.
 - Interface text is European Portuguese and addresses the user as "tu".

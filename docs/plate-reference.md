@@ -18,6 +18,13 @@ Matrícula Fresquinha generates Portuguese car registration numbers in the forma
 - The date band shows the year over the month of first registration (for example `10` over `03` for March 2010). IMT removed it in 2020 because Portugal was the only EU country to print it, and abroad the same space usually shows when the registration expires.
 - IMT writes the 2020 series without dashes (`AA 01 AA`). The generator keeps the dashes in every format so that all results share one shape; remove them if a form rejects them.
 
+### How plates are drawn
+
+- Lettering uses Barlow Semi Condensed, an open-licence DIN-style face close to the real plate font, not the official typeface.
+- `black`: white characters on black with a raised silver rim and no EU band, as on pre-1992 aluminium plates.
+- `white`, `dated` and `modern`: black on white with the blue EU band (12 stars and `P`). `dated` adds the yellow band with the year above a rule and the month below.
+- Rear two-line plates, dealer/temporary plates and screw holes are not drawn.
+
 ### Rules the generator follows
 
 - No group of digits is all zeros: `AA-00-00`, `00-00-AA` and `00-AA-00` never have `00` in both digit pairs, and the `AA-00-AA` series never has `00` in the middle (the first number issued was `AA-01-AA`).

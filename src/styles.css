@@ -17,6 +17,15 @@
   src: url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: 'Barlow Semi Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-600-normal.woff2')
+    format('woff2');
+}
+
 :root {
   font-family:
     'Manrope',
@@ -757,34 +766,51 @@ button svg,
   margin-top: 8px;
   font-size: 13.5px;
 }
+/* Plates keep their real-world colours in both themes; every size derives from --plate. */
 .plate {
+  --plate: 27px;
   display: inline-flex;
   align-items: stretch;
   max-width: 100%;
-  border: 2px solid #1b1b1b;
-  border-radius: 6px;
+  border-radius: calc(var(--plate) * 0.16);
   overflow: hidden;
   background: #ffffff;
   color: #111111;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.28),
+    0 0 0 1px var(--line);
+}
+.is-single .plate {
+  --plate: 40px;
 }
 .plate-band {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  width: 22px;
-  padding-bottom: 4px;
-  background: #003399;
+  flex: none;
+  width: calc(var(--plate) * 0.78);
+  padding-bottom: calc(var(--plate) * 0.1);
+  background: #003399
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%23fc0' d='M10.00 1.65L10.32 2.56L11.28 2.58L10.52 3.17L10.79 4.09L10.00 3.55L9.21 4.09L9.48 3.17L8.72 2.58L9.68 2.56ZM13.50 2.59L13.82 3.49L14.78 3.52L14.02 4.11L14.29 5.03L13.50 4.49L12.71 5.03L12.98 4.11L12.22 3.52L13.18 3.49ZM16.06 5.15L16.39 6.06L17.35 6.08L16.59 6.67L16.86 7.59L16.06 7.05L15.27 7.59L15.54 6.67L14.78 6.08L15.74 6.06ZM17.00 8.65L17.32 9.56L18.28 9.58L17.52 10.17L17.79 11.09L17.00 10.55L16.21 11.09L16.48 10.17L15.72 9.58L16.68 9.56ZM16.06 12.15L16.39 13.06L17.35 13.08L16.59 13.67L16.86 14.59L16.06 14.05L15.27 14.59L15.54 13.67L14.78 13.08L15.74 13.06ZM13.50 14.71L13.82 15.62L14.78 15.65L14.02 16.23L14.29 17.15L13.50 16.61L12.71 17.15L12.98 16.23L12.22 15.65L13.18 15.62ZM10.00 15.65L10.32 16.56L11.28 16.58L10.52 17.17L10.79 18.09L10.00 17.55L9.21 18.09L9.48 17.17L8.72 16.58L9.68 16.56ZM6.50 14.71L6.82 15.62L7.78 15.65L7.02 16.23L7.29 17.15L6.50 16.61L5.71 17.15L5.98 16.23L5.22 15.65L6.18 15.62ZM3.94 12.15L4.26 13.06L5.22 13.08L4.46 13.67L4.73 14.59L3.94 14.05L3.14 14.59L3.41 13.67L2.65 13.08L3.61 13.06ZM3.00 8.65L3.32 9.56L4.28 9.58L3.52 10.17L3.79 11.09L3.00 10.55L2.21 11.09L2.48 10.17L1.72 9.58L2.68 9.56ZM3.94 5.15L4.26 6.06L5.22 6.08L4.46 6.67L4.73 7.59L3.94 7.05L3.14 7.59L3.41 6.67L2.65 6.08L3.61 6.06ZM6.50 2.59L6.82 3.49L7.78 3.52L7.02 4.11L7.29 5.03L6.50 4.49L5.71 5.03L5.98 4.11L5.22 3.52L6.18 3.49Z'/%3E%3C/svg%3E")
+    no-repeat center calc(var(--plate) * 0.1) / calc(var(--plate) * 0.62);
   color: #ffffff;
   font:
-    700 12px/1 'Manrope',
+    600 calc(var(--plate) * 0.42) / 1 'Barlow Semi Condensed',
+    'Manrope',
     sans-serif;
 }
-.plate .plate-number {
+/* The second selector outranks the phone-size rules for .is-single .identifier. */
+.plate .plate-number,
+.is-single .plate .plate-number {
   display: flex;
   align-items: center;
-  padding: 2px 14px;
+  padding: calc(var(--plate) * 0.12) calc(var(--plate) * 0.32) calc(var(--plate) * 0.08);
   color: inherit;
-  letter-spacing: 0.04em;
+  font:
+    600 calc(var(--plate) * 1.18) / 1 'Barlow Semi Condensed',
+    'Manrope',
+    sans-serif;
+  letter-spacing: 0.03em;
   white-space: nowrap;
 }
 .plate-date {
@@ -792,21 +818,36 @@ button svg,
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  width: 24px;
-  background: #f6c500;
+  flex: none;
+  width: calc(var(--plate) * 0.86);
+  background: #fcc500;
   color: #111111;
   font:
-    700 10.5px/1 'IBM Plex Mono',
-    monospace;
+    600 calc(var(--plate) * 0.5) / 1.1 'Barlow Semi Condensed',
+    'Manrope',
+    sans-serif;
 }
+.plate-date span + span {
+  align-self: stretch;
+  margin: calc(var(--plate) * 0.04) 20% 0;
+  padding-top: calc(var(--plate) * 0.04);
+  border-top: max(1px, calc(var(--plate) * 0.05)) solid currentColor;
+  text-align: center;
+}
+/* Before March 1992: embossed white characters on black, a raised silver rim and no EU band. */
 .plate--black {
-  border-color: #141414;
-  background: #141414;
-  color: #f2f2f2;
+  background: #151515;
+  color: #e9e9e6;
+  border-radius: calc(var(--plate) * 0.12);
+  box-shadow:
+    inset 0 0 0 calc(var(--plate) * 0.09) #151515,
+    inset 0 0 0 calc(var(--plate) * 0.15) #c9c9c4,
+    0 0 0 1px var(--line);
 }
-:root[data-theme='dark'] .plate--black {
-  border-color: #5a5458;
+.plate--black .plate-number {
+  padding-inline: calc(var(--plate) * 0.42);
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
 }
 .plate + .result-bank {
   margin-top: 8px;
@@ -1234,6 +1275,9 @@ button svg,
   .is-single .identifier {
     font-size: 18px;
   }
+  .is-single .plate {
+    --plate: 34px;
+  }
   .result-bank,
   .is-single .result-bank {
     font-size: 12.5px;
@@ -1279,6 +1323,9 @@ button svg,
   .identifier,
   .is-single .identifier {
     font-size: 15px;
+  }
+  .is-single .plate {
+    --plate: 30px;
   }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -1417,10 +1464,8 @@ button svg,
   background: #102449;
   color: #f1f4ff;
 }
-.plate--egg .plate-number {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 30px;
-  padding: 6px 20px;
+.plate--egg {
+  --plate: 38px;
 }
 .plate-egg-kicker {
   margin: 18px 0 0;

@@ -89,7 +89,7 @@ A native `<dialog>`. Its 108 rows ("Qualquer banco" plus 107 codes) are built on
 
 ## Styling (`src/styles.css`)
 
-Tailwind provides the reset and the `sr-only` utility; components are plain CSS. Colours, lines and surfaces are custom properties in `:root` and `:root[data-theme='dark']`, so both themes share one set of rules. Plates are the one place with fixed real-world colours (white, black, EU blue and the yellow date band) in both themes. The design rules are listed in [maintaining.md](maintaining.md#design-rules).
+Tailwind provides the reset and the `sr-only` utility; components are plain CSS. Colours, lines and surfaces are custom properties in `:root` and `:root[data-theme='dark']`, so both themes share one set of rules. Plates are the one place with fixed real-world colours (white, black, EU blue and the yellow date band) in both themes. Every plate dimension derives from one custom property, `--plate`, which is larger for a single result and smaller on phones. The EU stars are an inline SVG data URI, allowed by `img-src 'self' data:`. The design rules are listed in [maintaining.md](maintaining.md#design-rules).
 
 ## Offline and updates
 
