@@ -1,6 +1,7 @@
 import './styles.css';
 import {
   createElement,
+  Car,
   Check,
   ChevronDown,
   Copy,
@@ -18,6 +19,16 @@ import {
 } from 'lucide';
 import { createMultipleIBANs, formatIBAN, MAX_IBAN_BATCH_SIZE } from './iban';
 import { createMultipleNIFs, MAX_NIF_BATCH_SIZE, type NIFCategory } from './nif';
+import {
+  createMultipleVehicles,
+  FIRST_REGISTRATION_YEAR,
+  MAX_PLATE_BATCH_SIZE,
+  plateStyle,
+  VehicleFilterError,
+  type VehicleFilterField,
+  type VehicleFilters,
+  type VehicleResult,
+} from './plate';
 import { bankCatalogue, bankReferenceSource } from './banks';
 import { startPWA } from './pwa';
 
@@ -43,12 +54,35 @@ const increase = element<HTMLButtonElement>('increase-count');
 const toolPrefix = element<HTMLButtonElement>('tool-prefix');
 const toolMenu = element<HTMLUListElement>('tool-menu');
 
-type Tool = 'iban' | 'nif';
+type Tool = 'iban' | 'nif' | 'plate';
+
+const TOOLS: readonly Tool[] = ['iban', 'nif', 'plate'];
+
+interface ToolText {
+  prefix: string;
+  name: string;
+  singular: string;
+  plural: string;
+  feminine: boolean;
+}
+
+const TOOL_TEXT: Record<Tool, ToolText> = {
+  iban: { prefix: 'IBAN', name: 'Fresquinho', singular: 'IBAN', plural: 'IBANs', feminine: false },
+  nif: { prefix: 'NIF', name: 'Fresquinho', singular: 'NIF', plural: 'NIFs', feminine: false },
+  plate: {
+    prefix: 'Matrícula',
+    name: 'Fresquinha',
+    singular: 'matrícula',
+    plural: 'matrículas',
+    feminine: true,
+  },
+};
 
 interface IdentifierResult {
   value: string;
   formatted: string;
   label: string;
+  vehicle?: VehicleResult;
 }
 
 interface ToolState {
@@ -62,6 +96,7 @@ interface ToolState {
 const toolStates: Record<Tool, ToolState> = {
   iban: { results: [], quantity: '1', error: '', invalid: false },
   nif: { results: [], quantity: '1', error: '', invalid: false },
+  plate: { results: [], quantity: '1', error: '', invalid: false },
 };
 const nifLabels: Record<NIFCategory, string> = {
   individual: 'Pessoa singular',
@@ -161,6 +196,197 @@ const NIF_LOVE_NOTES: readonly SunflowerDedication[] = [
   },
 ];
 
+const PLATE_LOVE_NOTES: readonly SunflowerDedication[] = [
+  {
+    title: 'Para onde fores, eu vou.',
+    lead: 'Não preciso de saber o destino quando o lugar ao lado do teu é o meu.',
+    sub: 'Fiz esta matrícula fresquinha a pensar nas tuas tardes de testes, para que até os formulários de seguros te lembrem que há alguém à tua espera com o motor ligado.',
+    whisper: '“A melhor viagem da minha vida começou no dia em que te conheci.”',
+  },
+  {
+    title: 'Cilindrada do coração: incalculável.',
+    lead: 'Podes filtrar por cv e por cm³, mas o que sinto por ti não cabe em nenhum intervalo.',
+    sub: 'Se o dia acelerar demais, abranda um bocadinho. A próxima curva fazemo-la juntos.',
+    whisper: '“Contigo, até o trânsito da ponte parece um passeio.”',
+  },
+  {
+    title: 'Primeira matrícula: o dia em que te vi.',
+    lead: 'Há datas que não precisam de barra amarela para ficarem gravadas.',
+    sub: 'Guardo esse mês e esse ano como quem guarda a chave do carro preferido: sempre à mão, sempre com cuidado.',
+    whisper: '“Se me perguntarem pelo meu modelo favorito, respondo com o teu nome.”',
+  },
+  {
+    title: 'Sem portagens, sem pressa, só nós.',
+    lead: 'As melhores estradas são as que fazemos de janelas abertas e música alta, a rir de tudo.',
+    sub: 'Prometo continuar a escolher a rota mais bonita, mesmo quando o GPS insistir na mais rápida.',
+    whisper: '“A paisagem muda; a companhia é que eu nunca troco.”',
+  },
+  {
+    title: 'Revisão feita: tudo em ordem no coração.',
+    lead: 'Óleo mudado, pneus calibrados e o mesmo amor do primeiro dia, agora com mais quilómetros de cumplicidade.',
+    sub: 'Obrigado por tornares cada percurso mais leve, mesmo nos dias de chuva e de pressa.',
+    whisper: '“Contigo, todos os caminhos vão dar a casa.”',
+  },
+  {
+    title: 'Seguro contra todos os riscos: nós dois.',
+    lead: 'Passas os dias entre apólices e coberturas, por isso sabes que há coisas que nenhuma tabela consegue avaliar.',
+    sub: 'A minha cobertura para ti é total, sem franquia e sem data de fim.',
+    whisper: '“Amar-te é a viagem que quero repetir todos os dias.”',
+  },
+];
+
+interface EasterEgg {
+  notes: readonly SunflowerDedication[];
+  icon: IconNode;
+  label: string;
+  triggerClass: string;
+  tag: string;
+  next: string;
+  signature: string;
+}
+
+const EASTER_EGGS: Record<Tool, EasterEgg> = {
+  iban: {
+    notes: SUNFLOWER_DEDICATIONS,
+    icon: Flower2,
+    label: 'Girassol',
+    triggerClass: '',
+    tag: 'Dedicatória',
+    next: 'Outra dedicatória',
+    signature: 'Sempre teu, com todo o meu amor.',
+  },
+  nif: {
+    notes: NIF_LOVE_NOTES,
+    icon: Heart,
+    label: 'Segredo Bordô',
+    triggerClass: 'is-bordeaux-egg',
+    tag: 'Bilhete',
+    next: 'Outro bilhete',
+    signature: 'Teu em todos os detalhes, hoje e sempre.',
+  },
+  plate: {
+    notes: PLATE_LOVE_NOTES,
+    icon: Car,
+    label: 'Viagem a dois',
+    triggerClass: 'is-euro-egg',
+    tag: 'Viagem',
+    next: 'Outra viagem',
+    signature: 'Contigo, qualquer estrada é a certa.',
+  },
+};
+
+function isTool(value: string | undefined): value is Tool {
+  return TOOLS.includes(value as Tool);
+}
+
+function capitalise(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function copiedMessage(count: number): string {
+  const { singular, plural, feminine } = TOOL_TEXT[activeTool];
+  return count === 1
+    ? `${capitalise(singular)} ${feminine ? 'copiada' : 'copiado'}.`
+    : `${count} ${plural} ${feminine ? 'copiadas' : 'copiados'}.`;
+}
+
+function readyMessage(count: number): string {
+  const { singular, plural, feminine } = TOOL_TEXT[activeTool];
+  return count === 1
+    ? `${feminine ? 'Nova' : 'Novo'} ${singular} ${feminine ? 'pronta' : 'pronto'}.`
+    : `${count} ${plural} ${feminine ? 'prontas' : 'prontos'}.`;
+}
+
+function resultsHeading(count: number): string {
+  const { singular, plural, feminine } = TOOL_TEXT[activeTool];
+  return count === 1
+    ? `${feminine ? 'A tua' : 'O teu'} ${singular}`
+    : `${feminine ? 'As tuas' : 'Os teus'} ${count} ${plural}`;
+}
+
+const FILTER_INPUTS: Record<VehicleFilterField, readonly string[]> = {
+  year: ['plate-year'],
+  month: ['plate-month', 'plate-year'],
+  displacement: ['plate-cm3-min', 'plate-cm3-max'],
+  power: ['plate-cv-min', 'plate-cv-max'],
+  combination: ['plate-cm3-min', 'plate-cm3-max', 'plate-cv-min', 'plate-cv-max'],
+};
+
+function filterMessage(field: VehicleFilterField): string {
+  switch (field) {
+    case 'year':
+      return `Escolhe um ano entre ${FIRST_REGISTRATION_YEAR} e ${new Date().getFullYear()}.`;
+    case 'month':
+      return 'A 1.ª matrícula não pode ser num mês que ainda não chegou.';
+    case 'displacement':
+      return 'Escolhe uma cilindrada entre 600 e 6500 cm³, com o mínimo abaixo do máximo.';
+    case 'power':
+      return 'Escolhe uma potência entre 30 e 650 cv, com o mínimo abaixo do máximo.';
+    case 'combination':
+      return 'Não há carros plausíveis com essa cilindrada e essa potência juntas.';
+  }
+}
+
+function readFilter(id: string): number | undefined {
+  const input = element<HTMLInputElement | HTMLSelectElement>(id);
+  if (input instanceof HTMLInputElement && input.validity.badInput) return Number.NaN;
+  return input.value.trim() === '' ? undefined : Number(input.value);
+}
+
+function vehicleFilters(): VehicleFilters {
+  return {
+    year: readFilter('plate-year'),
+    month: readFilter('plate-month'),
+    minDisplacement: readFilter('plate-cm3-min'),
+    maxDisplacement: readFilter('plate-cm3-max'),
+    minPower: readFilter('plate-cv-min'),
+    maxPower: readFilter('plate-cv-max'),
+  };
+}
+
+function setFilterError(error: VehicleFilterError | null): void {
+  const invalid = new Set(error ? FILTER_INPUTS[error.field] : []);
+  for (const id of new Set(Object.values(FILTER_INPUTS).flat())) {
+    if (invalid.has(id)) element(id).setAttribute('aria-invalid', 'true');
+    else element(id).removeAttribute('aria-invalid');
+  }
+  element('plate-error').textContent = error ? filterMessage(error.field) : '';
+  if (error) element(FILTER_INPUTS[error.field][0]!).focus();
+}
+
+function vehicleSummary({ firstRegistration, displacement, power, fuel }: VehicleResult): string {
+  const month = String(firstRegistration.month).padStart(2, '0');
+  return `1.ª matrícula ${month}/${firstRegistration.year} · ${displacement} cm³ · ${power} cv · ${fuel}`;
+}
+
+function plateElement(vehicle: VehicleResult, identifier: HTMLElement): HTMLElement {
+  const style = plateStyle(vehicle.firstRegistration);
+  const plate = document.createElement('span');
+  plate.className = `plate plate--${style}`;
+  if (style !== 'black') {
+    const band = document.createElement('span');
+    band.className = 'plate-band';
+    band.setAttribute('aria-hidden', 'true');
+    band.textContent = 'P';
+    plate.append(band);
+  }
+  identifier.classList.add('plate-number');
+  plate.append(identifier);
+  if (style === 'dated') {
+    // The yellow band shows the year above the month, as printed from 1998 to 2020.
+    const date = document.createElement('span');
+    date.className = 'plate-date';
+    date.setAttribute('aria-hidden', 'true');
+    const year = document.createElement('span');
+    year.textContent = String(vehicle.firstRegistration.year).slice(-2);
+    const month = document.createElement('span');
+    month.textContent = String(vehicle.firstRegistration.month).padStart(2, '0');
+    date.append(year, month);
+    plate.append(date);
+  }
+  return plate;
+}
+
 function animateFeedback(
   target: HTMLElement,
   frames: Keyframe[],
@@ -213,6 +439,7 @@ function quantity(): number | null {
 }
 
 function batchLimit(): number {
+  if (activeTool === 'plate') return MAX_PLATE_BATCH_SIZE;
   return activeTool === 'iban' ? MAX_IBAN_BATCH_SIZE : MAX_NIF_BATCH_SIZE;
 }
 
@@ -243,7 +470,6 @@ function applyTheme(theme: 'light' | 'dark'): void {
 async function copyResult(value: string, trigger: HTMLButtonElement, count = 1): Promise<void> {
   resetCopyFeedback();
   const request = ++copyRequest;
-  const name = activeTool.toUpperCase();
   copyTrigger = trigger;
   try {
     if (!navigator.clipboard?.writeText) {
@@ -251,7 +477,7 @@ async function copyResult(value: string, trigger: HTMLButtonElement, count = 1):
     }
     await navigator.clipboard.writeText(value);
     if (request !== copyRequest) return;
-    copyStatus.textContent = count === 1 ? `${name} copiado.` : `${count} ${name}s copiados.`;
+    copyStatus.textContent = copiedMessage(count);
     copiedButton = trigger;
     trigger.classList.add('is-copied');
     if (trigger === copyAll) {
@@ -288,7 +514,7 @@ async function copyResult(value: string, trigger: HTMLButtonElement, count = 1):
 function generateResults(): void {
   const state = toolStates[activeTool];
   const hadResults = state.results.length > 0;
-  const name = activeTool.toUpperCase();
+  const { plural, feminine } = TOOL_TEXT[activeTool];
   const count = quantity();
   if (count === null) {
     countError.textContent = `Escolhe um número inteiro entre 1 e ${batchLimit()}.`;
@@ -299,16 +525,21 @@ function generateResults(): void {
   countInput.removeAttribute('aria-invalid');
   try {
     state.results = generateIdentifiers(count);
-  } catch {
-    countError.textContent = `Não foi possível gerar os ${name}s. Tenta novamente.`;
+  } catch (error) {
+    if (error instanceof VehicleFilterError) {
+      countError.textContent = '';
+      setFilterError(error);
+      return;
+    }
+    countError.textContent = `Não foi possível gerar ${feminine ? 'as' : 'os'} ${plural}. Tenta novamente.`;
     return;
   }
+  if (activeTool === 'plate') setFilterError(null);
   countError.textContent = '';
   resetCopyFeedback();
   updateStepper();
   renderResults();
-  element('generation-status').textContent =
-    count === 1 ? `Novo ${name} pronto.` : `${count} ${name}s prontos.`;
+  element('generation-status').textContent = readyMessage(count);
   if (hadResults) {
     animateFeedback(
       resultList,
@@ -322,6 +553,14 @@ function generateResults(): void {
 }
 
 function generateIdentifiers(count: number): IdentifierResult[] {
+  if (activeTool === 'plate') {
+    return createMultipleVehicles(count, vehicleFilters()).map((vehicle) => ({
+      value: vehicle.plate,
+      formatted: vehicle.plate,
+      label: vehicleSummary(vehicle),
+      vehicle,
+    }));
+  }
   if (activeTool === 'nif') {
     return createMultipleNIFs(count, nifCategory).map(({ nif, category }) => ({
       value: nif,
@@ -336,7 +575,7 @@ function generateIdentifiers(count: number): IdentifierResult[] {
 
 function renderResults(): void {
   const results = toolStates[activeTool].results;
-  const name = activeTool.toUpperCase();
+  const { singular, plural, feminine } = TOOL_TEXT[activeTool];
   const fragment = document.createDocumentFragment();
   results.forEach((result, index) => {
     const row = document.createElement('li');
@@ -350,12 +589,15 @@ function renderResults(): void {
     const bankName = document.createElement('p');
     bankName.className = 'result-bank';
     bankName.textContent = result.label;
-    content.append(identifier, bankName);
+    content.append(
+      result.vehicle ? plateElement(result.vehicle, identifier) : identifier,
+      bankName
+    );
     const copy = document.createElement('button');
     copy.type = 'button';
     copy.className = 'icon-button result-copy';
-    copy.dataset.tooltip = `Copiar ${name}`;
-    copy.setAttribute('aria-label', `Copiar ${name} ${index + 1}`);
+    copy.dataset.tooltip = `Copiar ${singular}`;
+    copy.setAttribute('aria-label', `Copiar ${singular} ${index + 1}`);
     copy.appendChild(icon(Copy));
     copy.addEventListener('click', () => {
       void copyResult(result.value, copy);
@@ -365,9 +607,11 @@ function renderResults(): void {
   });
   resultList.replaceChildren(fragment);
   resultList.classList.toggle('is-single', results.length === 1);
-  resultList.setAttribute('aria-label', `${name}s gerados`);
-  element('results-heading').textContent =
-    results.length === 1 ? `O teu ${name}` : `Os teus ${results.length} ${name}s`;
+  resultList.setAttribute(
+    'aria-label',
+    `${capitalise(plural)} ${feminine ? 'geradas' : 'gerados'}`
+  );
+  element('results-heading').textContent = resultsHeading(results.length);
   copyAll.hidden = results.length < 2;
 }
 
@@ -387,7 +631,7 @@ function switchTool(next: Tool): void {
   if (state.invalid) countInput.setAttribute('aria-invalid', 'true');
   else countInput.removeAttribute('aria-invalid');
   updateStepper();
-  for (const tool of ['iban', 'nif'] as const) {
+  for (const tool of TOOLS) {
     const active = tool === next;
     element(`tab-${tool}`).setAttribute('aria-current', String(active));
     element(`${tool}-controls`).hidden = !active;
@@ -395,8 +639,10 @@ function switchTool(next: Tool): void {
     element(`${tool}-about`).hidden = !active;
   }
   element('bank-note').hidden = next !== 'iban';
+  const text = TOOL_TEXT[next];
   const prefixText = element('tool-prefix-text');
-  prefixText.textContent = next.toUpperCase();
+  prefixText.textContent = text.prefix;
+  element('wordmark-name').textContent = text.name;
   animateFeedback(
     prefixText,
     [
@@ -405,14 +651,17 @@ function switchTool(next: Tool): void {
     ],
     420
   );
-  element('copy-value-label').textContent = `${next.toUpperCase()} para cópia manual`;
+  element('copy-value-label').textContent = `${capitalise(text.singular)} para cópia manual`;
   element('generation-status').textContent = '';
+  const egg = EASTER_EGGS[next];
   const flowerTrigger = element<HTMLButtonElement>('sunflower-trigger');
-  const triggerSlot = element('easter-trigger-icon');
-  triggerSlot.replaceChildren(icon(next === 'iban' ? Flower2 : Heart));
-  flowerTrigger.classList.toggle('is-bordeaux-egg', next === 'nif');
-  flowerTrigger.setAttribute('aria-label', next === 'iban' ? 'Girassol' : 'Segredo Bordô');
-  flowerTrigger.dataset.tooltip = next === 'iban' ? 'Girassol' : 'Segredo Bordô';
+  element('easter-trigger-icon').replaceChildren(icon(egg.icon));
+  for (const { triggerClass } of Object.values(EASTER_EGGS)) {
+    if (triggerClass)
+      flowerTrigger.classList.toggle(triggerClass, triggerClass === egg.triggerClass);
+  }
+  flowerTrigger.setAttribute('aria-label', egg.label);
+  flowerTrigger.dataset.tooltip = egg.label;
   // Only the first visit generates; later visits redraw stored results without using randomness.
   if (state.results.length === 0) generateResults();
   else renderResults();
@@ -468,7 +717,7 @@ function initTools(): void {
   for (const option of toolOptions()) {
     option.addEventListener('click', () => {
       const tool = option.dataset.tool;
-      if (tool === 'iban' || tool === 'nif') switchTool(tool);
+      if (isTool(tool)) switchTool(tool);
       closeToolMenu(true);
     });
   }
@@ -685,6 +934,7 @@ function init(): void {
   if (initialized) return;
   initialized = true;
   const icons: Record<string, IconNode> = {
+    car: Car,
     heart: Heart,
     chevron: ChevronDown,
     minus: Minus,
@@ -836,27 +1086,24 @@ function init(): void {
   const flowerCard = element<HTMLDivElement>('sunflower-card');
   const flowerWhisper = element<HTMLElement>('sunflower-whisper');
   let flowerVisits = 0;
-  const dedicationIndices: Record<Tool, number> = { iban: 0, nif: 0 };
+  const dedicationIndices: Record<Tool, number> = { iban: 0, nif: 0, plate: 0 };
 
   const renderDedication = (tool: Tool, index: number, animateNote = false): void => {
-    const collection = tool === 'iban' ? SUNFLOWER_DEDICATIONS : NIF_LOVE_NOTES;
-    const item = collection[index % collection.length]!;
-    const isIban = tool === 'iban';
+    const egg = EASTER_EGGS[tool];
+    const item = egg.notes[index % egg.notes.length]!;
     flowerDialog.dataset.eggMode = tool;
-    element('sunflower-photo-wrap').hidden = !isIban;
-    element('bordeaux-velvet-wrap').hidden = isIban;
-    element('note-emblem').replaceChildren(icon(isIban ? Flower2 : Heart));
+    element('sunflower-photo-wrap').hidden = tool !== 'iban';
+    element('bordeaux-velvet-wrap').hidden = tool !== 'nif';
+    element('plate-egg-wrap').hidden = tool !== 'plate';
+    element('note-emblem').replaceChildren(icon(egg.icon));
     element('sunflower-title').textContent = item.title;
     element('sunflower-lead').textContent = item.lead;
     element('sunflower-sub').textContent = item.sub;
     flowerWhisper.textContent = item.whisper;
-    const prefix = isIban ? 'Dedicatória' : 'Bilhete';
     element('sunflower-tag').textContent =
-      `${prefix} · ${(index % collection.length) + 1} / ${collection.length}`;
-    element('next-sunflower-label').textContent = isIban ? 'Outra dedicatória' : 'Outro bilhete';
-    element('sunflower-signature').textContent = isIban
-      ? 'Sempre teu, com todo o meu amor.'
-      : 'Teu em todos os detalhes, hoje e sempre.';
+      `${egg.tag} · ${(index % egg.notes.length) + 1} / ${egg.notes.length}`;
+    element('next-sunflower-label').textContent = egg.next;
+    element('sunflower-signature').textContent = egg.signature;
     if (animateNote) {
       animateFeedback(
         flowerCard,
@@ -905,8 +1152,8 @@ function init(): void {
     );
   });
   element('next-sunflower').addEventListener('click', () => {
-    const collection = activeTool === 'iban' ? SUNFLOWER_DEDICATIONS : NIF_LOVE_NOTES;
-    dedicationIndices[activeTool] = (dedicationIndices[activeTool] + 1) % collection.length;
+    const { notes } = EASTER_EGGS[activeTool];
+    dedicationIndices[activeTool] = (dedicationIndices[activeTool] + 1) % notes.length;
     renderDedication(activeTool, dedicationIndices[activeTool], true);
   });
   element('close-sunflower').addEventListener('click', () => closeDialogSmoothly(flowerDialog));
@@ -921,6 +1168,7 @@ function init(): void {
     }
   });
   initTools();
+  element<HTMLInputElement>('plate-year').max = String(new Date().getFullYear());
   renderBankOptions();
   generateResults();
 }

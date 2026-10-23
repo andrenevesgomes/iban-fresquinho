@@ -10,23 +10,24 @@ Fresh Portuguese test data with valid check digits, generated entirely in the br
 
 **Live:** [iban-fresquinho.vercel.app](https://iban-fresquinho.vercel.app/)
 
-| Tool                | Generates                                                                 | Checked by                                 |
-| ------------------- | ------------------------------------------------------------------------- | ------------------------------------------ |
-| **IBAN Fresquinho** | Portuguese IBANs (`PT50` + 21 digits) for any of 107 published bank codes | NIB control digits and ISO 13616 modulo 97 |
-| **NIF Fresquinho**  | Individual (ranges 1, 2, 3) or company (range 5) taxpayer numbers         | Modulo 11 check digit                      |
+| Tool                     | Generates                                                                                       | Checked by                                 |
+| ------------------------ | ----------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| **IBAN Fresquinho**      | Portuguese IBANs (`PT50` + 21 digits) for any of 107 published bank codes                       | NIB control digits and ISO 13616 modulo 97 |
+| **NIF Fresquinho**       | Individual (ranges 1, 2, 3) or company (range 5) taxpayer numbers                               | Modulo 11 check digit                      |
+| **Matrícula Fresquinha** | Car registration numbers in the format of their first-registration month, with vehicle data | Format rules of each era since 1937        |
 
 > [!IMPORTANT]
-> Results are mathematically valid test data. Nothing is looked up: a value may coincide with a real account or taxpayer, and validity proves neither existence nor ownership. Use only in authorised test environments, never for payments or identity checks.
+> Results are valid test data. Nothing is looked up: a value may coincide with a real account, taxpayer or vehicle, and validity proves neither existence nor ownership. Use only in authorised test environments, never for payments, identity checks or real claims.
 
 ## Em português
 
-Gera IBANs e NIFs portugueses com dígitos de controlo válidos, diretamente no navegador. Clica no prefixo do título (**IBAN**) para mudar para **NIF**. Escolhe os bancos ou o perfil, a quantidade (1 a 100) e clica em **Gerar**; cada resultado copia-se num clique. Nada é enviado para um servidor e só a preferência de tema fica guardada.
+Gera IBANs, NIFs e matrículas portuguesas de teste, diretamente no navegador. Clica no prefixo do título (**IBAN**) para mudar para **NIF** ou **Matrícula**. Escolhe os bancos, o perfil ou os filtros do veículo (mês e ano da 1.ª matrícula, cilindrada, potência), a quantidade (1 a 100) e clica em **Gerar**; cada resultado copia-se num clique. Nada é enviado para um servidor e só a preferência de tema fica guardada.
 
 ## Using it
 
 1. Open the site. One IBAN is ready on arrival.
-2. Select the title prefix (**IBAN**) to switch to **NIF**. Each tool keeps its own results, quantity and choices.
-3. **IBAN:** combine bank shortcuts, or open **Lista completa** to search all 107 codes by name or code. **NIF:** choose **Pessoa singular** or **Empresa**.
+2. Select the title prefix (**IBAN**) to switch to **NIF** or **Matrícula**. Each tool keeps its own results, quantity and choices.
+3. **IBAN:** combine bank shortcuts, or open **Lista completa** to search all 107 codes by name or code. **NIF:** choose **Pessoa singular** or **Empresa**. **Matrícula:** optionally set the month and/or year of first registration and a displacement (cm³) or power (cv) range; empty fields mean "any".
 4. Pick a quantity (1–100, with shortcuts 1, 5 and 6) and press **Gerar**. Choices apply to the next generation only.
 5. Copy one value, or **Copiar todos** for one value per line. If the browser blocks the clipboard, the values are shown pre-selected for manual copying.
 
@@ -63,6 +64,7 @@ src/
   main.ts            UI: tool switching, per-tool state, bank picker, clipboard, theme, dialogs
   iban.ts            IBAN generation, validation, parsing and formatting (no DOM)
   nif.ts             NIF generation and checksum validation (no DOM)
+  plate.ts           Licence plates by era, vehicle data model and filters (no DOM)
   banks.ts           Bank catalogue derived from docs/bank-reference.json
   types.ts           Shared IBAN types
   pwa.ts             Service worker registration and consent-based updates
@@ -84,6 +86,7 @@ pnpm-workspace.yaml  Supply-chain settings for pnpm
 | [Maintaining](docs/maintaining.md)       | Release, add a tool, update the bank list, change headers or design |
 | [IBAN reference](docs/iban-reference.md) | Check the IBAN format, algorithms and bank catalogue policy         |
 | [NIF reference](docs/nif-reference.md)   | Check the NIF rules, generated ranges and legal sources             |
+| [Plate reference](docs/plate-reference.md) | Check the plate formats by era, the vehicle data model and sources |
 | [Security](SECURITY.md)                  | Review data handling, supply-chain controls and hosting limits      |
 
 ## Privacy

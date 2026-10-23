@@ -39,16 +39,15 @@ CI also runs `pnpm audit`, so a newly published advisory can turn `main` red wit
 
 ### Add a new tool
 
-A third tool (for example licence plates) touches these places:
+A new tool touches these places. Matrícula Fresquinha (`plate`) is the most complete example to copy.
 
-1. **Domain:** create `src/<tool>.ts` with pure functions, a `MAX_<TOOL>_BATCH_SIZE` constant and a `createMultiple…(count, …)` that returns a unique batch or throws. Add `src/__tests__/<tool>.test.ts` that checks results with an independent calculation, not the code under test.
-2. **Reference:** add `docs/<tool>-reference.md` with the rules, what is deliberately excluded and the official sources.
-3. **State:** in `main.ts`, extend the `Tool` type, `toolStates`, `batchLimit()` and `generateIdentifiers()`, and add the tool to the `['iban', 'nif']` list in `switchTool()`.
-4. **Labels:** the interface derives names from the tool id (`next.toUpperCase()`, `` `${name}s` ``). That suits acronyms such as IBAN and NIF. A word such as "Matrícula" needs explicit singular and plural labels. Feminine names also change the title to "Fresquinha".
-5. **Markup:** in `index.html`, add a `tool-option` button with `data-tool="<tool>"` to `#tool-menu`, plus `<tool>-controls` (a `form-row`), `<tool>-validity` and `<tool>-about`, all `hidden`. The existing option ids keep their historical `tab-` prefix.
-6. **Footer button:** give the new tool its own content and icon in `renderDedication()` and `switchTool()`.
-7. **Metadata:** update the page description, keywords and JSON-LD, then [recompute the CSP hash](#change-the-structured-data).
-8. **Docs:** add the tool to the table in the README.
+1. **Domain:** create `src/<tool>.ts` with pure functions, a `MAX_<TOOL>_BATCH_SIZE` constant and a `createMultiple…(count, …)` that returns a unique batch or throws. Validate options before using randomness, and avoid retry loops that a mocked `Math.random` could keep spinning. Add `src/__tests__/<tool>.test.ts` that checks results with an independent calculation, not the code under test.
+2. **Reference:** add `docs/<tool>-reference.md` with the rules, what is deliberately excluded and the sources.
+3. **State:** in `main.ts`, extend the `Tool` type and `TOOLS`, `toolStates`, `batchLimit()` and `generateIdentifiers()`, and add an entry to `TOOL_TEXT` (prefix, name, singular, plural, feminine). Messages and headings are built from it.
+4. **Markup:** in `index.html`, add a `tool-option` button with `id="tab-<tool>"` and `data-tool="<tool>"` to `#tool-menu`, plus `<tool>-controls` (a `form-row`), `<tool>-validity` and `<tool>-about`, all `hidden`. The `tab-` prefix is historical; keep it.
+5. **Footer button:** add an entry to `EASTER_EGGS` with its own notes, icon, label and signature. If it needs its own colour, add a `triggerClass` and style it for both themes.
+6. **Metadata:** update the page title and description, keywords, JSON-LD and the manifest description in `vite.config.ts`, then [recompute the CSP hash](#change-the-structured-data).
+7. **Docs:** add the tool to the README (table, "Em português", usage, layout, documentation list), [architecture.md](architecture.md) and, if it can collide with real data, [SECURITY.md](../SECURITY.md).
 
 ### Update the bank list
 
@@ -109,11 +108,11 @@ These are held back deliberately. Check the condition before upgrading, and upda
 
 These keep the interface feeling made by hand rather than generated. Please keep them.
 
-- The title is always `<PREFIX> Fresquinho`; switching tools changes only the prefix.
+- The title is always `<PREFIX> Fresquinho` (or `Fresquinha` for a feminine tool name); switching tools changes only the words, never the layout.
 - Flat surfaces: no gradients, glows or decorative shadows. Shadows are reserved for floating layers (menus and dialogs).
 - No pill badges, icon badges or decorative icons. Icons appear only where they act (copy, close, theme, steppers).
 - Thin rules structure the page: a single column up to 820 px, form rows with the label on the left and the control on the right.
-- Colour roles: Bordeaux (`--wine`) for the prefix and selected options, ink (`--ink`) for the main action. Define every colour for both themes.
+- Colour roles: Bordeaux (`--wine`) for the prefix and selected options, ink (`--ink`) for the main action. Define every colour for both themes. Licence plates are the exception: they keep their real colours in both themes.
 - Type: Manrope for the interface, IBM Plex Mono for generated values.
 - Controls are at least 44 px tall, show a visible focus ring, and animations are short and skipped for reduced motion.
 - Interface text is European Portuguese and addresses the user as "tu".

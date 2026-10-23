@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { bankCatalogue } from '../banks';
 import { hasValidNIFChecksum } from '../nif';
+import { plateEra } from '../plate';
 
 vi.mock('../styles.css', () => ({}));
 vi.mock('../pwa', () => ({ startPWA: vi.fn() }));
@@ -378,9 +379,13 @@ describe('IBAN and NIF Fresquinho', () => {
     key(button('#tab-iban'), 'ArrowDown');
     expect(document.activeElement).toBe(button('#tab-nif'));
     key(button('#tab-nif'), 'ArrowDown');
+    expect(document.activeElement).toBe(button('#tab-plate'));
+    key(button('#tab-plate'), 'ArrowDown');
     expect(document.activeElement).toBe(button('#tab-iban'));
-    key(button('#tab-iban'), 'End');
-    expect(document.activeElement).toBe(button('#tab-nif'));
+    key(button('#tab-iban'), 'ArrowUp');
+    expect(document.activeElement).toBe(button('#tab-plate'));
+    key(button('#tab-plate'), 'End');
+    expect(document.activeElement).toBe(button('#tab-plate'));
     button('#tab-nif').click();
 
     expect(menu.hidden).toBe(true);
@@ -397,8 +402,8 @@ describe('IBAN and NIF Fresquinho', () => {
 
     key(prefix, 'ArrowUp');
     expect(menu.hidden).toBe(false);
-    expect(document.activeElement).toBe(button('#tab-nif'));
-    key(button('#tab-nif'), 'Home');
+    expect(document.activeElement).toBe(button('#tab-plate'));
+    key(button('#tab-plate'), 'Home');
     expect(document.activeElement).toBe(button('#tab-iban'));
     key(button('#tab-iban'), 'Escape');
     expect(menu.hidden).toBe(true);
@@ -594,6 +599,167 @@ describe('IBAN and NIF Fresquinho', () => {
   );
 });
 
+describe('Matrícula Fresquinha', () => {
+  const summaryPattern =
+    /^1\.ª matrícula (\d{2})\/(\d{4}) · (\d+) cm³ · (\d+) cv · (Gasolina|Gasóleo|Híbrido)$/;
+
+  function fill(id: string, value: string): void {
+    document.querySelector<HTMLInputElement | HTMLSelectElement>(`#${id}`)!.value = value;
+  }
+
+  function summaries(): RegExpMatchArray[] {
+    return [...rows()].map(
+      (row) => row.querySelector('.result-bank')!.textContent!.match(summaryPattern)!
+    );
+  }
+
+  function plates(): string[] {
+    return [...rows()].map((row) => row.querySelector('code')!.textContent!);
+  }
+
+  it('switches the wordmark and wording to a feminine tool with its own controls', () => {
+    button('#tab-plate').click();
+    expect(document.querySelector('h1')!.textContent!.replace(/\s+/g, ' ').trim()).toBe(
+      'Matrícula Fresquinha'
+    );
+    expect(button('#tab-plate').getAttribute('aria-current')).toBe('true');
+    expect(document.querySelector<HTMLElement>('#plate-controls')!.hidden).toBe(false);
+    expect(document.querySelector<HTMLElement>('#plate-about')!.hidden).toBe(false);
+    expect(document.querySelector<HTMLElement>('#plate-validity')!.hidden).toBe(false);
+    expect(document.querySelector<HTMLElement>('#iban-controls')!.hidden).toBe(true);
+    expect(document.querySelector('#results-heading')!.textContent).toBe('A tua matrícula');
+    expect(document.querySelector('#iban-list')!.getAttribute('aria-label')).toBe(
+      'Matrículas geradas'
+    );
+    expect(document.querySelector('#generation-status')!.textContent).toBe(
+      'Nova matrícula pronta.'
+    );
+    expect(plateEra(plates()[0])).not.toBeNull();
+    expect(summaries()[0]).not.toBeNull();
+    expect(input('#plate-year').max).toBe(String(new Date().getFullYear()));
+    button('#tab-iban').click();
+    expect(document.querySelector('h1')!.textContent!.replace(/\s+/g, ' ').trim()).toBe(
+      'IBAN Fresquinho'
+    );
+  });
+
+  it('honours month, year, displacement and power filters for a whole batch', async () => {
+    button('#tab-plate').click();
+    fill('plate-month', '6');
+    fill('plate-year', '2010');
+    fill('plate-cm3-min', '1500');
+    fill('plate-cm3-max', '1600');
+    fill('plate-cv-min', '100');
+    fill('plate-cv-max', '120');
+    generate(6);
+    expect(document.querySelector('#generation-status')!.textContent).toBe('6 matrículas prontas.');
+    expect(document.querySelector('#results-heading')!.textContent).toBe('As tuas 6 matrículas');
+    for (const [, month, year, cm3, cv] of summaries()) {
+      expect([month, year]).toEqual(['06', '2010']);
+      expect(Number(cm3)).toBeGreaterThanOrEqual(1500);
+      expect(Number(cm3)).toBeLessThanOrEqual(1600);
+      expect(Number(cv)).toBeGreaterThanOrEqual(100);
+      expect(Number(cv)).toBeLessThanOrEqual(120);
+    }
+    expect(plates().every((plate) => /^[0-9]{2}-[A-Z]{2}-[0-9]{2}$/.test(plate))).toBe(true);
+    button('#copy-all').click();
+    await Promise.resolve();
+    expect(writeText).toHaveBeenLastCalledWith(plates().join('\n'));
+    expect(document.querySelector('#copy-status')!.textContent).toBe('6 matrículas copiadas.');
+  });
+
+  it.each([
+    ['1985', 'plate--black', false, null],
+    ['1995', 'plate--white', true, null],
+    ['2010', 'plate--dated', true, '10'],
+    ['2022', 'plate--modern', true, null],
+  ])('prints a %s plate in the design of its time', (year, style, band, dateText) => {
+    button('#tab-plate').click();
+    fill('plate-year', year);
+    fill('plate-month', '3');
+    generate(1);
+    const plate = document.querySelector<HTMLElement>('.plate')!;
+    expect(plate.classList.contains(style)).toBe(true);
+    expect(Boolean(plate.querySelector('.plate-band'))).toBe(band);
+    const date = plate.querySelector('.plate-date');
+    expect(date?.firstElementChild?.textContent ?? null).toBe(dateText);
+    if (date) expect(date.lastElementChild!.textContent).toBe('03');
+    expect(plate.querySelector('code')!.id).toBe('plate-single');
+  });
+
+  it('copies a single plate with feminine feedback', async () => {
+    button('#tab-plate').click();
+    button('.result-copy').click();
+    await Promise.resolve();
+    expect(writeText).toHaveBeenLastCalledWith(plates()[0]);
+    expect(document.querySelector('#copy-status')!.textContent).toBe('Matrícula copiada.');
+    expect(button('.result-copy').getAttribute('aria-label')).toBe('Copiar matrícula 1');
+  });
+
+  it.each<[Record<string, string>, string[], string]>([
+    [{ 'plate-year': '1900' }, ['plate-year'], 'Escolhe um ano entre 1937'],
+    [{ 'plate-year': '2026.5' }, ['plate-year'], 'Escolhe um ano entre 1937'],
+    [
+      { 'plate-year': String(new Date().getFullYear()), 'plate-month': '12' },
+      ['plate-month', 'plate-year'],
+      'ainda não chegou',
+    ],
+    [
+      { 'plate-cm3-min': '2000', 'plate-cm3-max': '1000' },
+      ['plate-cm3-min', 'plate-cm3-max'],
+      'cilindrada',
+    ],
+    [{ 'plate-cv-max': '9999' }, ['plate-cv-min', 'plate-cv-max'], 'potência'],
+    [
+      { 'plate-cm3-min': '600', 'plate-cm3-max': '700', 'plate-cv-min': '300' },
+      ['plate-cm3-min', 'plate-cm3-max', 'plate-cv-min', 'plate-cv-max'],
+      'Não há carros plausíveis',
+    ],
+  ])('explains invalid filters %o and keeps the previous results', (values, invalid, message) => {
+    button('#tab-plate').click();
+    const previous = plates();
+    for (const [id, value] of Object.entries(values)) fill(id, value);
+    const now = new Date();
+    if (values['plate-month'] === '12' && now.getMonth() === 11) return;
+    generate(5);
+    expect(document.querySelector('#plate-error')!.textContent).toContain(message);
+    expect(plates()).toEqual(previous);
+    for (const id of [
+      'plate-year',
+      'plate-month',
+      'plate-cm3-min',
+      'plate-cm3-max',
+      'plate-cv-min',
+      'plate-cv-max',
+    ]) {
+      expect(document.querySelector(`#${id}`)!.getAttribute('aria-invalid')).toBe(
+        invalid.includes(id) ? 'true' : null
+      );
+    }
+    expect(document.activeElement!.id).toBe(invalid[0]);
+    for (const id of Object.keys(values)) fill(id, '');
+    generate(2);
+    expect(document.querySelector('#plate-error')!.textContent).toBe('');
+    expect(document.querySelector('#plate-year')!.hasAttribute('aria-invalid')).toBe(false);
+    expect(rows()).toHaveLength(2);
+  });
+
+  it('keeps plate results and filters while visiting the other tools', () => {
+    button('#tab-plate').click();
+    fill('plate-year', '2001');
+    generate(5);
+    const kept = plates();
+    button('#tab-nif').click();
+    button('#tab-iban').click();
+    button('#tab-plate').click();
+    expect(plates()).toEqual(kept);
+    expect(input('#plate-year').value).toBe('2001');
+    expect(document.querySelector('#copy-value-label')!.textContent).toBe(
+      'Matrícula para cópia manual'
+    );
+  });
+});
+
 describe('Discreet sunflower interaction', () => {
   it('requires five activations and preserves results, with Escape returning focus', () => {
     const previous = identifiers();
@@ -662,6 +828,33 @@ describe('Discreet sunflower interaction', () => {
     expect(document.querySelector('#sunflower-title')!.textContent).not.toBe(firstNifTitle);
     button('#close-sunflower').click();
     expect(dialog.open).toBe(false);
+  });
+
+  it('gives Matrícula Fresquinha its own road-trip Easter egg', () => {
+    const trigger = button('#sunflower-trigger');
+    button('#tab-nif').click();
+    button('#tab-plate').click();
+    expect(trigger.getAttribute('aria-label')).toBe('Viagem a dois');
+    expect(trigger.classList.contains('is-euro-egg')).toBe(true);
+    expect(trigger.classList.contains('is-bordeaux-egg')).toBe(false);
+
+    trigger.focus();
+    for (let count = 0; count < 5; count++) trigger.click();
+    const dialog = document.querySelector<HTMLDialogElement>('#sunflower-dialog')!;
+    expect(dialog.open).toBe(true);
+    expect(dialog.dataset.eggMode).toBe('plate');
+    expect(document.querySelector<HTMLElement>('#plate-egg-wrap')!.hidden).toBe(false);
+    expect(document.querySelector<HTMLElement>('#bordeaux-velvet-wrap')!.hidden).toBe(true);
+    expect(document.querySelector<HTMLElement>('#sunflower-photo-wrap')!.hidden).toBe(true);
+    expect(document.querySelector('#sunflower-tag')!.textContent).toBe('Viagem · 1 / 6');
+    expect(document.querySelector('#next-sunflower-label')!.textContent).toBe('Outra viagem');
+    button('#next-sunflower').click();
+    expect(document.querySelector('#sunflower-tag')!.textContent).toBe('Viagem · 2 / 6');
+    button('#close-sunflower').click();
+
+    button('#tab-nif').click();
+    expect(trigger.classList.contains('is-euro-egg')).toBe(false);
+    expect(trigger.classList.contains('is-bordeaux-egg')).toBe(true);
   });
 
   it('uses bounded event animations and skips them for reduced motion', () => {

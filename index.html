@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- Primary Meta Tags -->
-    <title>IBAN Fresquinho - IBANs e NIFs para testes</title>
-    <meta name="title" content="IBAN Fresquinho - IBANs e NIFs para testes" />
-    <meta name="description" content="Gere IBANs e NIFs portugueses localmente para testes de software, com dígitos de controlo válidos. Sem consultar contas ou contribuintes." />
-    <meta name="keywords" content="gerador de iban, iban portugal, iban teste, iban fresquinho, gerador nif, nif teste" />
+    <title>IBAN Fresquinho - IBANs, NIFs e matrículas para testes</title>
+    <meta name="title" content="IBAN Fresquinho - IBANs, NIFs e matrículas para testes" />
+    <meta name="description" content="Gere IBANs, NIFs e matrículas portuguesas localmente para testes de software, com dígitos de controlo e formatos válidos. Sem consultar contas, contribuintes ou veículos." />
+    <meta name="keywords" content="gerador de iban, iban portugal, iban teste, iban fresquinho, gerador nif, nif teste, gerador de matrículas, matrícula teste" />
     <meta name="robots" content="index, follow" />
     <meta name="google-site-verification" content="y4IXZhBzZRUxK7cq8UmLsnuq_BiXv5qrQVzR5De6XBg" />
     <link rel="canonical" href="https://iban-fresquinho.vercel.app/" />
@@ -16,8 +16,8 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://iban-fresquinho.vercel.app/" />
-    <meta property="og:title" content="IBAN Fresquinho - IBANs e NIFs para testes" />
-    <meta property="og:description" content="Gerador local de IBANs e NIFs portugueses para testes de software. Sem consultar contas ou contribuintes." />
+    <meta property="og:title" content="IBAN Fresquinho - IBANs, NIFs e matrículas para testes" />
+    <meta property="og:description" content="Gerador local de IBANs, NIFs e matrículas portuguesas para testes de software. Sem consultar contas, contribuintes ou veículos." />
     <meta property="og:image" content="https://iban-fresquinho.vercel.app/images/bank-social-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -26,8 +26,8 @@
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://iban-fresquinho.vercel.app/" />
-    <meta property="twitter:title" content="IBAN Fresquinho - IBANs e NIFs para testes" />
-    <meta property="twitter:description" content="Gerador local de IBANs e NIFs portugueses para testes de software. Sem consultar contas ou contribuintes." />
+    <meta property="twitter:title" content="IBAN Fresquinho - IBANs, NIFs e matrículas para testes" />
+    <meta property="twitter:description" content="Gerador local de IBANs, NIFs e matrículas portuguesas para testes de software. Sem consultar contas, contribuintes ou veículos." />
     <meta property="twitter:image" content="https://iban-fresquinho.vercel.app/images/bank-social-image.jpg" />
     
     <!-- Theme -->
@@ -48,7 +48,7 @@
         "@type": "WebApplication",
         "name": "IBAN Fresquinho",
         "url": "https://iban-fresquinho.vercel.app/",
-        "description": "Gerador local de IBANs e NIFs portugueses para testes de software.",
+        "description": "Gerador local de IBANs, NIFs e matrículas portuguesas para testes de software.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -67,7 +67,7 @@
         <div class="wordmark-wrap">
           <h1 class="wordmark">
             <button id="tool-prefix" class="tool-prefix" type="button" aria-expanded="false" aria-controls="tool-menu" aria-describedby="tool-prefix-hint"><span id="tool-prefix-text" class="tool-prefix-text">IBAN</span><span class="tool-prefix-caret" data-icon="chevron" aria-hidden="true"></span></button>
-            <span class="wordmark-name">Fresquinho</span>
+            <span id="wordmark-name" class="wordmark-name">Fresquinho</span>
           </h1>
           <span id="tool-prefix-hint" class="sr-only">Mudar de gerador</span>
           <ul id="tool-menu" class="tool-menu" aria-label="Geradores Fresquinho" hidden>
@@ -81,6 +81,12 @@
               <button id="tab-nif" class="tool-option" type="button" data-tool="nif" aria-current="false">
                 <span class="tool-option-name"><span>NIF</span> Fresquinho</span>
                 <span class="tool-option-detail">Contribuintes, singulares e empresas</span>
+              </button>
+            </li>
+            <li>
+              <button id="tab-plate" class="tool-option" type="button" data-tool="plate" aria-current="false">
+                <span class="tool-option-name"><span>Matrícula</span> Fresquinha</span>
+                <span class="tool-option-detail">Veículos ligeiros, com cilindrada, potência e data</span>
               </button>
             </li>
           </ul>
@@ -137,6 +143,71 @@
               </div>
             </div>
           </div>
+          <div id="plate-controls" class="plate-control" hidden>
+            <div class="form-row">
+              <div class="row-label">
+                <span id="plate-date-label" class="field-label">1.ª matrícula</span>
+                <span class="row-hint">Desde 1937; vazio usa 2000 a hoje</span>
+              </div>
+              <div class="row-field filter-pair" role="group" aria-labelledby="plate-date-label">
+                <label class="filter-field">
+                  <span class="filter-caption">Mês</span>
+                  <select id="plate-month" aria-describedby="plate-error">
+                    <option value="">Qualquer</option>
+                    <option value="1">janeiro</option>
+                    <option value="2">fevereiro</option>
+                    <option value="3">março</option>
+                    <option value="4">abril</option>
+                    <option value="5">maio</option>
+                    <option value="6">junho</option>
+                    <option value="7">julho</option>
+                    <option value="8">agosto</option>
+                    <option value="9">setembro</option>
+                    <option value="10">outubro</option>
+                    <option value="11">novembro</option>
+                    <option value="12">dezembro</option>
+                  </select>
+                </label>
+                <label class="filter-field">
+                  <span class="filter-caption">Ano</span>
+                  <input id="plate-year" type="number" inputmode="numeric" min="1937" step="1" placeholder="Qualquer" aria-describedby="plate-error" />
+                </label>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="row-label">
+                <span id="plate-cm3-label" class="field-label">Cilindrada</span>
+                <span class="row-hint">600 a 6500 cm³</span>
+              </div>
+              <div class="row-field filter-pair" role="group" aria-labelledby="plate-cm3-label">
+                <label class="filter-field">
+                  <span class="filter-caption">Mínimo</span>
+                  <span class="unit-input"><input id="plate-cm3-min" type="number" inputmode="numeric" min="600" max="6500" step="1" placeholder="Qualquer" aria-describedby="plate-error" /><span aria-hidden="true">cm³</span></span>
+                </label>
+                <label class="filter-field">
+                  <span class="filter-caption">Máximo</span>
+                  <span class="unit-input"><input id="plate-cm3-max" type="number" inputmode="numeric" min="600" max="6500" step="1" placeholder="Qualquer" aria-describedby="plate-error" /><span aria-hidden="true">cm³</span></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="row-label">
+                <span id="plate-cv-label" class="field-label">Potência</span>
+                <span class="row-hint">30 a 650 cv</span>
+              </div>
+              <div class="row-field filter-pair" role="group" aria-labelledby="plate-cv-label">
+                <label class="filter-field">
+                  <span class="filter-caption">Mínimo</span>
+                  <span class="unit-input"><input id="plate-cv-min" type="number" inputmode="numeric" min="30" max="650" step="1" placeholder="Qualquer" aria-describedby="plate-error" /><span aria-hidden="true">cv</span></span>
+                </label>
+                <label class="filter-field">
+                  <span class="filter-caption">Máximo</span>
+                  <span class="unit-input"><input id="plate-cv-max" type="number" inputmode="numeric" min="30" max="650" step="1" placeholder="Qualquer" aria-describedby="plate-error" /><span aria-hidden="true">cv</span></span>
+                </label>
+              </div>
+            </div>
+            <p id="plate-error" class="inline-error" role="alert"></p>
+          </div>
           <div class="form-row quantity-control">
             <div class="row-label">
               <label for="count-input">Quantidade</label>
@@ -181,6 +252,7 @@
           <div class="validity-note">
             <p id="iban-validity">Formato e controlo válidos (ISO 13616 &amp; NIB).<br class="mobile-break" /> <span>Existência da conta não verificada.</span></p>
             <p id="nif-validity" hidden>Formato e dígito de controlo válidos.<br class="mobile-break" /> <span>Pode coincidir com um NIF atribuído. Apenas para testes autorizados.</span></p>
+            <p id="plate-validity" hidden>Formato da época da 1.ª matrícula; dados do veículo fictícios.<br class="mobile-break" /> <span>A matrícula pode existir e pertencer a outro veículo.</span></p>
           </div>
         </section>
       </section>
@@ -196,6 +268,11 @@
           <p>Os NIFs são gerados localmente com nove algarismos e dígito de controlo módulo 11. Não é consultada a AT nem o VIES. Não se confirma atribuição, titularidade, situação fiscal ou aceitação por uma seguradora. Podem coincidir com números reais; apenas para testes autorizados.</p>
           <p>Pessoa singular: gamas 1, 2 e 3. Empresa: perfil limitado à gama 5 do NIF/NIPC, não a todas as pessoas coletivas. Gamas especiais estão excluídas da geração, sem que isso as torne inválidas.</p>
           <p>Referências: <a href="https://data.dre.pt/eli/dec-lei/14/2013/01/28/p/dre/pt/pdf" target="_blank" rel="noopener noreferrer">Decreto-Lei 14/2013</a>, <a href="https://data.dre.pt/eli/dec-lei/129/1998/05/13/p/dre/pt/pdf" target="_blank" rel="noopener noreferrer">regime do RNPC</a> e <a href="https://info.portaldasfinancas.gov.pt/pt/destaques/Paginas/Atribuicao_Nova_Gama_de_NIF_a_Pessoas_Singulares.aspx" target="_blank" rel="noopener noreferrer">nota da AT sobre a gama 3</a>.</p>
+        </div>
+        <div id="plate-about" class="about-content" hidden>
+          <p>Cada matrícula usa o formato em vigor no mês da 1.ª matrícula: <code>AA-00-00</code> (1937 a fevereiro de 1992), <code>00-00-AA</code> (março de 1992 a 2005), <code>00-AA-00</code> (2005 a fevereiro de 2020) e <code>AA-00-AA</code> (desde março de 2020). Em 2005 os dois formatos coexistiram. As letras são aleatórias dentro do formato e não seguem a ordem cronológica real das séries. O valor copiado usa sempre hífenes, embora as chapas desde 2020 já não os tenham.</p>
+          <p>Cilindrada, potência e combustível são fictícios mas plausíveis para a época: a potência por litro depende do combustível e do ano (por exemplo, gasóleo até 50 cv/l antes de 1990 e até 95 hoje; gasolina até 115), e os híbridos só aparecem a partir de 2000. Abaixo de 1000 cm³ só há gasolina, e o gasóleo começa nos 1200 cm³. Sem filtros, a 1.ª matrícula fica entre 2000 e hoje e a cilindrada entre 900 e 2500 cm³. Não são gerados veículos elétricos, motociclos, reboques nem matrículas especiais (militares, diplomáticas ou de exportação).</p>
+          <p>Quase todas as combinações destes formatos já foram atribuídas: uma matrícula gerada pode pertencer a um veículo real, com outros dados. Não é consultado o IMT nem o registo automóvel. Apenas para testes autorizados.</p>
         </div>
       </details>
     </main>
@@ -214,6 +291,10 @@
       <div id="bordeaux-velvet-wrap" class="bordeaux-velvet" hidden>
         <p class="velvet-acronym"><span>N</span>úmero de <span>I</span>dentificação da <span>F</span>elicidade</p>
         <p class="velvet-kicker">Dígito de controlo válido, sem colisões nem repetidos: és única.</p>
+      </div>
+      <div id="plate-egg-wrap" class="plate-egg" hidden>
+        <span class="plate plate--modern plate--egg"><span class="plate-band" aria-hidden="true">P</span><span class="plate-number">AM 27 OR</span></span>
+        <p class="plate-egg-kicker">Desde 2020 as chapas deixaram de ter data, porque lá fora a confundiam com um prazo de validade. A nossa nunca teve.</p>
       </div>
       <div class="sunflower-note">
         <div class="sunflower-note-header">

@@ -45,6 +45,8 @@
   --note: #78511e;
   --error: #a02039;
   --focus: #336e84;
+  --euro: #003399;
+  --euro-soft: rgba(0, 51, 153, 0.08);
   color: var(--ink);
   background-color: #f7f3ee;
   color-scheme: light;
@@ -71,6 +73,8 @@
   --note: #efd075;
   --error: #ff9eae;
   --focus: #83cee1;
+  --euro: #9fb4ff;
+  --euro-soft: rgba(159, 180, 255, 0.12);
   color: var(--ink);
   background-color: #171517;
   color-scheme: dark;
@@ -288,6 +292,81 @@ button svg,
 }
 .nif-control {
   min-width: 0;
+}
+.plate-control {
+  min-width: 0;
+}
+.plate-control .inline-error {
+  margin: 0;
+  padding-top: 14px;
+}
+.filter-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 220px));
+  gap: 12px;
+}
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.filter-caption {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.filter-field select,
+.filter-field > input,
+.unit-input {
+  width: 100%;
+  height: 46px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface-elevated);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  transition: border-color 180ms ease;
+}
+.filter-field select,
+.filter-field > input {
+  padding: 0 12px;
+}
+.unit-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 12px;
+}
+.unit-input input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 0 0 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+}
+.unit-input > span {
+  font-size: 13px;
+  color: var(--muted);
+}
+.filter-field input {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+.filter-field input::-webkit-inner-spin-button,
+.filter-field input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.filter-field select:hover,
+.filter-field > input:hover,
+.unit-input:hover {
+  border-color: var(--muted);
+}
+.filter-field [aria-invalid='true'],
+.unit-input:has([aria-invalid='true']) {
+  border-color: var(--error);
 }
 .segmented {
   display: inline-flex;
@@ -677,6 +756,60 @@ button svg,
 .is-single .result-bank {
   margin-top: 8px;
   font-size: 13.5px;
+}
+.plate {
+  display: inline-flex;
+  align-items: stretch;
+  max-width: 100%;
+  border: 2px solid #1b1b1b;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ffffff;
+  color: #111111;
+}
+.plate-band {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 22px;
+  padding-bottom: 4px;
+  background: #003399;
+  color: #ffffff;
+  font:
+    700 12px/1 'Manrope',
+    sans-serif;
+}
+.plate .plate-number {
+  display: flex;
+  align-items: center;
+  padding: 2px 14px;
+  color: inherit;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.plate-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 24px;
+  background: #f6c500;
+  color: #111111;
+  font:
+    700 10.5px/1 'IBM Plex Mono',
+    monospace;
+}
+.plate--black {
+  border-color: #141414;
+  background: #141414;
+  color: #f2f2f2;
+}
+:root[data-theme='dark'] .plate--black {
+  border-color: #5a5458;
+}
+.plate + .result-bank {
+  margin-top: 8px;
 }
 .result-copy {
   border: 1px solid var(--line);
@@ -1071,6 +1204,9 @@ button svg,
   .segment {
     flex: 1;
   }
+  .filter-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .bank-trigger-hint {
     display: none;
   }
@@ -1175,6 +1311,20 @@ button svg,
 .sunflower-trigger.is-bordeaux-egg {
   color: var(--wine);
 }
+.sunflower-trigger.is-euro-egg {
+  color: var(--euro);
+}
+.sunflower-trigger.is-euro-egg:hover:not(:disabled) {
+  color: var(--euro);
+  background: var(--euro-soft);
+}
+.sunflower-trigger.is-euro-egg svg circle,
+.sunflower-dialog[data-egg-mode='plate'] .note-flower svg circle {
+  fill: none;
+}
+.sunflower-dialog[data-egg-mode='plate'] .note-flower {
+  color: var(--euro);
+}
 .sunflower-trigger svg {
   width: 22px;
   height: 22px;
@@ -1261,6 +1411,22 @@ button svg,
   font-size: 14.5px;
   line-height: 1.55;
   color: #f1d9d6;
+}
+.plate-egg {
+  padding: 52px 28px 26px;
+  background: #102449;
+  color: #f1f4ff;
+}
+.plate--egg .plate-number {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 30px;
+  padding: 6px 20px;
+}
+.plate-egg-kicker {
+  margin: 18px 0 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #d7def5;
 }
 .sunflower-note {
   padding: 24px 26px 26px;
