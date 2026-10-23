@@ -7,6 +7,7 @@ flowchart LR
   html[index.html] --> main[src/main.ts]
   main --> iban[src/iban.ts]
   main --> nif[src/nif.ts]
+  main --> plate[src/plate.ts]
   main --> banks[src/banks.ts]
   main --> pwa[src/pwa.ts]
   iban --> types[src/types.ts]
@@ -18,7 +19,7 @@ flowchart LR
 
 | Layer          | Files                                 | Rules                                                                                                                                                       |
 | -------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Domain         | `iban.ts`, `nif.ts`                   | Pure functions, no DOM. Invalid input throws `RangeError`. Batches are unique and give up after `count × 10` attempts instead of returning a partial batch. |
+| Domain         | `iban.ts`, `nif.ts`, `plate.ts`       | Pure functions, no DOM. Invalid input throws `RangeError` (plate filters throw `VehicleFilterError`, which names the field). Batches are unique and give up after `count × 10` attempts instead of returning a partial batch. |
 | Reference data | `banks.ts`, `bank-reference.json`     | A dated, immutable snapshot of the Banco de Portugal list. See [iban-reference.md](iban-reference.md).                                                      |
 | Interface      | `main.ts`, `index.html`, `styles.css` | Owns all state and DOM work. Writes text with `textContent` only.                                                                                           |
 | Offline        | `pwa.ts`, `vite.config.ts`            | Registers the service worker in production builds and asks before applying updates.                                                                         |
@@ -35,32 +36,40 @@ Randomness comes from `Math.random`. That is enough for test-data variety; the v
 
 | Variable        | Holds                                                                        |
 | --------------- | ---------------------------------------------------------------------------- |
-| `activeTool`    | `'iban'` or `'nif'`                                                          |
+| `activeTool`    | `'iban'`, `'nif'` or `'plate'`                                               |
 | `toolStates`    | Per tool: current results, raw quantity text, error message and invalid flag |
 | `selectedCodes` | IBAN bank selection, shared by the shortcut buttons and the full list        |
 | `nifCategory`   | NIF profile for the next generation                                          |
 | `copyRequest`   | Counter that identifies the latest clipboard request                         |
 
-Choices (banks, profile, quantity) apply to the next generation only. Results keep the labels they were generated with.
+Vehicle filters are not copied into state: they are read from their inputs (`#plate-month`, `#plate-year`, `#plate-cm3-*`, `#plate-cv-*`) when **Gerar** is pressed. The inputs stay in the DOM while hidden, so they survive tool switches.
+
+Choices (banks, profile, filters, quantity) apply to the next generation only. Results keep the labels they were generated with.
 
 Only the theme is persisted (`localStorage` key `iban-theme`). Everything else is lost on reload by design.
 
+### Tool wording
+
+The title reads `<PREFIX> <Name>`, for example "IBAN Fresquinho" or "Matrícula Fresquinha". All tool wording comes from `TOOL_TEXT`: prefix, name, singular, plural and grammatical gender. `copiedMessage()`, `readyMessage()` and `resultsHeading()` build the status and heading text from it ("5 matrículas prontas", "As tuas 5 matrículas"), so a new tool never needs string surgery elsewhere.
+
 ### Switching tools
 
-The title reads `<PREFIX> Fresquinho`. The prefix is a disclosure button (`#tool-prefix`) that opens a list of tool buttons (`#tool-menu`). This is the WAI-ARIA disclosure pattern, not an ARIA menu: options are ordinary buttons marked with `aria-current`. Arrow keys, Home and End move between options; Escape closes and returns focus; Tab or a click outside closes.
+The prefix is a disclosure button (`#tool-prefix`) that opens a list of tool buttons (`#tool-menu`). This is the WAI-ARIA disclosure pattern, not an ARIA menu: options are ordinary buttons marked with `aria-current`. Arrow keys, Home and End move between options; Escape closes and returns focus; Tab or a click outside closes.
 
 `switchTool(next)`:
 
 1. Saves the current tool's raw quantity, error and invalid flag.
 2. Cancels any copy feedback, so a slow clipboard response cannot appear on the other tool.
 3. Restores the next tool's state and batch limit.
-4. Shows `<tool>-controls`, `<tool>-validity` and `<tool>-about`; hides the others.
-5. Updates the prefix text and the footer button.
+4. For every tool in `TOOLS`, shows or hides `<tool>-controls`, `<tool>-validity` and `<tool>-about`.
+5. Updates the prefix and name from `TOOL_TEXT`, and the footer button from `EASTER_EGGS`.
 6. Generates one result on the first visit only; later visits redraw the stored results without using randomness.
 
 ### Generating and rendering
 
 `generateResults()` validates the quantity, calls `generateIdentifiers()` for the active tool and passes the result to `renderResults()`. On failure, the previous results stay visible and an error is shown. A screen-reader status announces each new batch.
+
+For plates, `vehicleFilters()` reads the inputs; empty means "any" and a malformed number becomes `NaN` so the domain rejects it. A `VehicleFilterError` goes to `setFilterError()`, which shows the message under the filters, marks the matching inputs with `aria-invalid` and focuses the first one. Each plate is drawn by `plateElement()` in the design of its first-registration month (black, white, white with the yellow date band, or the 2020 design) with a summary line underneath. The copied value is the plate text only.
 
 ### Clipboard
 
@@ -72,7 +81,7 @@ A native `<dialog>`. Its 108 rows ("Qualquer banco" plus 107 codes) are built on
 
 ### Footer button
 
-`#sunflower-trigger` has intentional hidden behaviour with per-tool content, defined near the top of `main.ts` and covered by tests. Keep it when refactoring.
+`#sunflower-trigger` has intentional hidden behaviour with per-tool content. `EASTER_EGGS` holds each tool's icon, label, notes and signature; the notes are defined near the top of `main.ts` and covered by tests. Keep them when refactoring.
 
 ### Motion
 
@@ -80,7 +89,7 @@ A native `<dialog>`. Its 108 rows ("Qualquer banco" plus 107 codes) are built on
 
 ## Styling (`src/styles.css`)
 
-Tailwind provides the reset and the `sr-only` utility; components are plain CSS. Colours, lines and surfaces are custom properties in `:root` and `:root[data-theme='dark']`, so both themes share one set of rules. The design rules are listed in [maintaining.md](maintaining.md#design-rules).
+Tailwind provides the reset and the `sr-only` utility; components are plain CSS. Colours, lines and surfaces are custom properties in `:root` and `:root[data-theme='dark']`, so both themes share one set of rules. Plates are the one place with fixed real-world colours (white, black, EU blue and the yellow date band) in both themes. Every plate dimension derives from one custom property, `--plate`, which is larger for a single result and smaller on phones. The EU stars are an inline SVG data URI, allowed by `img-src 'self' data:`. The design rules are listed in [maintaining.md](maintaining.md#design-rules).
 
 ## Offline and updates
 
@@ -96,6 +105,7 @@ The Content Security Policy in `vercel.json` allows only same-origin scripts, st
 | ------------------ | ------------------------------------------------------------------------------------------------------- |
 | `iban.test.ts`     | Algorithms against a SWIFT vector and independent `BigInt` calculations, invalid input, collisions      |
 | `nif.test.ts`      | All 11 checksum remainders, profiles, batch limits, collisions                                          |
+| `plate.test.ts`    | Era boundaries, letter and reserved-group rules, filter validation and combinations, the power model, batch invariants |
 | `banks.test.ts`    | Catalogue counts, source metadata and the default-generation policy                                     |
 | `main.test.ts`     | The real `index.html` in jsdom, driven through DOM events: switching, state, clipboard, picker, dialogs |
 | `pwa.test.ts`      | Update prompt and reload behaviour                                                                      |
