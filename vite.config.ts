@@ -15,7 +15,7 @@ export default defineConfig({
         lang: 'pt-PT',
         id: '.',
         scope: '.',
-        description: 'Gerador local de IBANs e NIFs portugueses para testes de software',
+        description: 'Gerador local de IBANs, NIFs e matrículas portuguesas para testes de software',
         theme_color: '#f7f3ee',
         background_color: '#f7f3ee',
         display: 'standalone',

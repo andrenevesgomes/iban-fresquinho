@@ -1,0 +1,178 @@
+﻿Matrícula;Marca;Modelo;Versão;Combustível;cm³;cv;Mês;Ano;Preço;Anos de venda
+;Fiat;600;600 D;Gasolina;767;25;;;;1960-1969
+;Fiat;127;900;Gasolina;903;45;;;;1971-1983
+;Citroën;2CV;2CV6;Gasolina;602;29;;;;1970-1990
+;Renault;4;GTL;Gasolina;1108;34;;;;1978-1992
+;Renault;5;1.1 TL;Gasolina;1108;47;;;;1985-1996
+;Fiat;Uno;45 1.0 Fire;Gasolina;999;45;;;;1985-1995
+;Citroën;AX;1.1;Gasolina;1124;55;;;;1987-1998
+;Renault;Clio;1.2;Gasolina;1149;60;;;;1998-2005
+;Renault;Clio;1.5 dCi 90;Gasóleo;1461;90;;;;2013-2019
+;Renault;Clio;0.9 TCe 90;Gasolina;898;90;;;;2013-2019
+;Renault;Clio;1.0 TCe 100;Gasolina;999;100;;;;2019-2022
+;Renault;Clio;1.6 E-Tech Hybrid 140;Híbrido;1598;140;;;;2020-2025
+;Renault;Mégane;1.5 dCi 100;Gasóleo;1461;100;;;;2003-2008
+;Renault;Mégane;1.5 dCi 110;Gasóleo;1461;110;;;;2009-2016
+;Renault;Mégane;1.5 Blue dCi 115;Gasóleo;1461;115;;;;2018-2023
+;Renault;Mégane;1.3 TCe 140;Gasolina;1332;140;;;;2018-2022
+;Renault;Mégane;1.6 E-Tech Plug-in 160;Híbrido;1598;160;;;;2020-2023
+;Renault;Captur;0.9 TCe 90;Gasolina;898;90;;;;2013-2019
+;Renault;Captur;1.5 dCi 90;Gasóleo;1461;90;;;;2013-2019
+;Renault;Captur;1.0 TCe 100;Gasolina;999;100;;;;2020-2021
+;Renault;Captur;1.5 Blue dCi 115;Gasóleo;1461;115;;;;2019-2021
+;Renault;Captur;1.6 E-Tech Hybrid 145;Híbrido;1598;145;;;;2021-2024
+;Dacia;Sandero;1.2 16V 75;Gasolina;1149;75;;;;2008-2012
+;Dacia;Sandero;1.5 dCi 90;Gasóleo;1461;90;;;;2013-2020
+;Dacia;Sandero;0.9 TCe 90;Gasolina;898;90;;;;2013-2020
+;Dacia;Sandero;1.0 TCe 90;Gasolina;999;90;;;;2021-2026
+;Dacia;Sandero;1.0 SCe 65;Gasolina;999;65;;;;2021-2026
+;Peugeot;206;1.1;Gasolina;1124;60;;;;1998-2010
+;Peugeot;206;1.4 HDi;Gasóleo;1398;68;;;;2001-2010
+;Peugeot;207;1.4 HDi;Gasóleo;1398;68;;;;2006-2012
+;Peugeot;208;1.2 PureTech 82;Gasolina;1199;82;;;;2012-2019
+;Peugeot;208;1.2 PureTech 100;Gasolina;1199;100;;;;2019-2026
+;Peugeot;208;1.5 BlueHDi 100;Gasóleo;1499;100;;;;2019-2024
+;Peugeot;308;1.6 HDi 110;Gasóleo;1560;110;;;;2007-2013
+;Peugeot;308;1.2 PureTech 130;Gasolina;1199;130;;;;2014-2021
+;Peugeot;308;1.5 BlueHDi 130;Gasóleo;1499;130;;;;2017-2021
+;Peugeot;308;1.5 BlueHDi 130;Gasóleo;1499;130;;;;2022-2026
+;Peugeot;308;1.6 Hybrid 180;Híbrido;1598;180;;;;2022-2026
+;Peugeot;2008;1.2 PureTech 82;Gasolina;1199;82;;;;2013-2019
+;Peugeot;2008;1.6 BlueHDi 100;Gasóleo;1560;100;;;;2015-2019
+;Peugeot;2008;1.2 PureTech 130;Gasolina;1199;130;;;;2020-2026
+;Peugeot;2008;1.5 BlueHDi 110;Gasóleo;1499;110;;;;2020-2023
+;Peugeot;2008;1.2 Hybrid 145;Híbrido;1199;145;;;;2024-2026
+;Citroën;C3;1.1;Gasolina;1124;60;;;;2002-2009
+;Citroën;C3;1.4 HDi;Gasóleo;1398;68;;;;2009-2016
+;Citroën;C3;1.2 PureTech 82;Gasolina;1199;82;;;;2016-2024
+;Citroën;C3;1.2 PureTech 110;Gasolina;1199;110;;;;2017-2023
+;Citroën;C3;1.2 Hybrid 110;Híbrido;1199;110;;;;2025-2026
+;Opel;Corsa;1.3 CDTI 70;Gasóleo;1248;70;;;;2003-2006
+;Opel;Corsa;1.3 CDTI 75;Gasóleo;1248;75;;;;2006-2014
+;Opel;Corsa;1.2 Turbo 100;Gasolina;1199;100;;;;2019-2026
+;Opel;Corsa;1.5 D 100;Gasóleo;1499;100;;;;2020-2023
+;Opel;Astra;1.4 16V;Gasolina;1389;90;;;;1998-2004
+;Opel;Astra;1.3 CDTI 90;Gasóleo;1248;90;;;;2005-2010
+;Opel;Astra;1.7 CDTI 130;Gasóleo;1686;130;;;;2012-2015
+;Opel;Astra;1.6 CDTI 110;Gasóleo;1598;110;;;;2015-2019
+;Opel;Astra;1.2 Turbo 130;Gasolina;1199;130;;;;2022-2026
+;Opel;Astra;1.2 Hybrid 145;Híbrido;1199;145;;;;2025-2026
+;Fiat;Punto;1.2 16V 80;Gasolina;1242;80;;;;1999-2010
+;Fiat;Punto;1.3 Multijet 75;Gasóleo;1248;75;;;;2005-2012
+;Fiat;Punto;1.2 69;Gasolina;1242;69;;;;2012-2018
+;Fiat;500;1.2 69;Gasolina;1242;69;;;;2008-2020
+;Fiat;500;1.3 Multijet 95;Gasóleo;1248;95;;;;2010-2016
+;Fiat;500;1.0 Hybrid 70;Híbrido;999;70;;;;2020-2026
+;SEAT;Ibiza;1.9 D;Gasóleo;1896;64;;;;1993-1999
+;SEAT;Ibiza;1.4 16V;Gasolina;1390;75;;;;2002-2008
+;SEAT;Ibiza;1.2 TDI;Gasóleo;1199;75;;;;2010-2015
+;SEAT;Ibiza;1.6 TDI;Gasóleo;1598;90;;;;2009-2015
+;SEAT;Ibiza;1.0 TSI;Gasolina;999;95;;;;2017-2026
+;SEAT;Leon;1.6 TDI;Gasóleo;1598;105;;;;2009-2012
+;SEAT;Leon;1.6 TDI;Gasóleo;1598;115;;;;2017-2020
+;SEAT;Leon;2.0 TDI;Gasóleo;1968;115;;;;2020-2026
+;SEAT;Leon;1.4 e-Hybrid;Híbrido;1395;204;;;;2020-2024
+;Volkswagen;Polo;1.4 TDI;Gasóleo;1422;75;;;;1999-2001
+;Volkswagen;Polo;1.2;Gasolina;1198;65;;;;2002-2005
+;Volkswagen;Polo;1.2 TDI;Gasóleo;1199;75;;;;2009-2014
+;Volkswagen;Polo;1.0 TSI;Gasolina;999;95;;;;2017-2026
+;Volkswagen;Golf;1.9 TDI;Gasóleo;1896;90;;;;1993-1997
+;Volkswagen;Golf;1.6 16V;Gasolina;1598;105;;;;2000-2003
+;Volkswagen;Golf;1.4 FSI;Gasolina;1390;90;;;;2003-2008
+;Volkswagen;Golf;2.0 TDI;Gasóleo;1968;150;;;;2012-2020
+;Volkswagen;Golf;1.4 eHybrid;Híbrido;1395;204;;;;2020-2024
+;Volkswagen;Passat;1.9 TDI;Gasóleo;1896;110;;;;1996-2000
+;Volkswagen;Passat;2.0 TDI;Gasóleo;1968;140;;;;2005-2010
+;Volkswagen;Passat;1.6 TDI;Gasóleo;1598;105;;;;2010-2014
+;Volkswagen;Passat;2.0 TDI;Gasóleo;1968;150;;;;2014-2023
+;Volkswagen;Passat;1.4 TSI GTE;Híbrido;1395;218;;;;2015-2023
+;Audi;A3;1.9 TDI;Gasóleo;1896;110;;;;1997-2003
+;Audi;A3;2.0 TDI;Gasóleo;1968;140;;;;2003-2012
+;Audi;A3;1.6 TDI;Gasóleo;1598;105;;;;2012-2016
+;Audi;A3;2.0 TDI;Gasóleo;1968;150;;;;2012-2020
+;Audi;A3;40 TFSI e;Híbrido;1395;204;;;;2020-2024
+;Skoda;Octavia;1.9 TDI;Gasóleo;1896;110;;;;1997-2004
+;Skoda;Octavia;2.0 TDI;Gasóleo;1968;140;;;;2004-2010
+;Skoda;Octavia;1.6 TDI;Gasóleo;1598;105;;;;2013-2017
+;Skoda;Octavia;2.0 TDI;Gasóleo;1968;116;;;;2020-2026
+;Skoda;Octavia;1.4 TSI iV;Híbrido;1395;204;;;;2020-2024
+;BMW;Série 1;116i;Gasolina;1596;115;;;;2004-2007
+;BMW;Série 1;118d;Gasóleo;1995;143;;;;2007-2011
+;BMW;Série 1;116d;Gasóleo;1598;116;;;;2012-2015
+;BMW;Série 1;118d;Gasóleo;1995;143;;;;2011-2015
+;BMW;Série 1;118i;Gasolina;1499;140;;;;2019-2024
+;BMW;Série 3;325 tds;Gasóleo;2498;143;;;;1993-1998
+;BMW;Série 3;320d;Gasóleo;1995;150;;;;2001-2005
+;BMW;Série 3;320d;Gasóleo;1995;184;;;;2012-2015
+;BMW;Série 3;320d;Gasóleo;1995;190;;;;2019-2026
+;BMW;Série 3;320e;Híbrido;1998;204;;;;2020-2026
+;Mercedes-Benz;Classe A;A 180 CDI;Gasóleo;1991;109;;;;2004-2012
+;Mercedes-Benz;Classe A;A 180 CDI;Gasóleo;1461;109;;;;2012-2018
+;Mercedes-Benz;Classe A;A 180 CDI;Gasóleo;1796;109;;;;2012-2015
+;Mercedes-Benz;Classe A;A 180 d;Gasóleo;1461;116;;;;2018-2023
+;Mercedes-Benz;Classe A;A 180;Gasolina;1332;136;;;;2018-2026
+;Mercedes-Benz;Classe C;C 220 CDI;Gasóleo;2148;143;;;;2000-2003
+;Mercedes-Benz;Classe C;C 220 CDI;Gasóleo;2143;170;;;;2007-2014
+;Mercedes-Benz;Classe C;C 220 d;Gasóleo;2143;170;;;;2014-2018
+;Mercedes-Benz;Classe C;C 220 d;Gasóleo;1950;194;;;;2018-2021
+;Mercedes-Benz;Classe C;C 220 d;Gasóleo;1993;200;;;;2021-2026
+;Toyota;Yaris;1.0 VVT-i;Gasolina;998;68;;;;1999-2005
+;Toyota;Yaris;1.4 D-4D;Gasóleo;1364;75;;;;2002-2005
+;Toyota;Yaris;1.4 D-4D;Gasóleo;1364;90;;;;2005-2018
+;Toyota;Yaris;1.5 Hybrid;Híbrido;1497;100;;;;2012-2020
+;Toyota;Yaris;1.5 Hybrid;Híbrido;1490;116;;;;2020-2026
+;Toyota;Corolla;1.3 XLi;Gasolina;1331;88;;;;1992-1997
+;Toyota;Corolla;1.4 VVT-i;Gasolina;1398;97;;;;2002-2007
+;Toyota;Corolla;1.8 Hybrid;Híbrido;1798;122;;;;2019-2026
+;Toyota;Auris;1.4 D-4D;Gasóleo;1364;90;;;;2007-2018
+;Toyota;Auris;1.8 Hybrid;Híbrido;1798;136;;;;2010-2018
+;Toyota;C-HR;1.8 Hybrid;Híbrido;1798;122;;;;2016-2023
+;Toyota;C-HR;2.0 Hybrid;Híbrido;1987;184;;;;2019-2023
+;Toyota;C-HR;1.8 Hybrid;Híbrido;1798;140;;;;2024-2026
+;Nissan;Micra;1.0;Gasolina;998;55;;;;1992-2002
+;Nissan;Micra;1.2;Gasolina;1240;80;;;;2003-2010
+;Nissan;Micra;1.2;Gasolina;1198;80;;;;2011-2017
+;Nissan;Micra;1.5 dCi;Gasóleo;1461;90;;;;2017-2019
+;Nissan;Micra;1.0 IG-T;Gasolina;999;100;;;;2019-2023
+;Nissan;Qashqai;1.5 dCi;Gasóleo;1461;106;;;;2007-2013
+;Nissan;Qashqai;1.6 dCi;Gasóleo;1598;130;;;;2011-2018
+;Nissan;Qashqai;1.5 dCi;Gasóleo;1461;110;;;;2014-2018
+;Nissan;Qashqai;1.2 DIG-T;Gasolina;1197;115;;;;2014-2018
+;Nissan;Qashqai;1.3 DIG-T;Gasolina;1332;140;;;;2021-2026
+;Honda;Civic;1.4i;Gasolina;1396;90;;;;1995-2005
+;Honda;Civic;1.7 CTDi;Gasóleo;1686;100;;;;2002-2005
+;Honda;Civic;1.4 i-DSi;Gasolina;1339;83;;;;2006-2011
+;Honda;Civic;1.6 i-DTEC;Gasóleo;1597;120;;;;2013-2017
+;Honda;Civic;1.0 VTEC Turbo;Gasolina;988;129;;;;2017-2022
+;Mazda;3;1.6 MZ-CD;Gasóleo;1560;109;;;;2004-2013
+;Mazda;3;1.5 Skyactiv-D;Gasóleo;1499;105;;;;2016-2019
+;Mazda;3;2.0 Skyactiv-G;Gasolina;1998;122;;;;2019-2026
+;Mazda;3;2.0 Skyactiv-X;Gasolina;1998;180;;;;2019-2026
+;Kia;Ceed;1.6 CRDi;Gasóleo;1582;115;;;;2007-2012
+;Kia;Ceed;1.4 CRDi;Gasóleo;1396;90;;;;2012-2018
+;Kia;Ceed;1.0 T-GDi;Gasolina;998;120;;;;2015-2023
+;Kia;Ceed;1.6 CRDi;Gasóleo;1598;136;;;;2018-2021
+;Kia;Sportage;2.0 TD;Gasóleo;1998;83;;;;1996-2004
+;Kia;Sportage;1.7 CRDi;Gasóleo;1685;115;;;;2010-2018
+;Kia;Sportage;1.6 GDi;Gasolina;1591;132;;;;2016-2021
+;Kia;Sportage;1.6 T-GDi;Gasolina;1598;150;;;;2022-2026
+;Kia;Sportage;1.6 T-GDi HEV;Híbrido;1598;230;;;;2022-2026
+;Hyundai;i20;1.2;Gasolina;1248;78;;;;2008-2014
+;Hyundai;i20;1.1 CRDi;Gasóleo;1120;75;;;;2012-2018
+;Hyundai;i20;1.0 T-GDi;Gasolina;998;100;;;;2016-2020
+;Hyundai;i20;1.2 MPi;Gasolina;1197;84;;;;2020-2026
+;Hyundai;i20;1.0 T-GDi;Gasolina;998;100;;;;2020-2026
+;Hyundai;i30;1.4 CVVT;Gasolina;1396;109;;;;2007-2012
+;Hyundai;i30;1.6 CRDi;Gasóleo;1582;110;;;;2012-2018
+;Hyundai;i30;1.6 CRDi;Gasóleo;1598;116;;;;2019-2024
+;Hyundai;i30;1.0 T-GDi;Gasolina;998;120;;;;2017-2026
+;Ford;Fiesta;1.8 D;Gasóleo;1753;60;;;;1996-2002
+;Ford;Fiesta;1.25 Zetec;Gasolina;1242;75;;;;1996-2008
+;Ford;Fiesta;1.4 TDCi;Gasóleo;1399;68;;;;2002-2012
+;Ford;Fiesta;1.25;Gasolina;1242;82;;;;2008-2017
+;Ford;Fiesta;1.0 EcoBoost;Gasolina;998;100;;;;2013-2023
+;Ford;Focus;1.8 TDdi;Gasóleo;1753;90;;;;1999-2004
+;Ford;Focus;1.6 TDCi;Gasóleo;1560;90;;;;2004-2011
+;Ford;Focus;1.0 EcoBoost;Gasolina;998;125;;;;2012-2018
+;Ford;Focus;1.5 EcoBlue;Gasóleo;1499;120;;;;2018-2025
+;Ford;Focus;1.0 EcoBoost;Gasolina;998;125;;;;2018-2025

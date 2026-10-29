@@ -6,12 +6,16 @@ IBAN Fresquinho is a static, client-side test-data generator. It does not look u
 
 The NIF feature also generates identifiers without querying AT, VIES or any registry. Checksum validity does not verify taxpayer registration, ownership, tax status or an unassigned number. Individual ranges 1-3 and the limited company range 5 are generation profiles, not an exhaustive validation of Portuguese taxpayer categories.
 
+The licence plate feature generates registration numbers in the format of each era without querying IMT or the vehicle register. Almost every combination of the older formats has been issued, so a generated plate may belong to a real vehicle, with a different owner and almost certainly a different model. The car version shown comes from a built-in catalogue of factory specs and its price is an estimate; neither is linked to the plate. The catalogue stores no listing data, only specs and rounded price anchors. Never use the output to identify a vehicle, look up an owner or support a real claim.
+
+The optional internal plate list (`data/plates.csv`) may hold real plates, which are personal data. It is git-ignored and read only at build time, so the repository and the public Vercel build never contain it. A build made on a machine that has the file bundles the list into its JavaScript: serve such a build only on the internal network, never on a public host, and only with plates your organisation allows you to use for testing. Delete the file to stop including it.
+
 No absolute security guarantee is possible. A compromised browser, device, extension, dependency or hosting account remains outside the generator's protection.
 
 ## Data Handling
 
-- Generation, bank search and each tool's results and selections stay in browser memory. Reloading clears both IBAN and NIF state.
-- Only `iban-theme` is stored in localStorage. The PWA caches application assets, not generated IBANs or NIFs.
+- Generation, bank search and each tool's results and selections stay in browser memory. Reloading clears the state of every tool.
+- Only `iban-theme` is stored in localStorage. The PWA caches application assets, not generated values.
 - The application has no analytics client or telemetry endpoint. Hosting providers may log normal page and asset requests, including IP addresses.
 - Copy buttons write only after a user action; the app does not read the clipboard. Clipboard history and operating-system synchronisation are outside its control.
 - Labels and generated values use textContent rather than inserting user-provided HTML.

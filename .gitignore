@@ -33,3 +33,6 @@ coverage/
 
 # Vite
 .vite/
+
+# Private plate list: real plates never go to git or to the public build
+data/plates.csv
